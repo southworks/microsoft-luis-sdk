@@ -1,6 +1,6 @@
-# LUIS Client SDKs
+# LUIS Runtime Client SDK
 
-> see https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/Home
+> see https://westus.dev.cognitive.microsoft.com/docs/services/5819c76f40a6350ce09de1ac/operations/5819c77140a63516d81aee78
 
 ``` yaml
 input-file:
