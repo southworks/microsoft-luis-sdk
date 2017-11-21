@@ -1,0 +1,29 @@
+{
+  "name": "microsoft-luis-runtime-sdk",
+  "author": "Microsoft Corporation",
+  "description": "LUIS Runtime Client Library",
+  "version": "2.0.0",
+  "keywords": [
+    "azure",
+    "LUIS",
+    "cognitive-services",
+    "language-undertanding",
+    "nlp"
+  ],
+  "license": "MIT",
+  "main": "./luisClient.js",
+  "types": "./luisClient.d.ts",
+  "scripts": {},
+  "dependencies": {
+    "ms-rest": "^2.2.7"
+  },
+  "devDependencies": {},
+  "homepage": "TBC",
+  "repository": {
+    "type": "git",
+    "url": "TBC"
+  },
+  "bugs": {
+    "url": "TBC"
+  }
+}
