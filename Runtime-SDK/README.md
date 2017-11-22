@@ -10,8 +10,8 @@ version: 2.0
 override-client-name: LuisClient
 
 csharp:
-  namespace: Microsoft.CognitiveServices.LUIS
-  output-folder: .NET
+  namespace: Microsoft.Azure.CognitiveServices.Language.LUIS
+  output-folder: .NET/LUIS-Runtime/Generated
 
 nodejs:
   generate-metadata: false
