@@ -4,7 +4,7 @@
 
 ``` yaml
 input-file:
- - https://raw.githubusercontent.com/stevengum97/azure-rest-api-specs/luis/luisSwaggerFiles/specification/cognitiveservices/data-plane/Luis/v2.0/LUIS%20Endpoint%20API.swagger.json
+ - LUIS-Endpoint-API.swagger.json
 
 version: 2.0
 override-client-name: LuisClient
