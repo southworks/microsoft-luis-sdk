@@ -6,9 +6,13 @@ Each folder will be moved to is proper repo:
 
   https://github.com/Azure/azure-rest-api-specs/tree/current/specification/cognitiveservices/data-plane
 
-- .NET
+- .NET/LUIS-Runtime
 
   https://github.com/Azure/azure-sdk-for-net/tree/psSdkJson6/src/SDKs/CognitiveServices/dataPlane
+
+- .NET/LUIS-Runtime.Sample
+
+  https://github.com/Azure-Samples/
 
 - JavaScript
 
