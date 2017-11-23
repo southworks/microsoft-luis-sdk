@@ -25,16 +25,21 @@ export interface IntentModel {
  * @class
  * Initializes a new instance of the EntityModel class.
  * @constructor
- * @member {string} [entity]
- * @member {string} [type]
- * @member {number} [startIndex]
- * @member {number} [endIndex]
+ * Entity returned from LUIS.
+ *
+ * @member {object} [additionalProperties] Unmatched properties from the
+ * message are deserialized this collection
+ * @member {string} entity
+ * @member {string} type
+ * @member {number} startIndex
+ * @member {number} endIndex
  */
 export interface EntityModel {
-  entity?: string;
-  type?: string;
-  startIndex?: number;
-  endIndex?: number;
+  additionalProperties?: { [propertyName: string]: any };
+  entity: string;
+  type: string;
+  startIndex: number;
+  endIndex: number;
 }
 
 /**
@@ -90,10 +95,20 @@ export interface LuisResult {
 
 /**
  * @class
- * Initializes a new instance of the SimpleOrCompositeEntity class.
+ * Initializes a new instance of the EntityWithScore class.
  * @constructor
  * @member {number} [score]
  */
-export interface SimpleOrCompositeEntity extends EntityModel {
+export interface EntityWithScore extends EntityModel {
   score?: number;
+}
+
+/**
+ * @class
+ * Initializes a new instance of the EntityWithResolution class.
+ * @constructor
+ * @member {object} [resolution]
+ */
+export interface EntityWithResolution extends EntityModel {
+  resolution?: any;
 }

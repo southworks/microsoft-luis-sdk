@@ -6,36 +6,34 @@
 
 'use strict';
 
+const models = require('./index');
+
 /**
- * Entity returned from LUIS.
- *
+ * Class representing a EntityWithResolution.
+ * @extends models['EntityModel']
  */
-class EntityModel {
+class EntityWithResolution extends models['EntityModel'] {
   /**
-   * Create a EntityModel.
-   * @member {object} [additionalProperties] Unmatched properties from the
-   * message are deserialized this collection
-   * @member {string} entity
-   * @member {string} type
-   * @member {number} startIndex
-   * @member {number} endIndex
+   * Create a EntityWithResolution.
+   * @member {object} [resolution]
    */
   constructor() {
+    super();
   }
 
   /**
-   * Defines the metadata of EntityModel
+   * Defines the metadata of EntityWithResolution
    *
-   * @returns {object} metadata of EntityModel
+   * @returns {object} metadata of EntityWithResolution
    *
    */
   mapper() {
     return {
       required: false,
-      serializedName: 'EntityModel',
+      serializedName: 'EntityWithResolution',
       type: {
         name: 'Composite',
-        className: 'EntityModel',
+        className: 'EntityWithResolution',
         modelProperties: {
           additionalProperties: {
             required: false,
@@ -77,6 +75,13 @@ class EntityModel {
             type: {
               name: 'Number'
             }
+          },
+          resolution: {
+            required: false,
+            serializedName: 'resolution',
+            type: {
+              name: 'Object'
+            }
           }
         }
       }
@@ -84,4 +89,4 @@ class EntityModel {
   }
 }
 
-module.exports = EntityModel;
+module.exports = EntityWithResolution;

@@ -15,4 +15,5 @@ exports.EntityModel = require('./entityModel');
 exports.CompositeChildModel = require('./compositeChildModel');
 exports.CompositeEntityModel = require('./compositeEntityModel');
 exports.LuisResult = require('./luisResult');
-exports.SimpleOrCompositeEntity = require('./simpleOrCompositeEntity');
+exports.EntityWithScore = require('./entityWithScore');
+exports.EntityWithResolution = require('./entityWithResolution');

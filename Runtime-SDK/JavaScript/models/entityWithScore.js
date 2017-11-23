@@ -9,12 +9,12 @@
 const models = require('./index');
 
 /**
- * Class representing a SimpleOrCompositeEntity.
+ * Class representing a EntityWithScore.
  * @extends models['EntityModel']
  */
-class SimpleOrCompositeEntity extends models['EntityModel'] {
+class EntityWithScore extends models['EntityModel'] {
   /**
-   * Create a SimpleOrCompositeEntity.
+   * Create a EntityWithScore.
    * @member {number} [score]
    */
   constructor() {
@@ -22,42 +22,55 @@ class SimpleOrCompositeEntity extends models['EntityModel'] {
   }
 
   /**
-   * Defines the metadata of SimpleOrCompositeEntity
+   * Defines the metadata of EntityWithScore
    *
-   * @returns {object} metadata of SimpleOrCompositeEntity
+   * @returns {object} metadata of EntityWithScore
    *
    */
   mapper() {
     return {
       required: false,
-      serializedName: 'SimpleOrCompositeEntity',
+      serializedName: 'EntityWithScore',
       type: {
         name: 'Composite',
-        className: 'SimpleOrCompositeEntity',
+        className: 'EntityWithScore',
         modelProperties: {
-          entity: {
+          additionalProperties: {
             required: false,
+            type: {
+              name: 'Dictionary',
+              value: {
+                  required: false,
+                  serializedName: 'ObjectElementType',
+                  type: {
+                    name: 'Object'
+                  }
+              }
+            }
+          },
+          entity: {
+            required: true,
             serializedName: 'entity',
             type: {
               name: 'String'
             }
           },
           type: {
-            required: false,
+            required: true,
             serializedName: 'type',
             type: {
               name: 'String'
             }
           },
           startIndex: {
-            required: false,
+            required: true,
             serializedName: 'startIndex',
             type: {
               name: 'Number'
             }
           },
           endIndex: {
-            required: false,
+            required: true,
             serializedName: 'endIndex',
             type: {
               name: 'Number'
@@ -76,4 +89,4 @@ class SimpleOrCompositeEntity extends models['EntityModel'] {
   }
 }
 
-module.exports = SimpleOrCompositeEntity;
+module.exports = EntityWithScore;

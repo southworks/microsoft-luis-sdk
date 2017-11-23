@@ -6,9 +6,15 @@
 
 namespace Microsoft.CognitiveServices.LUIS.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Entity returned from LUIS.
+    /// </summary>
     public partial class EntityModel
     {
         /// <summary>
@@ -22,8 +28,11 @@ namespace Microsoft.CognitiveServices.LUIS.Models
         /// <summary>
         /// Initializes a new instance of the EntityModel class.
         /// </summary>
-        public EntityModel(string entity = default(string), string type = default(string), double? startIndex = default(double?), double? endIndex = default(double?))
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        public EntityModel(string entity, string type, double startIndex, double endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
+            AdditionalProperties = additionalProperties;
             Entity = entity;
             Type = type;
             StartIndex = startIndex;
@@ -35,6 +44,13 @@ namespace Microsoft.CognitiveServices.LUIS.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// </summary>
@@ -49,12 +65,29 @@ namespace Microsoft.CognitiveServices.LUIS.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "startIndex")]
-        public double? StartIndex { get; set; }
+        public double StartIndex { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "endIndex")]
-        public double? EndIndex { get; set; }
+        public double EndIndex { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Entity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Entity");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

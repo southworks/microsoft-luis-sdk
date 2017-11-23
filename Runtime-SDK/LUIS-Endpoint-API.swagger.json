@@ -269,7 +269,8 @@
       }
     },
     "EntityModel": {
-
+      "description": "Entity returned from LUIS.",
+      "type": "object",
       "properties":{
         "entity": {
           "type": "string"
@@ -283,24 +284,45 @@
         "endIndex": {
           "type": "number"
         }
-      }
+      },
+      "additionalProperties": {
+        "type": "object"
+      },
+      "required": [ "entity", "type", "startIndex", "endIndex" ]
     },
-    "SimpleOrCompositeEntity": {
+    "EntityWithScore": {
       "allOf": [
         {
           "$ref": "#/definitions/EntityModel"
-        }
-        ,
+        },
         {
           "type": "object",
-          "required": [
-            "score"
-          ],
           "properties": {
             "score": {
               "type": "number"
             }
-          }
+          },
+          "required": [
+            "score"
+          ]
+        }
+      ]
+    },
+    "EntityWithResolution": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/EntityModel"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "resolution": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "resolution"
+          ]
         }
       ]
     }
