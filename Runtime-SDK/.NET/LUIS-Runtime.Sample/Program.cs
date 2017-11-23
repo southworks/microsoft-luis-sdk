@@ -42,7 +42,8 @@
                     if (input.Length > 0)
                     {
                         // Analize
-                        var result = await Recognize(input);
+                        var client = new LuisRuntimeAPI();
+                        var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, input, ApplicationId);
 
                         // Print result
                         var json = JsonConvert.SerializeObject(result, Formatting.Indented);
@@ -51,12 +52,6 @@
                     }
                 }
             }
-        }
-
-        static async Task<LuisResult> Recognize(string input)
-        {
-            var client = new LuisRuntimeAPI();
-            return await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, input, ApplicationId);
         }
 
         static void ReadConfiguration()
@@ -73,7 +68,7 @@
                 throw new ArgumentException("Missing \"LUIS.Region\" in appsettings.json");
             }
 
-            AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region);
+            AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region, true);
             SubscriptionKey = Configuration["LUIS.SubscriptionKey"];
             ApplicationId = Configuration["LUIS.ApplicationId"];
 
