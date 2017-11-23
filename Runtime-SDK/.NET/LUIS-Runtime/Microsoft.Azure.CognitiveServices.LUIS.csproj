@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <Product>Microsoft Azure .NET SDK</Product>
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Runtime API.</Description>
     <Company>Microsoft</Company>
@@ -10,7 +10,7 @@
     <NeutralLanguage />
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.10" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 </Project>
