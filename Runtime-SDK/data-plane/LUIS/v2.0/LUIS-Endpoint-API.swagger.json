@@ -45,26 +45,24 @@
   ],
   "paths": {
     "/{appId}": {
-      "parameters": [
-        {
-          "name": "Ocp-Apim-Subscription-Key",
-          "in": "header",
-          "description": "Either Subscription Key or Programmatic Key.",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "appId",
-          "in": "path",
-          "type": "string",
-          "description": "Format - guid. The application ID.",
-          "required": true
-        }
-      ],
       "get": {
         "description": "Gets the published endpoint predictions for the given query.",
         "operationId": "Prediction_GetPredictionsFromEndpointViaGet",
         "parameters": [
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Either Subscription Key or Programmatic Key."
+          },
+          {
+            "name": "appId",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Format - guid. The application ID."
+          },
           {
             "name": "q",
             "in": "query",
@@ -119,8 +117,23 @@
         "operationId": "Prediction_GetPredictionsFromEndpointViaPost",
         "parameters": [
           {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Either Subscription Key or Programmatic Key."
+          },
+          {
+            "name": "appId",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Format - guid. The application ID."
+          },
+          {
             "name": "q",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Q"
             },
