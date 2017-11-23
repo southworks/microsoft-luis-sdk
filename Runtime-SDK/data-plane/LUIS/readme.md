@@ -8,7 +8,7 @@ The current release is `release_2_0`.
 
 ``` yaml
 tag: release_2_0
-add-credentials: true
+add-credentials: false
 openapi-type: data-plane
 ```
 # Releases
@@ -24,7 +24,7 @@ input-file: v2.0/LUIS-Endpoint-API.swagger.json
 These settings apply only when `--csharp` is specified on the command line.
 ``` yaml $(csharp)
 csharp:
-  override-client-name: LuisClient
+  override-client-name: LuisRuntimeAPI
   sync-methods: None
   license-header: MICROSOFT_MIT_NO_VERSION
   azure-arm: false
