@@ -1,7 +1,7 @@
 {
   "parameters": {
     "AzureRegion": "westus",
-    "subscription-key": "{Subscription Key}",
+    "Ocp-Apim-Subscription-Key": "{Subscription Key}",
     "appId": "{Application Id}",
     "q": "forward to frank 30 dollars through HSBC"
   },

@@ -29,11 +29,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Supported Azure regions for Cognitive Services endpoints. Possible
         /// values include: 'westus', 'westeurope'
         /// </param>
-        /// <param name='subscriptionKey'>
-        /// Either Subscription Key or Programmatic Key.
-        /// </param>
         /// <param name='q'>
         /// The query to predict.
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// Either Subscription Key or Programmatic Key.
         /// </param>
         /// <param name='appId'>
         /// Format - guid. The application ID.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(AzureRegions azureRegion, string subscriptionKey, string q, string appId, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(AzureRegions azureRegion, string q, string ocpApimSubscriptionKey, string appId, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the published endpoint prediction for the given long query.
         /// </summary>
@@ -74,8 +74,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Supported Azure regions for Cognitive Services endpoints. Possible
         /// values include: 'westus', 'westeurope'
         /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// Either Subscription Key or Programmatic Key.
+        /// </param>
         /// <param name='appId'>
         /// Format - guid. The application ID.
+        /// </param>
+        /// <param name='q'>
+        /// The query to predict.
         /// </param>
         /// <param name='timezoneOffset'>
         /// The timezone offset for the location of the request.
@@ -89,9 +95,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// </param>
         /// <param name='staging'>
         /// Use staging endpoint.
-        /// </param>
-        /// <param name='q'>
-        /// The query to predict.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -108,6 +111,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string appId, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), string q = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string ocpApimSubscriptionKey, string appId, string q = default(string), double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
