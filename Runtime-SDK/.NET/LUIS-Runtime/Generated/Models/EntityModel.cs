@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.CognitiveServices.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
