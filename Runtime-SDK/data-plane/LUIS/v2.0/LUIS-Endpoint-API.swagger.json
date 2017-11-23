@@ -5,10 +5,10 @@
     "version": "1.0"
   },
   "x-ms-parameterized-host": {
-    "hostTemplate": "{azureRegion}.api.cognitive.microsoft.com",
+    "hostTemplate": "{AzureRegion}.api.cognitive.microsoft.com",
     "parameters": [
       {
-        "name": "azureRegion",
+        "name": "AzureRegion",
         "description": "Supported Azure regions for Cognitive Services endpoints.",
         "x-ms-parameter-location": "client",
         "required": true,
@@ -54,7 +54,7 @@
         "operationId": "Prediction_GetPredictionsFromEndpointViaGet",
         "parameters": [
           {
-            "name": "Ocp-Apim-Subscription-Key",
+            "name": "subscription-key",
             "in": "query",
             "description": "Either Subscription Key or Programmatic Key.",
             "required": true,
