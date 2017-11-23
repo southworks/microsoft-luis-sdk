@@ -1,28 +1,28 @@
-# Cognitive Services LUIS Runtime SDK
+# Cognitive Services LUIS SDKs
 
 > see https://aka.ms/autorest
 
-Configuration for generating LUIS Runtime SDK.
-
-The current release is `release_2_0`.
+Configuration for generating LUIS SDKs.
 
 ``` yaml
-tag: release_2_0
 add-credentials: true
 openapi-type: data-plane
 ```
+
+The current release for the Runtime Endpoint is `runtime_2_0`.
+
 # Releases
 
-### Release 2.0
-These settings apply only when `--tag=release_2_0` is specified on the command line.
+### Runtime 2.0
+These settings apply only when `--tag=runtime_2_0` is specified on the command line.
 
-``` yaml $(tag) == 'release_2_0'
+``` yaml $(tag) == 'runtime_2_0'
 input-file: v2.0/LUIS-Endpoint-API.swagger.json
 ```
 
-## CSharp Settings
+## Runtime - CSharp Settings
 These settings apply only when `--csharp` is specified on the command line.
-``` yaml $(csharp)
+``` yaml $(tag) == 'runtime_2_0' && $(csharp)
 csharp:
   override-client-name: LuisRuntimeAPI
   sync-methods: None
