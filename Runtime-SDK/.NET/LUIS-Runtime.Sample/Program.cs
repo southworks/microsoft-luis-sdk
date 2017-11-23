@@ -43,7 +43,12 @@
                     {
                         // Analize
                         var client = new LuisRuntimeAPI();
-                        var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, input, ApplicationId);
+
+                        // Via GET
+                        // var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, ApplicationId, input);
+
+                        // Via POST
+                        var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(AzureRegion, SubscriptionKey, ApplicationId, input);
 
                         // Print result
                         var json = JsonConvert.SerializeObject(result, Formatting.Indented);
