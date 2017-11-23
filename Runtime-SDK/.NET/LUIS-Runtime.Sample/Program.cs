@@ -55,7 +55,7 @@
 
         static async Task<LuisResult> Recognize(string input)
         {
-            var client = new LuisClient();
+            var client = new LuisRuntimeAPI();
             return await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, input, ApplicationId);
         }
 
