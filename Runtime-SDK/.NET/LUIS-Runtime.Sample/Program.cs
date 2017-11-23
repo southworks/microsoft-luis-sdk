@@ -73,7 +73,7 @@
                 throw new ArgumentException("Missing \"LUIS.Region\" in appsettings.json");
             }
 
-            AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region);
+            AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region, true);
             SubscriptionKey = Configuration["LUIS.SubscriptionKey"];
             ApplicationId = Configuration["LUIS.ApplicationId"];
 
