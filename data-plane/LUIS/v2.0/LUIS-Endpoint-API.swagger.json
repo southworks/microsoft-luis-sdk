@@ -94,6 +94,12 @@
             "schema": {
               "$ref": "#/definitions/LuisResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         },
         "produces": [
@@ -158,6 +164,12 @@
             "description": "A JSON object containing the prediction.",
             "schema": {
               "$ref": "#/definitions/LuisResult"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -324,6 +336,18 @@
           ]
         }
       ]
+    },
+    "APIError": {
+      "type": "object",
+      "description": "Error information returned by the API",
+      "properties": {
+        "statusCode": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
     }
   }
 }
