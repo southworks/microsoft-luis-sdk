@@ -11,15 +11,15 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
 {
     public abstract class BaseTest
     {
-        private const HttpRecorderMode mode = HttpRecorderMode.Playback;
+        protected const HttpRecorderMode mode = HttpRecorderMode.Playback;
 
         protected const AzureRegions region = AzureRegions.Westus;
-        protected const string appId = "f8ef55e6-1543-4a36-95da-497c21feea65";
+        protected const string appId = "7ce0ddf9-b4c4-4784-929e-a05d2bef6560";
         protected const string subscriptionKey = "3eff76bb229942899255402725b72941";
 
-        private string ClassName => GetType().FullName;
+        protected string ClassName => GetType().FullName;
 
-        private ILuisRuntimeAPI GetClient(DelegatingHandler handler)
+        protected ILuisRuntimeAPI GetClient(DelegatingHandler handler, string subscriptionKey = subscriptionKey)
         {
             return new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
         }

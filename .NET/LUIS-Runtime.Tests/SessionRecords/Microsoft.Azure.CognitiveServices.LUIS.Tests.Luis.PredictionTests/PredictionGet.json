@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v2.0/apps/f8ef55e6-1543-4a36-95da-497c21feea65?q=hello",
-      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzL2Y4ZWY1NWU2LTE1NDMtNGEzNi05NWRhLTQ5N2MyMWZlZWE2NT9xPWhlbGxv",
+      "RequestUri": "/luis/v2.0/apps/7ce0ddf9-b4c4-4784-929e-a05d2bef6560?q=this%20is%20a%20test",
+      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzLzdjZTBkZGY5LWI0YzQtNDc4NC05MjllLWEwNWQyYmVmNjU2MD9xPXRoaXMlMjBpcyUyMGElMjB0ZXN0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -14,10 +14,10 @@
           "Microsoft.Azure.CognitiveServices.Language.LUIS.LuisRuntimeAPI/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"query\": \"hello\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"Family Intent\",\r\n    \"score\": 0.6968358\r\n  },\r\n  \"entities\": []\r\n}",
+      "ResponseBody": "{\r\n  \"query\": \"this is a test\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"None\",\r\n    \"score\": 0.460794479\r\n  },\r\n  \"entities\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "130"
+          "132"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -26,16 +26,19 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 24 Nov 2017 13:39:49 GMT"
+          "Fri, 24 Nov 2017 18:04:02 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "89a901cb-5453-46c5-9233-6f3658bb5ad2"
+          "2e63c27d-2898-4a4a-966f-2da6b7313e6f"
         ],
         "Request-Id": [
-          "89a901cb-5453-46c5-9233-6f3658bb5ad2"
+          "2e63c27d-2898-4a4a-966f-2da6b7313e6f"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
         ],
         "X-Powered-By": [
           "ASP.NET"
