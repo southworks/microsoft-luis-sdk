@@ -16,15 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LUIS-Runtime\Microsoft.Azure.CognitiveServices.LUIS.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SessionRecords\Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis.PredictionTests\Prediction.json">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
