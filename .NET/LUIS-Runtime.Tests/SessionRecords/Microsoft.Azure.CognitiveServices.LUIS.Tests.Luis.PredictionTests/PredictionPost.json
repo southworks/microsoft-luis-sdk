@@ -1,11 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v2.0/apps/f8ef55e6-1543-4a36-95da-497c21feea65?q=hello",
-      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzL2Y4ZWY1NWU2LTE1NDMtNGEzNi05NWRhLTQ5N2MyMWZlZWE2NT9xPWhlbGxv",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/luis/v2.0/apps/f8ef55e6-1543-4a36-95da-497c21feea65",
+      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzL2Y4ZWY1NWU2LTE1NDMtNGEzNi05NWRhLTQ5N2MyMWZlZWE2NQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "\"hello\"",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "7"
+        ],
         "Ocp-Apim-Subscription-Key": [
           "42176485494149818968315538ddf05b"
         ],
@@ -26,16 +32,19 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 23 Nov 2017 22:13:06 GMT"
+          "Fri, 24 Nov 2017 13:39:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "29fb37a8-fdcf-4a35-84ab-99bcd60bd753"
+          "50e11879-d94d-4b08-9ed9-af5ebf775b55"
         ],
         "Request-Id": [
-          "29fb37a8-fdcf-4a35-84ab-99bcd60bd753"
+          "50e11879-d94d-4b08-9ed9-af5ebf775b55"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
         ],
         "X-Powered-By": [
           "ASP.NET"
