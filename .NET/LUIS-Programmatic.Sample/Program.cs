@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using System.Threading.Tasks;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -20,7 +19,7 @@
             ReadConfiguration();
 
             var client = new LuisProgrammaticAPI(new ApiKeyServiceClientCredentials(SubscriptionKey));
-            var apps = client.Apps.GetApplicationsListAsync(AzureRegions.Westus);
+            var apps = client.Apps.GetApplicationsListAsync(AzureRegion);
 
             var json = JsonConvert.SerializeObject(apps, Formatting.Indented);
             Console.WriteLine(json);
