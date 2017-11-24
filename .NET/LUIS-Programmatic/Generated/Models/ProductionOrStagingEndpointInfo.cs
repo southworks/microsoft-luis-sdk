@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 {
     using System.Linq;
 
