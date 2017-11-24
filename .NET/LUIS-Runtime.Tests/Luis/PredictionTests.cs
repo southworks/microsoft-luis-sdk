@@ -2,6 +2,7 @@
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
@@ -21,6 +22,21 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
         }
 
         [Fact]
+        public void PredictionInvalidKey()
+        {
+            var headers = new Dictionary<string, List<string>> { ["Ocp-Apim-Subscription-Key"] = new List<string> { "invalid-key" } };
+
+            UseClientFor(async client =>
+            {
+                var ex = await Assert.ThrowsAsync<APIErrorException>(async () => {
+                    await client.Prediction.GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(region, appId, "test", customHeaders: headers);
+                });
+
+                Assert.Equal("401", ex.Body.StatusCode);
+            });
+        }
+
+        [Fact]
         public void PredictionPost()
         {
             UseClientFor(async client => {
@@ -30,23 +46,6 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
                 Assert.Equal("None", result.TopScoringIntent.Intent);
                 Assert.Equal(utterance, result.Query);
             });
-        }
-        
-        [Fact]
-        public async void PredictionInvalidKey()
-        {
-            using (MockContext context = MockContext.Start(ClassName))
-            {
-                HttpMockServer.Initialize(ClassName, nameof(PredictionInvalidKey), mode);
-                ILuisRuntimeAPI client = GetClient(HttpMockServer.CreateInstance(), "invalid-key");
-
-                var ex = await Assert.ThrowsAsync<APIErrorException>(async () 
-                    => await client.Prediction.GetPredictionsFromEndpointViaGetAsync(region, appId, "test"));
-
-                Assert.Equal("401", ex.Body.StatusCode);
-
-                context.Stop();
-            }
         }
     }
 }
