@@ -1,13 +1,13 @@
 using System.Net.Http;
-using Microsoft.Azure.CognitiveServices.Language.LUIS;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
+namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests
 {
     public abstract class BaseTest
     {
@@ -19,17 +19,18 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
 
         private string ClassName => GetType().FullName;
 
-        private ILuisRuntimeAPI GetClient(DelegatingHandler handler)
+        private ILuisProgrammaticAPI GetClient(DelegatingHandler handler)
         {
-            return new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            return new LuisProgrammaticAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
         }
 
-        protected async void UseClientFor(Func<ILuisRuntimeAPI, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
+        protected async void UseClientFor(Func<ILuisProgrammaticAPI, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
         {
             using (MockContext context = MockContext.Start(className ?? ClassName, methodName))
             {
                 HttpMockServer.Initialize(className ?? ClassName, methodName, mode);
-                ILuisRuntimeAPI client = GetClient(HttpMockServer.CreateInstance());
+                ILuisProgrammaticAPI client = GetClient(HttpMockServer.CreateInstance());
+                
                 await doTest(client);
                 context.Stop();
             }

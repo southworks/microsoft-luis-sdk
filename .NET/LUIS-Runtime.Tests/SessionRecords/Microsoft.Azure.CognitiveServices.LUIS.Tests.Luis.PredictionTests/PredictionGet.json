@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/v2.0/apps/f8ef55e6-1543-4a36-95da-497c21feea65?q=hello",
+      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzL2Y4ZWY1NWU2LTE1NDMtNGEzNi05NWRhLTQ5N2MyMWZlZWE2NT9xPWhlbGxv",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3eff76bb229942899255402725b72941"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.LuisRuntimeAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"query\": \"hello\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"Family Intent\",\r\n    \"score\": 0.6968358\r\n  },\r\n  \"entities\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "130"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 24 Nov 2017 13:39:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "89a901cb-5453-46c5-9233-6f3658bb5ad2"
+        ],
+        "Request-Id": [
+          "89a901cb-5453-46c5-9233-6f3658bb5ad2"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
