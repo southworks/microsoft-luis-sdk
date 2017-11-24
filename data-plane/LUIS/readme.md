@@ -7,7 +7,6 @@ Configuration for generating LUIS SDKs.
 ``` yaml
 add-credentials: true
 openapi-type: data-plane
-add-credentials: true
 ```
 
 The current release for the Runtime Endpoint is `runtime_2_0`.

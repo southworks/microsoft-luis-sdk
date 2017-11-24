@@ -253,9 +253,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Supported Azure regions for Cognitive Services endpoints. Possible values
         /// include: 'westus', 'westeurope'
         /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// Either Subscription Key or Programmatic Key.
-        /// </param>
         /// <param name='appId'>
         /// Format - guid. The application ID.
         /// </param>
@@ -295,12 +292,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string ocpApimSubscriptionKey, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (ocpApimSubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ocpApimSubscriptionKey");
-            }
             if (appId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "appId");
@@ -317,7 +310,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("q", q);
                 tracingParameters.Add("timezoneOffset", timezoneOffset);
@@ -359,14 +351,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ocpApimSubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
-            }
 
 
             if (customHeaders != null)

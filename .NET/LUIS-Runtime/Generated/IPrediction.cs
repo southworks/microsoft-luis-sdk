@@ -71,9 +71,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Supported Azure regions for Cognitive Services endpoints. Possible
         /// values include: 'westus', 'westeurope'
         /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// Either Subscription Key or Programmatic Key.
-        /// </param>
         /// <param name='appId'>
         /// Format - guid. The application ID.
         /// </param>
@@ -108,6 +105,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string ocpApimSubscriptionKey, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

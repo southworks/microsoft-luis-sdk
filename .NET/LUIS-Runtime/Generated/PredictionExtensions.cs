@@ -68,9 +68,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             /// Supported Azure regions for Cognitive Services endpoints. Possible values
             /// include: 'westus', 'westeurope'
             /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// Either Subscription Key or Programmatic Key.
-            /// </param>
             /// <param name='appId'>
             /// Format - guid. The application ID.
             /// </param>
@@ -92,9 +89,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LuisResult> GetPredictionsFromEndpointViaPostAsync(this IPrediction operations, AzureRegions azureRegion, string ocpApimSubscriptionKey, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisResult> GetPredictionsFromEndpointViaPostAsync(this IPrediction operations, AzureRegions azureRegion, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(azureRegion, ocpApimSubscriptionKey, appId, q, timezoneOffset, verbose, spellCheck, staging, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(azureRegion, appId, q, timezoneOffset, verbose, spellCheck, staging, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
