@@ -8,7 +8,7 @@ The current release is `release_2_0`.
 
 ``` yaml
 tag: release_2_0
-add-credentials: false
+add-credentials: true
 openapi-type: data-plane
 ```
 # Releases

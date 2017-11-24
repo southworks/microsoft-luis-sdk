@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS
 {
+    using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
 
@@ -30,6 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
 
 
         /// <summary>

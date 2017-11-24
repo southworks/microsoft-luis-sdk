@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
                 ILuisRuntimeAPI client = GetClient(HttpMockServer.CreateInstance());
 
                 var utterance = "hello";
-                var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(region, subscriptionKey, appId, utterance);
+                var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(region, appId, utterance);
 
                 Assert.Equal("Family Intent", result.TopScoringIntent.Intent);
                 context.Stop();

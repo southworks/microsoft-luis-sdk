@@ -13,10 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
         protected const string subscriptionKey = "42176485494149818968315538ddf05b";
 
         protected string ClassName => GetType().FullName;
-        
+
         protected ILuisRuntimeAPI GetClient(DelegatingHandler handler)
         {
-            return new LuisRuntimeAPI(handlers: handler);
+            return new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
         }
     }
 }

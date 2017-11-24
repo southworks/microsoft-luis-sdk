@@ -57,9 +57,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// Supported Azure regions for Cognitive Services endpoints. Possible values
         /// include: 'westus', 'westeurope'
         /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// Either Subscription Key or Programmatic Key.
-        /// </param>
         /// <param name='appId'>
         /// Format - guid. The application ID.
         /// </param>
@@ -99,12 +96,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(AzureRegions azureRegion, string ocpApimSubscriptionKey, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (ocpApimSubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ocpApimSubscriptionKey");
-            }
             if (appId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "appId");
@@ -121,7 +114,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("q", q);
                 tracingParameters.Add("timezoneOffset", timezoneOffset);
@@ -167,14 +159,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ocpApimSubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -191,6 +175,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -398,6 +388,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(q, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)

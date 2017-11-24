@@ -42,13 +42,13 @@
                     if (input.Length > 0)
                     {
                         // Analize
-                        var client = new LuisRuntimeAPI();
+                        var client = new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(SubscriptionKey));
 
                         // Via GET
-                        // var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, SubscriptionKey, ApplicationId, input);
+                        // var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(AzureRegion, ApplicationId, input);
 
                         // Via POST
-                        var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(AzureRegion, SubscriptionKey, ApplicationId, input);
+                        var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(AzureRegion, ApplicationId, input);
 
                         // Print result
                         var json = JsonConvert.SerializeObject(result, Formatting.Indented);

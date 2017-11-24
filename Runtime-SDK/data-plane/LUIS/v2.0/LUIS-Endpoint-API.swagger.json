@@ -50,13 +50,6 @@
         "operationId": "Prediction_GetPredictionsFromEndpointViaGet",
         "parameters": [
           {
-            "name": "Ocp-Apim-Subscription-Key",
-            "in": "header",
-            "type": "string",
-            "required": true,
-            "description": "Either Subscription Key or Programmatic Key."
-          },
-          {
             "name": "appId",
             "in": "path",
             "type": "string",
