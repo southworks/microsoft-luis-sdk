@@ -1,6 +1,7 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
@@ -67,6 +68,33 @@
 
                 Assert.Equal("LUIS App name updated", app.Name);
                 Assert.Equal("LUIS App description updated", app.Description);
+            });
+        }
+
+        [Fact]
+        public void GetApplicationDomains()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationDomainsAsync(region);
+                foreach (var domain in result)
+                {
+                    Assert.False(string.IsNullOrWhiteSpace(domain));
+                }
+            });
+        }
+
+        [Fact]
+        public void GetApplicationCultures()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationCulturesAsync(region);
+                foreach (var culture in result)
+                {
+                    var cult = new CultureInfo(culture.Code);
+                    Assert.Equal(cult.Name.ToLowerInvariant(), culture.Code);
+                }
             });
         }
     }
