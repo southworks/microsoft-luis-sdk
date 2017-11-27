@@ -1841,7 +1841,12 @@
         },
         "produces": [
           "application/json"
-        ]
+        ],
+        "x-ms-examples": {
+          "Successful Application Creation": {
+            "$ref": "./examples/apps/SuccessfulAddApplicationRequest.json"
+          }
+        }
       },
       "get": {
         "description": "Lists all of the user applications.",
