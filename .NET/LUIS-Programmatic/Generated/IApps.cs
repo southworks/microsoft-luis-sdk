@@ -76,7 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> GetApplicationsListWithHttpMessagesAsync(AzureRegions azureRegion, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> GetApplicationsListWithHttpMessagesAsync(AzureRegions azureRegion, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Imports an application to LUIS, the application's JSON should be
         /// included in in the request body.

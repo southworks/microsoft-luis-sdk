@@ -76,7 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IntentClassifier>> GetApplicationVersionIntentInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentClassifier>> GetApplicationVersionIntentInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionIntentInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityExtractor>> GetApplicationVersionEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityExtractor>> GetApplicationVersionEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<HierarchicalEntityExtractor>> GetApplicationVersionHierarchicalEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<HierarchicalEntityExtractor>> GetApplicationVersionHierarchicalEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionHierarchicalEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<CompositeEntityExtractor>> GetApplicationVersionCompositeEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<CompositeEntityExtractor>> GetApplicationVersionCompositeEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionCompositeEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ClosedListEntityExtractor>> GetApplicationVersionClosedListInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ClosedListEntityExtractor>> GetApplicationVersionClosedListInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionClosedListInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PrebuiltEntityExtractor>> GetApplicationVersionPrebuiltInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PrebuiltEntityExtractor>> GetApplicationVersionPrebuiltInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionPrebuiltInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -454,7 +454,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetApplicationVersionModelInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelInfo>> GetApplicationVersionModelInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionModelInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1073,7 +1073,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SuggestEndpointQueriesForIntentsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SuggestEndpointQueriesForIntentsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SuggestEndpointQueriesForIntentsWithHttpMessagesAsync(azureRegion, appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -1103,7 +1103,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SuggestEndpointQueriesForEntitiesAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SuggestEndpointQueriesForEntitiesAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SuggestEndpointQueriesForEntitiesWithHttpMessagesAsync(azureRegion, appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

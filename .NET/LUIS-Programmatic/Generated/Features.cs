@@ -263,7 +263,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PatternFeatureInfo>>> GetApplicationVersionPatternFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PatternFeatureInfo>>> GetApplicationVersionPatternFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (appId == null)
             {
@@ -295,8 +295,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
-            _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+            }
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
@@ -616,7 +622,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> GetApplicationVersionPhraselistFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> GetApplicationVersionPhraselistFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (appId == null)
             {
@@ -648,8 +654,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
-            _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+            }
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
@@ -794,7 +806,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<FeaturesResponseObject>> GetApplicationVersionFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<FeaturesResponseObject>> GetApplicationVersionFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (appId == null)
             {
@@ -826,8 +838,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
-            _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+            }
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);

@@ -76,7 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternFeatureInfo>> GetApplicationVersionPatternFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternFeatureInfo>> GetApplicationVersionPatternFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionPatternFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PhraseListFeatureInfo>> GetApplicationVersionPhraselistFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PhraseListFeatureInfo>> GetApplicationVersionPhraselistFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionPhraselistFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeaturesResponseObject> GetApplicationVersionFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeaturesResponseObject> GetApplicationVersionFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationVersionFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {

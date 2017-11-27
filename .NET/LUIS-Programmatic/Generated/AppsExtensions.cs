@@ -68,7 +68,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ApplicationInfoResponse>> GetApplicationsListAsync(this IApps operations, AzureRegions azureRegion, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ApplicationInfoResponse>> GetApplicationsListAsync(this IApps operations, AzureRegions azureRegion, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetApplicationsListWithHttpMessagesAsync(azureRegion, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {

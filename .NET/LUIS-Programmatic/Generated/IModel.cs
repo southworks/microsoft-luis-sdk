@@ -89,7 +89,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<IntentClassifier>>> GetApplicationVersionIntentInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<IntentClassifier>>> GetApplicationVersionIntentInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds an entity extractor to the application.
         /// </summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityExtractor>>> GetApplicationVersionEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityExtractor>>> GetApplicationVersionEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a hierarchical entity extractor to the application version.
         /// </summary>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> GetApplicationVersionHierarchicalEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> GetApplicationVersionHierarchicalEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a composite entity extractor to the application.
         /// </summary>
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> GetApplicationVersionCompositeEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> GetApplicationVersionCompositeEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a closed list model to the application.
         /// </summary>
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> GetApplicationVersionClosedListInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> GetApplicationVersionClosedListInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a list of prebuilt entity extractors to the application.
         /// </summary>
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> GetApplicationVersionPrebuiltInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> GetApplicationVersionPrebuiltInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the available prebuilt entity extractors for the
         /// application.
@@ -498,7 +498,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ModelInfo>>> GetApplicationVersionModelInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ModelInfo>>> GetApplicationVersionModelInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the intent model.
         /// </summary>
@@ -1160,7 +1160,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> SuggestEndpointQueriesForIntentsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> SuggestEndpointQueriesForIntentsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Suggests examples that would improve the accuracy of the entity
         /// model.
@@ -1194,7 +1194,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> SuggestEndpointQueriesForEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, int take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> SuggestEndpointQueriesForEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a list to an existing closed list
         /// </summary>

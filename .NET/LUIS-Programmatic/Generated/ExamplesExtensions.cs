@@ -106,7 +106,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LabeledUtterance>> ReviewLabeledExamplesAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LabeledUtterance>> ReviewLabeledExamplesAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ReviewLabeledExamplesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
