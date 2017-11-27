@@ -14,8 +14,8 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests
         private const HttpRecorderMode mode = HttpRecorderMode.Playback;
 
         protected const AzureRegions region = AzureRegions.Westus;
-        protected const string appId = "f8ef55e6-1543-4a36-95da-497c21feea65";
-        protected const string subscriptionKey = "3eff76bb229942899255402725b72941";
+        protected const string appId = "86226c53-b7a6-416f-876b-226b2b5ab07b";
+        protected const string subscriptionKey = "00000000000000000000000000000000";
 
         private string ClassName => GetType().FullName;
 
