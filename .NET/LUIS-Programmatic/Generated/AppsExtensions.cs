@@ -255,7 +255,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RenameApplicationAsync(this IApps operations, AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject = default(ApplicationUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RenameApplicationAsync(this IApps operations, AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RenameApplicationWithHttpMessagesAsync(azureRegion, appId, applicationUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

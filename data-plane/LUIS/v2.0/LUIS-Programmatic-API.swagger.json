@@ -2065,14 +2065,14 @@
       }
     },
     "/apps/{appId}": {
-      "parameters": [
-        {
-          "$ref": "#/parameters/AppIdInPath"
-        }
-      ],
       "get": {
         "description": "Gets the application info.",
         "operationId": "Apps_GetApplicationInfo",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppIdInPath"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A JSON object containing the application info.",
@@ -2101,8 +2101,12 @@
         "operationId": "Apps_RenameApplication",
         "parameters": [
           {
+            "$ref": "#/parameters/AppIdInPath"
+          },
+          {
             "name": "applicationUpdateObject",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/ApplicationUpdateObject"
             },
@@ -2127,6 +2131,11 @@
       "delete": {
         "description": "Deletes an application.",
         "operationId": "Apps_DeleteApplication",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppIdInPath"
+          }
+        ],
         "responses": {
           "200": {
             "description": ""

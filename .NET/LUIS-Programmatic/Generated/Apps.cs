@@ -1411,11 +1411,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> RenameApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject = default(ApplicationUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> RenameApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (appId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "appId");
+            }
+            if (applicationUpdateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1425,8 +1429,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("applicationUpdateObject", applicationUpdateObject);
                 tracingParameters.Add("appId", appId);
+                tracingParameters.Add("applicationUpdateObject", applicationUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RenameApplication", tracingParameters);
             }
