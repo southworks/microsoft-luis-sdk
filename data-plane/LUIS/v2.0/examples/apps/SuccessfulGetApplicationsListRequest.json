@@ -1,8 +1,9 @@
 {
   "parameters": {
-    "Ocp-Apim-Subscription-Key": "{API key}",
-    "skip": "{skip}",
-    "take": "{take}"
+    "AzureRegion": "westus",
+    "Ocp-Apim-Subscription-Key": "00000000000000000000000000000000",
+    "skip": "0",
+    "take": "100"
   },
   "responses": {
     "200": {

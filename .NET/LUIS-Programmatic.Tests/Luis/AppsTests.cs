@@ -14,5 +14,20 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
                 Assert.Equal(appId, result.Id);
             });
         }
+
+        [Fact]
+        public void GetApplicationsList()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationsListAsync(region);
+
+                Assert.Equal(12, result.Count);
+                foreach (var app in result)
+                {
+                    Assert.True(Guid.TryParse(app.Id, out Guid id));
+                }
+            });
+        }
     }
 }
