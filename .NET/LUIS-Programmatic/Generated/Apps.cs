@@ -58,10 +58,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// include: 'westus', 'westeurope'
         /// </param>
         /// <param name='applicationCreateObject'>
-        /// A JSON object containing Name, Description (optional), Culture,
-        /// Usage Scenario (optional), Domain (optional) and initial version ID
-        /// (optional) of the application.            Default value for the version ID
-        /// is 0.1.Note that the culture cannot be changed after the app is created.
+        /// A JSON object containing Name, Description (optional), Culture, Usage
+        /// Scenario (optional), Domain (optional) and initial version ID (optional) of
+        /// the application.
+        /// Default value for the version ID is 0.1.
+        /// Note that the culture cannot be changed after the app is created.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -75,11 +76,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> AddApplicationWithHttpMessagesAsync(AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject = default(ApplicationCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<string>> AddApplicationWithHttpMessagesAsync(AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (applicationCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationCreateObject");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

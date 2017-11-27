@@ -44,32 +44,32 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Culture")]
+        [JsonProperty(PropertyName = "culture")]
         public string Culture { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Domain")]
+        [JsonProperty(PropertyName = "domain")]
         public string Domain { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "InitialVersionId")]
+        [JsonProperty(PropertyName = "initialVersionId")]
         public string InitialVersionId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "UsageScenario")]
+        [JsonProperty(PropertyName = "usageScenario")]
         public string UsageScenario { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

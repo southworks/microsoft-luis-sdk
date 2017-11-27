@@ -33,15 +33,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// include: 'westus', 'westeurope'
             /// </param>
             /// <param name='applicationCreateObject'>
-            /// A JSON object containing Name, Description (optional), Culture,
-            /// Usage Scenario (optional), Domain (optional) and initial version ID
-            /// (optional) of the application.            Default value for the version ID
-            /// is 0.1.Note that the culture cannot be changed after the app is created.
+            /// A JSON object containing Name, Description (optional), Culture, Usage
+            /// Scenario (optional), Domain (optional) and initial version ID (optional) of
+            /// the application.
+            /// Default value for the version ID is 0.1.
+            /// Note that the culture cannot be changed after the app is created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> AddApplicationAsync(this IApps operations, AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject = default(ApplicationCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> AddApplicationAsync(this IApps operations, AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddApplicationWithHttpMessagesAsync(azureRegion, applicationCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
