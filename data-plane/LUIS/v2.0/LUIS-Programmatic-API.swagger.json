@@ -2790,6 +2790,32 @@
         }
       }
     },
+    "/subscriptions/{subscriptionKey}": {
+      "delete": {
+        "description": "Deletes a user subscription key.",
+        "operationId": "User_DeleteSubscriptionKey",
+        "parameters": [
+          {
+            "name": "subscriptionKey",
+            "in": "path",
+            "description": "The subscription key.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "default": {
+            "description": "Error Response.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/externalKeys": {
       "post": {
         "description": "Adds an external API key to the user.",
@@ -2862,32 +2888,6 @@
         "produces": [
           "application/json"
         ]
-      }
-    },
-    "/subscriptions/{subscriptionKey}": {
-      "delete": {
-        "description": "Deletes a user subscription key.",
-        "operationId": "User_DeleteSubscriptionKey",
-        "parameters": [
-          {
-            "name": "subscriptionKey",
-            "in": "path",
-            "description": "The subscription key.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "default": {
-            "description": "Error Response.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
       }
     },
     "/externalKeys/{externalKeyValue}": {
