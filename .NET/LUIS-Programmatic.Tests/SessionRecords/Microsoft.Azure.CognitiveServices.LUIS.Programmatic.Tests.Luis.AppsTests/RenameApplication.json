@@ -1,0 +1,118 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"LUIS App name updated\",\r\n  \"description\": \"LUIS App description updated\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "89"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Mon, 27 Nov 2017 17:44:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "cb4e4e6f-944a-4dfa-9c73-4afb3925fd2c"
+        ],
+        "Request-Id": [
+          "cb4e4e6f-944a-4dfa-9c73-4afb3925fd2c"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2I=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n  \"name\": \"LUIS App name updated\",\r\n  \"description\": \"LUIS App description updated\",\r\n  \"culture\": \"en-us\",\r\n  \"usageScenario\": \"Iot\",\r\n  \"domain\": \"Travel & Local\",\r\n  \"versionsCount\": 1,\r\n  \"createdDateTime\": \"2017-02-09T14:01:44Z\",\r\n  \"endpoints\": {\r\n    \"PRODUCTION\": {\r\n      \"versionId\": \"0.1\",\r\n      \"isStaging\": false,\r\n      \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n      \"region\": null,\r\n      \"assignedEndpointKey\": \"11be6373fca44ded80fbe2afa8597c18\",\r\n      \"endpointRegion\": \"westus\",\r\n      \"publishedDateTime\": \"2017-05-09T19:10:24Z\"\r\n    }\r\n  },\r\n  \"endpointHitsCount\": 1046,\r\n  \"activeVersion\": \"0.1\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "609"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Mon, 27 Nov 2017 17:44:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "2e1d29fb-357d-4f00-bd1d-b2c37bf26b5d"
+        ],
+        "Request-Id": [
+          "2e1d29fb-357d-4f00-bd1d-b2c37bf26b5d"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -1812,10 +1812,11 @@
           {
             "name": "applicationCreateObject",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/ApplicationCreateObject"
             },
-            "description": "A JSON object containing Name, Description (optional), Culture,            Usage Scenario (optional), Domain (optional) and initial version ID (optional) of the application.            Default value for the version ID is 0.1.Note that the culture cannot be changed after the app is created."
+            "description": "A JSON object containing Name, Description (optional), Culture, Usage Scenario (optional), Domain (optional) and initial version ID (optional) of the application. \r\nDefault value for the version ID is 0.1. \r\nNote that the culture cannot be changed after the app is created."
           }
         ],
         "consumes": [
@@ -1840,7 +1841,12 @@
         },
         "produces": [
           "application/json"
-        ]
+        ],
+        "x-ms-examples": {
+          "Successful Application Creation": {
+            "$ref": "./examples/apps/SuccessfulAddApplicationRequest.json"
+          }
+        }
       },
       "get": {
         "description": "Lists all of the user applications.",
@@ -2064,14 +2070,14 @@
       }
     },
     "/apps/{appId}": {
-      "parameters": [
-        {
-          "$ref": "#/parameters/AppIdInPath"
-        }
-      ],
       "get": {
         "description": "Gets the application info.",
         "operationId": "Apps_GetApplicationInfo",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppIdInPath"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A JSON object containing the application info.",
@@ -2100,8 +2106,12 @@
         "operationId": "Apps_RenameApplication",
         "parameters": [
           {
+            "$ref": "#/parameters/AppIdInPath"
+          },
+          {
             "name": "applicationUpdateObject",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/ApplicationUpdateObject"
             },
@@ -2113,7 +2123,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "No Content. Successfully updated application name and description."
           },
           "default": {
             "description": "Error Response.",
@@ -2121,11 +2131,21 @@
               "$ref": "#/definitions/ErrorResponse"
             }
           }
+        },
+        "x-ms-examples": {
+          "Successful Rename Application request": {
+            "$ref": "./examples/apps/SuccessfulRenameApplicationRequest.json"
+          }
         }
       },
       "delete": {
         "description": "Deletes an application.",
         "operationId": "Apps_DeleteApplication",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppIdInPath"
+          }
+        ],
         "responses": {
           "200": {
             "description": ""
@@ -3863,26 +3883,33 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "Culture": {
+        "culture": {
           "type": "string"
         },
-        "Domain": {
+        "domain": {
           "type": "string"
         },
-        "Description": {
+        "description": {
           "type": "string"
         },
-        "InitialVersionId": {
+        "initialVersionId": {
           "type": "string"
         },
-        "UsageScenario": {
+        "usageScenario": {
           "type": "string"
         },
-        "Name": {
+        "name": {
           "type": "string"
         }
       },
-      "example": "{\t\"name\": \"MyFirstDummyApp\",\t\"description\": \"This is my first dummy application\",\t\"culture\": \"en-us\",\t\"usageScenario\": \"IoT\",\t\"domain\": \"Comics\",\t\"initialVersionId\": \"1.0\"}"
+      "example": {
+        "name": "MyFirstDummyApp",
+        "description": "This is my first dummy application",
+        "culture": "en-us",
+        "usageScenario": "IoT",
+        "domain": "Comics",
+        "initialVersionId": "1.0"
+      }
     },
     "PrebuiltDomainCreateBaseObject": {
       "additionalProperties": false,
@@ -4054,14 +4081,17 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "Name": {
+        "name": {
           "type": "string"
         },
-        "Description": {
+        "description": {
           "type": "string"
         }
       },
-      "example": "{\t\"name\": \"MyFirstRenamedDummyAp\",\t\"description\": \"This is my first modified dummy description\"}"
+      "example": {
+        "name": "MyFirstRenamedDummyAp",
+        "description": "This is my first modified dummy description"
+      }
     },
     "Channel": {
       "additionalProperties": false,

@@ -1,22 +1,14 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
 {
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using System;
     using System.Globalization;
+    using System.Linq;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using Xunit;
 
     public class AppsTests: BaseTest
     {
-        [Fact]
-        public void GetApplicationInfo()
-        {
-            UseClientFor(async client => {
-                var result = await client.Apps.GetApplicationInfoAsync(region, appId);
-
-                Assert.Equal(appId, result.Id);
-            });
-        }
-
         [Fact]
         public void GetApplicationsList()
         {
@@ -29,6 +21,53 @@
                 {
                     Assert.True(Guid.TryParse(app.Id, out Guid id));
                 }
+            });
+        }
+
+        [Fact]
+        public void AddApplication()
+        {
+            UseClientFor(async client =>
+            {
+                var appId = await client.Apps.AddApplicationAsync(region, new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+
+                Assert.True(Guid.TryParse(appId, out Guid appGuid));
+                Assert.Equal(new Guid("9e6703ec-56fe-48ce-8a72-10d592f6056d"), appGuid);
+            });
+        }
+
+        [Fact]
+        public void GetApplicationInfo()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationInfoAsync(region, appId);
+                Assert.Equal(appId, result.Id);
+            });
+        }
+
+        [Fact]
+        public void RenameApplication()
+        {
+            UseClientFor(async client =>
+            {
+                await client.Apps.RenameApplicationAsync(region, appId, new ApplicationUpdateObject
+                {
+                    Name = "LUIS App name updated",
+                    Description = "LUIS App description updated"
+                });
+
+                var app = await client.Apps.GetApplicationInfoAsync(region, appId);
+
+                Assert.Equal("LUIS App name updated", app.Name);
+                Assert.Equal("LUIS App description updated", app.Description);
             });
         }
 

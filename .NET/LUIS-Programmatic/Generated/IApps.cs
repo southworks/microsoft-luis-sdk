@@ -33,9 +33,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='applicationCreateObject'>
         /// A JSON object containing Name, Description (optional), Culture,
         /// Usage Scenario (optional), Domain (optional) and initial version ID
-        /// (optional) of the application.            Default value for the
-        /// version ID is 0.1.Note that the culture cannot be changed after the
-        /// app is created.
+        /// (optional) of the application.
+        /// Default value for the version ID is 0.1.
+        /// Note that the culture cannot be changed after the app is created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,7 +49,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<string>> AddApplicationWithHttpMessagesAsync(AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject = default(ApplicationCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<string>> AddApplicationWithHttpMessagesAsync(AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the user applications.
         /// </summary>
@@ -261,7 +264,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> RenameApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject = default(ApplicationUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> RenameApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an application.
         /// </summary>
