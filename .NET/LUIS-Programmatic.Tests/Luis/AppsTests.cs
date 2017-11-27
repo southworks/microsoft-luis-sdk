@@ -51,5 +51,23 @@
                 Assert.Equal(appId, result.Id);
             });
         }
+
+        [Fact]
+        public void RenameApplication()
+        {
+            UseClientFor(async client =>
+            {
+                await client.Apps.RenameApplicationAsync(region, appId, new ApplicationUpdateObject
+                {
+                    Name = "LUIS App name updated",
+                    Description = "LUIS App description updated"
+                });
+
+                var app = await client.Apps.GetApplicationInfoAsync(region, appId);
+
+                Assert.Equal("LUIS App name updated", app.Name);
+                Assert.Equal("LUIS App description updated", app.Description);
+            });
+        }
     }
 }

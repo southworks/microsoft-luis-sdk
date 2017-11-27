@@ -2118,13 +2118,18 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "No Content. Successfully updated application name and description."
           },
           "default": {
             "description": "Error Response.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          }
+        },
+        "x-ms-examples": {
+          "Successful Rename Application request": {
+            "$ref": "./examples/apps/SuccessfulRenameApplicationRequest.json"
           }
         }
       },
@@ -4071,14 +4076,17 @@
       "additionalProperties": false,
       "type": "object",
       "properties": {
-        "Name": {
+        "name": {
           "type": "string"
         },
-        "Description": {
+        "description": {
           "type": "string"
         }
       },
-      "example": "{\t\"name\": \"MyFirstRenamedDummyAp\",\t\"description\": \"This is my first modified dummy description\"}"
+      "example": {
+        "name": "MyFirstRenamedDummyAp",
+        "description": "This is my first modified dummy description"
+      }
     },
     "Channel": {
       "additionalProperties": false,
