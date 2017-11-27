@@ -1,7 +1,6 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
 {
     using System;
-    using System.Linq;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Xunit;
 
@@ -28,6 +27,19 @@
                 foreach (var app in result)
                 {
                     Assert.True(Guid.TryParse(app.Id, out Guid id));
+                }
+            });
+        }
+
+        [Fact]
+        public void GetApplicationDomains()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationDomainsAsync(region);
+                foreach (var domain in result)
+                {
+                    Assert.False(string.IsNullOrWhiteSpace(domain));
                 }
             });
         }
