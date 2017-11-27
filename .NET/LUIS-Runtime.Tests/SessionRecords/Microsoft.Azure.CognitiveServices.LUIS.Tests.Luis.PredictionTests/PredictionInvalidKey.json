@@ -1,8 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v2.0/apps/7ce0ddf9-b4c4-4784-929e-a05d2bef6560?q=test",
-      "EncodedRequestUri": "L2x1aXMvdjIuMC9hcHBzLzdjZTBkZGY5LWI0YzQtNDc4NC05MjllLWEwNWQyYmVmNjU2MD9xPXRlc3Q=",
+      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b?q=test",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
