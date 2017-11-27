@@ -5284,35 +5284,6 @@
         "$ref": "#/definitions/ModelTrainingInfo"
       }
     },
-    "PrebuiltDomain": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "culture": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "examples": {
-          "type": "string"
-        },
-        "intents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PrebuiltDomainModel"
-          }
-        },
-        "entities": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PrebuiltDomainModel"
-          }
-        }
-      }
-    },
     "UserAccessList": {
       "type": "object",
       "properties": {
@@ -5349,7 +5320,36 @@
         "$ref": "#/definitions/PrebuiltDomain"
       }
     },
-    "PrebuiltDomainModel": {
+    "PrebuiltDomain": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "culture": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "examples": {
+          "type": "string"
+        },
+        "intents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrebuiltDomainItem"
+          }
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrebuiltDomainItem"
+          }
+        }
+      }
+    },
+    "PrebuiltDomainItem": {
       "type": "object",
       "properties": {
         "name": {

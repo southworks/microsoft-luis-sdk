@@ -28,7 +28,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the PrebuiltDomain class.
         /// </summary>
-        public PrebuiltDomain(string name = default(string), string culture = default(string), string description = default(string), string examples = default(string), IList<PrebuiltDomainModel> intents = default(IList<PrebuiltDomainModel>), IList<PrebuiltDomainModel> entities = default(IList<PrebuiltDomainModel>))
+        public PrebuiltDomain(string name = default(string), string culture = default(string), string description = default(string), string examples = default(string), IList<PrebuiltDomainItem> intents = default(IList<PrebuiltDomainItem>), IList<PrebuiltDomainItem> entities = default(IList<PrebuiltDomainItem>))
         {
             Name = name;
             Culture = culture;
@@ -67,12 +67,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "intents")]
-        public IList<PrebuiltDomainModel> Intents { get; set; }
+        public IList<PrebuiltDomainItem> Intents { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "entities")]
-        public IList<PrebuiltDomainModel> Entities { get; set; }
+        public IList<PrebuiltDomainItem> Entities { get; set; }
 
     }
 }
