@@ -9,16 +9,6 @@
     public class AppsTests: BaseTest
     {
         [Fact]
-        public void GetApplicationInfo()
-        {
-            UseClientFor(async client => {
-                var result = await client.Apps.GetApplicationInfoAsync(region, appId);
-
-                Assert.Equal(appId, result.Id);
-            });
-        }
-
-        [Fact]
         public void GetApplicationsList()
         {
             UseClientFor(async client =>
@@ -50,6 +40,16 @@
                 Guid appGuid;
                 Assert.True(Guid.TryParse(appId, out appGuid));
                 Assert.Equal(new Guid("9e6703ec-56fe-48ce-8a72-10d592f6056d"), appGuid);
+            });
+        }
+
+        [Fact]
+        public void GetApplicationInfo()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationInfoAsync(region, appId);
+                Assert.Equal(appId, result.Id);
             });
         }
     }
