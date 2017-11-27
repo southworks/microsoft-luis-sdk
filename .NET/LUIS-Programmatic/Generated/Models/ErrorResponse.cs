@@ -26,9 +26,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public ErrorResponse(ErrorResponseDetails error = default(ErrorResponseDetails))
+        public ErrorResponse(int statusCode = default(int), string message = default(string))
         {
-            Error = error;
+            StatusCode = statusCode;
+            Message = message;
             CustomInit();
         }
 
@@ -39,8 +40,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponseDetails Error { get; set; }
+        [JsonProperty(PropertyName = "statusCode")]
+        public int StatusCode { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
