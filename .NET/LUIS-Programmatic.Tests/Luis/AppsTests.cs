@@ -110,5 +110,21 @@
                 }
             });
         }
+
+        [Fact]
+        public void GetAvailableCustomPrebuiltDomains()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetAvailableCustomPrebuiltDomainsAsync(region);
+                foreach (var prebuiltDomain in result)
+                {
+                    Assert.NotNull(prebuiltDomain);
+                    Assert.False(string.IsNullOrWhiteSpace(prebuiltDomain.Description));
+                    Assert.NotNull(prebuiltDomain.Intents);
+                    Assert.NotNull(prebuiltDomain.Entities);
+                }
+            });
+        }
     }
 }
