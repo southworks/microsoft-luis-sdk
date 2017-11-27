@@ -37,8 +37,7 @@
                     UsageScenario = "IoT"
                 });
 
-                Guid appGuid;
-                Assert.True(Guid.TryParse(appId, out appGuid));
+                Assert.True(Guid.TryParse(appId, out Guid appGuid));
                 Assert.Equal(new Guid("9e6703ec-56fe-48ce-8a72-10d592f6056d"), appGuid);
             });
         }
