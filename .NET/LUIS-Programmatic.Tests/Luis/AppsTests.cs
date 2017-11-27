@@ -58,5 +58,18 @@
                 }
             });
         }
+
+        [Fact]
+        public void GetApplicationUsageScenarios()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationUsageScenariosAsync(region);
+                foreach (var scenario in result)
+                {
+                    Assert.False(string.IsNullOrWhiteSpace(scenario));
+                }
+            });
+        }
     }
 }
