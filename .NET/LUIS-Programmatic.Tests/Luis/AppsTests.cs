@@ -1,7 +1,8 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
 {
-    using System;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using System;
+    using System.Globalization;
     using Xunit;
 
     public class AppsTests: BaseTest
@@ -40,6 +41,20 @@
                 foreach (var domain in result)
                 {
                     Assert.False(string.IsNullOrWhiteSpace(domain));
+                }
+            });
+        }
+
+        [Fact]
+        public void GetApplicationCultures()
+        {
+            UseClientFor(async client =>
+            {
+                var result = await client.Apps.GetApplicationCulturesAsync(region);
+                foreach (var culture in result)
+                {
+                    var cult = new CultureInfo(culture.Code);
+                    Assert.Equal(cult.Name.ToLowerInvariant(), culture.Code);
                 }
             });
         }
