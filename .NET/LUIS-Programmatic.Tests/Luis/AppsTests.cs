@@ -126,5 +126,24 @@
                 }
             });
         }
+
+        [Fact]
+        public void GetAvailableCustomPrebuiltDomainsForCulture()
+        {
+            UseClientFor(async client =>
+            {
+                var resultsUS = await client.Apps.GetAvailableCustomPrebuiltDomainsForCultureAsync(region, "en-US");
+                var resultsCN = await client.Apps.GetAvailableCustomPrebuiltDomainsForCultureAsync(region, "zh-CN");
+
+                foreach (var resultUS in resultsUS)
+                {
+                    Assert.DoesNotContain(resultsCN, r => r.Description == resultUS.Description);
+                }
+                foreach (var resultCN in resultsCN)
+                {
+                    Assert.DoesNotContain(resultsUS, r => r.Description == resultCN.Description);
+                }
+            });
+        }
     }
 }
