@@ -1,14 +1,14 @@
-using System.Net.Http;
-using Microsoft.Azure.CognitiveServices.Language.LUIS;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
-using System;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-
 namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
 {
+    using System;
+    using System.Net.Http;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
     public abstract class BaseTest
     {
         private const HttpRecorderMode mode = HttpRecorderMode.Playback;

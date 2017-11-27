@@ -1,8 +1,10 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-using Xunit;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.Luis
 {
+    using System;
+    using System.Linq;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Xunit;
+
     public class AppsTests: BaseTest
     {
         [Fact]
