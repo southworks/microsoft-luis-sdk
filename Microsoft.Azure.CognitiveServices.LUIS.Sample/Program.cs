@@ -19,7 +19,7 @@
         {
             ReadConfiguration();
 
-            // ShowIntro();
+            ShowIntro();
 
             RecognizeUserInput().Wait();
         }
@@ -86,6 +86,22 @@
             {
                 throw new ArgumentException("Missing \"LUIS.ApplicationId\" in appsettings.json");
             }
+        }
+
+        static void ShowIntro()
+        {
+            Console.WriteLine("Welcome to the LUIS Sample console application!");
+            Console.WriteLine("To try it out enter a phrase and let us show you the different outputs for the recognized intent and entities, or just type 'exit' to leave the application.");
+            Console.WriteLine();
+            Console.WriteLine("Here are some examples you could try:");
+            Console.WriteLine();
+            Console.WriteLine("\" Search for hotel in Seattle\"");
+            Console.WriteLine("\" Look for hotels in Miami\"");
+            Console.WriteLine("\" Look for hotels near LAX airport\"");
+            Console.WriteLine("\" Show me the reviews of the amazing bot resort\"");
+            Console.WriteLine("\" What are the available options?\"");
+            Console.WriteLine("\" Help!\"");
+            Console.WriteLine();
         }
     }
 }
