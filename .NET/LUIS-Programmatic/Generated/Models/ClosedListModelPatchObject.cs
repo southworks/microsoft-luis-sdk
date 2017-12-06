@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for adding a batch of sublists to an existing closedlist.
+    /// </summary>
     public partial class ClosedListModelPatchObject
     {
         /// <summary>
@@ -28,7 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ClosedListModelPatchObject class.
         /// </summary>
-        public ClosedListModelPatchObject(IList<WordListCreateObject> subLists = default(IList<WordListCreateObject>))
+        /// <param name="subLists">Sublists to add.</param>
+        public ClosedListModelPatchObject(IList<WordListObject> subLists = default(IList<WordListObject>))
         {
             SubLists = subLists;
             CustomInit();
@@ -40,9 +44,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets sublists to add.
         /// </summary>
-        [JsonProperty(PropertyName = "SubLists")]
-        public IList<WordListCreateObject> SubLists { get; set; }
+        [JsonProperty(PropertyName = "subLists")]
+        public IList<WordListObject> SubLists { get; set; }
 
     }
 }

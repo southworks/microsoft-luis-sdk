@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for updating the name or description of an application.
+    /// </summary>
     public partial class ApplicationUpdateObject
     {
         /// <summary>
@@ -26,6 +29,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationUpdateObject class.
         /// </summary>
+        /// <param name="name">The application's new name.</param>
+        /// <param name="description">The application's new
+        /// description.</param>
         public ApplicationUpdateObject(string name = default(string), string description = default(string))
         {
             Name = name;
@@ -39,11 +45,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the application's new name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the application's new description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

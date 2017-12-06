@@ -29,8 +29,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the EndpointInfo class.
         /// </summary>
+        /// <param name="versionId">The version ID to publish.</param>
+        /// <param name="isStaging">Indicates if the staging slot should be
+        /// used, instead of the Production one.</param>
+        /// <param name="endpointUrl">The Runtime endpoint URL for this model
+        /// version.</param>
+        /// <param name="region">The target region that the application is
+        /// published to.</param>
+        /// <param name="assignedEndpointKey">The endpoint key.</param>
         /// <param name="endpointRegion">The endpoint's region.</param>
-        public EndpointInfo(object versionId = default(object), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string publishedDateTime = default(string))
+        /// <param name="publishedDateTime">Timestamp when was last
+        /// published.</param>
+        public EndpointInfo(string versionId = default(string), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string publishedDateTime = default(string))
         {
             VersionId = versionId;
             IsStaging = isStaging;
@@ -48,26 +58,33 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the version ID to publish.
         /// </summary>
         [JsonProperty(PropertyName = "versionId")]
-        public object VersionId { get; set; }
+        public string VersionId { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates if the staging slot should be used, instead
+        /// of the Production one.
         /// </summary>
         [JsonProperty(PropertyName = "isStaging")]
         public bool? IsStaging { get; set; }
 
         /// <summary>
+        /// Gets or sets the Runtime endpoint URL for this model version.
         /// </summary>
         [JsonProperty(PropertyName = "endpointUrl")]
         public string EndpointUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the target region that the application is published
+        /// to.
         /// </summary>
         [JsonProperty(PropertyName = "region")]
         public string Region { get; set; }
 
         /// <summary>
+        /// Gets or sets the endpoint key.
         /// </summary>
         [JsonProperty(PropertyName = "assignedEndpointKey")]
         public string AssignedEndpointKey { get; set; }
@@ -79,6 +96,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         public string EndpointRegion { get; set; }
 
         /// <summary>
+        /// Gets or sets timestamp when was last published.
         /// </summary>
         [JsonProperty(PropertyName = "publishedDateTime")]
         public string PublishedDateTime { get; set; }

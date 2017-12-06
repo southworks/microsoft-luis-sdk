@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A model object containing the name of the custom prebuilt entity and
+    /// the name of the domain to which this model belongs.
+    /// </summary>
     public partial class PrebuiltDomainCreateBaseObject
     {
         /// <summary>
@@ -28,6 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the PrebuiltDomainCreateBaseObject
         /// class.
         /// </summary>
+        /// <param name="domainName">The domain name.</param>
         public PrebuiltDomainCreateBaseObject(string domainName = default(string))
         {
             DomainName = domainName;
@@ -40,8 +45,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "DomainName")]
+        [JsonProperty(PropertyName = "domainName")]
         public string DomainName { get; set; }
 
     }

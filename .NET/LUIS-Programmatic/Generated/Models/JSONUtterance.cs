@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Exported Model - Utterance that was used to train the model.
+    /// </summary>
     public partial class JSONUtterance
     {
         /// <summary>
@@ -28,6 +31,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the JSONUtterance class.
         /// </summary>
+        /// <param name="text">The utterance.</param>
+        /// <param name="intent">The matched intent.</param>
+        /// <param name="entities">The matched entities.</param>
         public JSONUtterance(string text = default(string), string intent = default(string), IList<JSONEntity> entities = default(IList<JSONEntity>))
         {
             Text = text;
@@ -42,16 +48,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets the matched intent.
         /// </summary>
         [JsonProperty(PropertyName = "intent")]
         public string Intent { get; set; }
 
         /// <summary>
+        /// Gets or sets the matched entities.
         /// </summary>
         [JsonProperty(PropertyName = "entities")]
         public IList<JSONEntity> Entities { get; set; }

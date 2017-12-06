@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Available culture for using in a new application.
+    /// </summary>
     public partial class AvailableCulture
     {
         /// <summary>
@@ -26,6 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the AvailableCulture class.
         /// </summary>
+        /// <param name="name">The language name.</param>
+        /// <param name="code">The ISO value for the language.</param>
         public AvailableCulture(string name = default(string), string code = default(string))
         {
             Name = name;
@@ -39,11 +44,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the language name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the ISO value for the language.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

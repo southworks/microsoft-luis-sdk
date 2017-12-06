@@ -53,17 +53,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds an intent classifier to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
-        /// <param name='modelCreateObject'>
+        /// <param name='intentCreateObject'>
         /// A model object containing the name of the new intent classifier.
         /// </param>
         /// <param name='customHeaders'>
@@ -87,15 +83,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateIntentClassifierWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, ModelCreateObject modelCreateObject = default(ModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddIntentWithHttpMessagesAsync(System.Guid appId, string versionId, ModelCreateObject intentCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (intentCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "intentCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -104,18 +100,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("modelCreateObject", modelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("intentCreateObject", intentCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateIntentClassifier", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddIntent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -139,9 +134,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 
             // Serialize Request
             string _requestContent = null;
-            if(modelCreateObject != null)
+            if(intentCreateObject != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(modelCreateObject, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(intentCreateObject, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -188,7 +183,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -197,7 +192,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,15 +214,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the intent models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -256,15 +247,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<IntentClassifier>>> GetApplicationVersionIntentInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<IntentClassifier>>> ListIntentsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -273,19 +272,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionIntentInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListIntents", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -403,15 +401,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds an entity extractor to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='modelCreateObject'>
         /// A model object containing the name for the new entity extractor.
@@ -437,15 +431,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateEntityExtractorWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, ModelCreateObject modelCreateObject = default(ModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddEntityWithHttpMessagesAsync(System.Guid appId, string versionId, ModelCreateObject modelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (modelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "modelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -454,18 +448,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("modelCreateObject", modelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("modelCreateObject", modelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateEntityExtractor", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -545,7 +538,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -554,7 +547,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -576,15 +569,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the entity models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -613,15 +602,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<EntityExtractor>>> GetApplicationVersionEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<EntityExtractor>>> ListEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -630,19 +627,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionEntityInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListEntities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -760,19 +756,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds a hierarchical entity extractor to the application version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hierarchicalModelCreateObject'>
-        /// A model object containing the name and children of the new entity
-        /// extractor.
+        /// A model containing the name and children of the new entity extractor.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -795,15 +786,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateHierarchicalEntityExtractorWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject = default(HierarchicalModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (hierarchicalModelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -812,18 +803,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("hierarchicalModelCreateObject", hierarchicalModelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("hierarchicalModelCreateObject", hierarchicalModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateHierarchicalEntityExtractor", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddHierarchicalEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -903,7 +893,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -912,7 +902,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -934,15 +924,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the hierarchical entity models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -971,15 +957,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> GetApplicationVersionHierarchicalEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> ListHierarchicalEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -988,19 +982,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionHierarchicalEntityInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListHierarchicalEntities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -1118,19 +1111,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds a composite entity extractor to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hierarchicalModelCreateObject'>
-        /// A model object containing the name and children of the new entity
-        /// extractor.
+        /// A model containing the name and children of the new entity extractor.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1153,15 +1141,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateCompositeEntityExtractorWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject = default(HierarchicalModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (hierarchicalModelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1170,18 +1158,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("hierarchicalModelCreateObject", hierarchicalModelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("hierarchicalModelCreateObject", hierarchicalModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateCompositeEntityExtractor", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddCompositeEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1261,7 +1248,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -1270,7 +1257,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1292,15 +1279,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the composite entity models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -1329,15 +1312,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> GetApplicationVersionCompositeEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> ListCompositeEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1346,19 +1337,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionCompositeEntityInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListCompositeEntities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -1474,191 +1464,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Adds a closed list model to the application.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='closedListModelCreateObject'>
-        /// A model object containing the name and words for the new closed list entity
-        /// extractor.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<string>> CreateClosedListEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject = default(ClosedListModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
-            if (versionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("closedListModelCreateObject", closedListModelCreateObject);
-                tracingParameters.Add("appId", appId);
-                tracingParameters.Add("versionId", versionId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateClosedListEntityModel", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
-            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(closedListModelCreateObject != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(closedListModelCreateObject, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 201)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<string>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 201)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// Gets information about the closedlist models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -1687,15 +1499,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> GetApplicationVersionClosedListInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> ListClosedListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1704,19 +1524,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionClosedListInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListClosedLists", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -1832,17 +1651,182 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Adds a list of prebuilt entity extractors to the application.
+        /// Adds a closed list model to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
+        /// </param>
+        /// <param name='closedListModelCreateObject'>
+        /// A model containing the name and words for the new closed list entity
+        /// extractor.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<System.Guid>> AddClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (versionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (closedListModelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "closedListModelCreateObject");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("appId", appId);
+                tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("closedListModelCreateObject", closedListModelCreateObject);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "AddClosedList", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists";
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(closedListModelCreateObject != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(closedListModelCreateObject, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 201)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<System.Guid>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Adds a list of prebuilt entity extractors to the application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
         /// </param>
         /// <param name='prebuiltExtractorNames'>
         /// An array of prebuilt entity extractor names.
@@ -1868,15 +1852,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> AddPrebuiltEntityExtractorsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, IList<string> prebuiltExtractorNames = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> AddPrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, IList<string> prebuiltExtractorNames, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (prebuiltExtractorNames == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltExtractorNames");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1885,18 +1869,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("prebuiltExtractorNames", prebuiltExtractorNames);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("prebuiltExtractorNames", prebuiltExtractorNames);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddPrebuiltEntityExtractors", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddPrebuilt", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2007,15 +1990,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the prebuilt entity models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -2044,15 +2023,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> GetApplicationVersionPrebuiltInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> ListPrebuiltsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2061,19 +2048,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("take", take);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionPrebuiltInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListPrebuilts", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -2191,15 +2177,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets all the available prebuilt entity extractors for the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2222,12 +2204,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<AvailablePrebuiltEntityModel>>> GetAvailablePrebuiltEntityExtractorsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<AvailablePrebuiltEntityModel>>> ListPrebuiltEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -2239,17 +2217,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetAvailablePrebuiltEntityExtractors", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListPrebuiltEntities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/listprebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2354,15 +2331,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the application version models.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -2391,15 +2364,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelInfo>>> GetApplicationVersionModelInfosWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ModelInfoResponse>>> ListModelsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2408,19 +2389,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetApplicationVersionModelInfos", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListModels", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/models";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
             if (skip != null)
@@ -2507,7 +2487,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ModelInfo>>();
+            var _result = new HttpOperationResponse<IList<ModelInfoResponse>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -2516,7 +2496,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ModelInfo>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ModelInfoResponse>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2538,18 +2518,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the intent model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='intentId'>
-        /// Format - guid. The intent classifier ID.
+        /// The intent classifier ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2572,19 +2548,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IntentClassifier>> GetIntentInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IntentClassifier>> GetIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (intentId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "intentId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2593,20 +2561,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("intentId", intentId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetIntentInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetIntent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(intentId));
+            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2710,18 +2677,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Updates the name of an intent classifier.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='intentId'>
-        /// Format - guid. The intent classifier ID.
+        /// The intent classifier ID.
         /// </param>
         /// <param name='modelUpdateObject'>
         /// A model object containing the new intent classifier name.
@@ -2732,7 +2695,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2744,19 +2707,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> RenameIntentModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, ModelUpdateObject modelUpdateObject = default(ModelUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (intentId == null)
+            if (modelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "intentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "modelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2765,21 +2724,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("modelUpdateObject", modelUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("intentId", intentId);
+                tracingParameters.Add("modelUpdateObject", modelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RenameIntentModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateIntent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(intentId));
+            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2830,12 +2788,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2864,18 +2829,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes an intent classifier from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='intentId'>
-        /// Format - guid. The intent classifier ID.
+        /// The intent classifier ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2883,7 +2844,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2895,19 +2856,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteIntentModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (intentId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "intentId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2916,20 +2869,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("intentId", intentId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteIntentModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteIntent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(intentId));
+            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2974,12 +2926,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3008,18 +2967,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='entityId'>
-        /// Format - guid. The entity extractor ID.
+        /// The entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3042,19 +2997,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EntityExtractor>> GetEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EntityExtractor>> GetEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (entityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3063,20 +3010,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("entityId", entityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetEntityInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(entityId));
+            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3180,18 +3126,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Updates the name of an entity extractor.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='entityId'>
-        /// Format - guid. The entity extractor ID.
+        /// The entity extractor ID.
         /// </param>
         /// <param name='modelUpdateObject'>
         /// A model object containing the new entity extractor name.
@@ -3202,7 +3144,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3214,19 +3156,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> RenameEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, ModelUpdateObject modelUpdateObject = default(ModelUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (entityId == null)
+            if (modelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "modelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3235,21 +3173,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("modelUpdateObject", modelUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("entityId", entityId);
+                tracingParameters.Add("modelUpdateObject", modelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RenameEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(entityId));
+            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3300,12 +3237,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3334,18 +3278,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes an entity extractor from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='entityId'>
-        /// Format - guid. The entity extractor ID.
+        /// The entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3353,7 +3293,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3365,19 +3305,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (entityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3386,20 +3318,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("entityId", entityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(entityId));
+            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3444,12 +3375,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3478,18 +3416,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the hierarchical entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3512,19 +3446,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<HierarchicalEntityExtractor>> GetHierarchicalEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<HierarchicalEntityExtractor>> GetHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (hEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3533,20 +3459,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3650,18 +3575,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Updates the name and children of a hierarchical entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='hierarchicalModelUpdateObject'>
         /// Model containing names of the children of the hierarchical entity.
@@ -3672,7 +3593,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3684,19 +3605,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateHierarchicalEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject = default(HierarchicalModelUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (hEntityId == null)
+            if (hierarchicalModelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalModelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3705,21 +3622,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("hierarchicalModelUpdateObject", hierarchicalModelUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
+                tracingParameters.Add("hierarchicalModelUpdateObject", hierarchicalModelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3770,12 +3686,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3804,18 +3727,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a hierarchical entity extractor from the application version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3823,7 +3742,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3835,19 +3754,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteHierarchicalEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (hEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3856,20 +3767,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3914,12 +3824,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3948,18 +3865,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the composite entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='cEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The composite entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3982,19 +3895,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<CompositeEntityExtractor>> GetCompositeEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<CompositeEntityExtractor>> GetCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (cEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4003,20 +3908,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cEntityId", cEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCompositeEntityInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCompositeEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(cEntityId));
+            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4120,18 +4024,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Updates the composite entity extractor.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='cEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The composite entity extractor ID.
         /// </param>
         /// <param name='hierarchicalModelUpdateObject'>
         /// A model object containing the new entity extractor name and children.
@@ -4142,7 +4042,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4154,19 +4054,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateCompositeEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject = default(HierarchicalModelUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (cEntityId == null)
+            if (hierarchicalModelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalModelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4175,21 +4071,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("hierarchicalModelUpdateObject", hierarchicalModelUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cEntityId", cEntityId);
+                tracingParameters.Add("hierarchicalModelUpdateObject", hierarchicalModelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateCompositeEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateCompositeEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(cEntityId));
+            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4240,12 +4135,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4274,18 +4176,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a composite entity extractor from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='cEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The composite entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4293,7 +4191,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4305,19 +4203,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteCompositeEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (cEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4326,20 +4216,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cEntityId", cEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(cEntityId));
+            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4384,12 +4273,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4418,18 +4314,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information of a closed list model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list model ID.
+        /// The closed list model ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4452,19 +4344,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ClosedListEntityExtractor>> GetClosedListEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ClosedListEntityExtractor>> GetClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (clEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4473,20 +4357,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetClosedListEntityInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetClosedList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4590,21 +4473,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Updates the closed list model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list model ID.
+        /// The closed list model ID.
         /// </param>
         /// <param name='closedListModelUpdateObject'>
-        /// A json object containing the new entity name and words list.
+        /// The new entity name and words list.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4612,7 +4491,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4624,19 +4503,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateClosedListEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject = default(ClosedListModelUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (clEntityId == null)
+            if (closedListModelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "closedListModelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4645,21 +4520,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("closedListModelUpdateObject", closedListModelUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
+                tracingParameters.Add("closedListModelUpdateObject", closedListModelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateClosedListEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateClosedList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4710,12 +4584,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4744,21 +4625,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds a batch of sublists to an existing closedlist.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list model ID.
+        /// The closed list model ID.
         /// </param>
         /// <param name='closedListModelPatchObject'>
-        /// A json object containing words list batch.
+        /// A words list batch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4766,7 +4643,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4778,19 +4655,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> PatchClosedListEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, ClosedListModelPatchObject closedListModelPatchObject = default(ClosedListModelPatchObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> PatchClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (clEntityId == null)
+            if (closedListModelPatchObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "closedListModelPatchObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4799,21 +4672,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("closedListModelPatchObject", closedListModelPatchObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
+                tracingParameters.Add("closedListModelPatchObject", closedListModelPatchObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PatchClosedListEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PatchClosedList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4864,12 +4736,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4898,18 +4777,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a closed list model from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list model ID.
+        /// The closed list model ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4917,7 +4792,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4929,19 +4804,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteClosedListEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (clEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4950,20 +4817,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteClosedListEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteClosedList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -5008,12 +4874,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5042,18 +4915,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the prebuilt entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='prebuiltId'>
-        /// Format - guid. The prebuilt entity extractor ID.
+        /// The prebuilt entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5076,19 +4945,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PrebuiltEntityExtractor>> GetPrebuiltInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PrebuiltEntityExtractor>> GetPrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (prebuiltId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5097,20 +4958,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("prebuiltId", prebuiltId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetPrebuiltInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetPrebuilt", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(prebuiltId));
+            _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -5214,18 +5074,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a prebuilt entity extractor from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='prebuiltId'>
-        /// Format - guid. The prebuilt entity extractor ID.
+        /// The prebuilt entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5233,7 +5089,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -5245,19 +5101,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeletePrebuiltModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeletePrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (prebuiltId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5266,20 +5114,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("prebuiltId", prebuiltId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeletePrebuiltModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeletePrebuilt", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(prebuiltId));
+            _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -5324,12 +5171,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5358,18 +5212,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a sublist of a specific closed list model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list entity extractor ID.
+        /// The closed list entity extractor ID.
         /// </param>
         /// <param name='subListId'>
         /// The sublist ID.
@@ -5380,7 +5230,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -5392,19 +5242,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteSubListWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, int subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (clEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5413,7 +5255,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
@@ -5424,10 +5265,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subListId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(subListId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -5473,12 +5314,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5505,20 +5353,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Updates one of the closed list's sublists
+        /// Updates one of the closed list's sublists.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// Format - guid. The closed list entity extractor ID.
+        /// The closed list entity extractor ID.
         /// </param>
         /// <param name='subListId'>
         /// The sublist ID.
@@ -5533,7 +5377,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -5545,19 +5389,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateSubListWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject = default(WordListBaseUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (clEntityId == null)
+            if (wordListBaseUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "wordListBaseUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5566,22 +5406,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("wordListBaseUpdateObject", wordListBaseUpdateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
                 tracingParameters.Add("subListId", subListId);
+                tracingParameters.Add("wordListBaseUpdateObject", wordListBaseUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSubList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subListId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(subListId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -5633,12 +5472,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5667,349 +5513,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Suggests examples that would improve the accuracy of the intent model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='intentId'>
-        /// Format - guid. The intent classifier ID.
+        /// The intent classifier ID.
         /// </param>
         /// <param name='take'>
         /// The number of entries to return. Maximum page size is 500. Default is 100.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse> SuggestEndpointQueriesForIntentsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
-            if (versionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (intentId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "intentId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("appId", appId);
-                tracingParameters.Add("versionId", versionId);
-                tracingParameters.Add("intentId", intentId);
-                tracingParameters.Add("take", take);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SuggestEndpointQueriesForIntents", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}/suggest";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
-            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(intentId));
-            List<string> _queryParameters = new List<string>();
-            if (take != null)
-            {
-                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Suggests examples that would improve the accuracy of the entity model.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='entityId'>
-        /// Format - guid. The target entity extractor model to enhance.
-        /// </param>
-        /// <param name='take'>
-        /// The number of entries to return. Maximum page size is 500. Default is 100.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse> SuggestEndpointQueriesForEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
-            if (versionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (entityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("appId", appId);
-                tracingParameters.Add("versionId", versionId);
-                tracingParameters.Add("entityId", entityId);
-                tracingParameters.Add("take", take);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SuggestEndpointQueriesForEntities", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/suggest";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
-            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(entityId));
-            List<string> _queryParameters = new List<string>();
-            if (take != null)
-            {
-                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Adds a list to an existing closed list
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='clEntityId'>
-        /// Format - guid. The closed list entity extractor ID.
-        /// </param>
-        /// <param name='wordListCreateObject'>
-        /// A json object containing words list.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6032,19 +5546,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> AddSubListWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string clEntityId, WordListCreateObject wordListCreateObject = default(WordListCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<IntentsSuggestionExample>>> GetIntentSuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (clEntityId == null)
+            if (take > 500)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clEntityId");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -6053,7 +5567,363 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
+                tracingParameters.Add("appId", appId);
+                tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("intentId", intentId);
+                tracingParameters.Add("take", take);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetIntentSuggestions", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}/suggest";
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<IList<IntentsSuggestionExample>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<IntentsSuggestionExample>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get suggestion examples that would improve the accuracy of the entity
+        /// model.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='entityId'>
+        /// The target entity extractor model to enhance.
+        /// </param>
+        /// <param name='take'>
+        /// The number of entries to return. Maximum page size is 500. Default is 100.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<IList<EntitiesSuggestionExample>>> GetEntitySuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (versionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (take > 500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("appId", appId);
+                tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("entityId", entityId);
+                tracingParameters.Add("take", take);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetEntitySuggestions", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/suggest";
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<IList<EntitiesSuggestionExample>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<EntitiesSuggestionExample>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Adds a list to an existing closed list.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='clEntityId'>
+        /// The closed list entity extractor ID.
+        /// </param>
+        /// <param name='wordListCreateObject'>
+        /// Words list.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<int?>> AddSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (versionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (wordListCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "wordListCreateObject");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("clEntityId", clEntityId);
@@ -6064,10 +5934,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(clEntityId));
+            _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -6146,7 +6016,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ApplicationInfoResponse>>();
+            var _result = new HttpOperationResponse<int?>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -6155,7 +6025,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ApplicationInfoResponse>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<int?>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6178,18 +6048,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// Adds a customizable prebuilt domain along with all of its models to this
         /// application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
-        /// <param name='prebuiltDomainCreateBaseObject'>
-        /// A prebuilt domain create object containing the name of the domain
+        /// <param name='prebuiltDomainObject'>
+        /// A prebuilt domain create object containing the name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6212,15 +6078,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<string>>> AddCustomPrebuiltDomainToApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainCreateBaseObject = default(PrebuiltDomainCreateBaseObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<System.Guid?>>> AddCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (prebuiltDomainObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltDomainObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -6229,18 +6095,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
-                tracingParameters.Add("prebuiltDomainCreateBaseObject", prebuiltDomainCreateBaseObject);
+                tracingParameters.Add("prebuiltDomainObject", prebuiltDomainObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltDomainToApplication", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltDomain", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltdomains";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -6264,9 +6129,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 
             // Serialize Request
             string _requestContent = null;
-            if(prebuiltDomainCreateBaseObject != null)
+            if(prebuiltDomainObject != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltDomainCreateBaseObject, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltDomainObject, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -6320,7 +6185,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<string>>();
+            var _result = new HttpOperationResponse<IList<System.Guid?>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -6329,7 +6194,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<string>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<System.Guid?>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6349,17 +6214,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Adds a custom prebuilt intent model to the application
+        /// Adds a custom prebuilt intent model to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='prebuiltDomainModelCreateObject'>
         /// A model object containing the name of the custom prebuilt intent and the
@@ -6386,15 +6247,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> AddCustomPrebuiltIntentModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject = default(PrebuiltDomainModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltIntentWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (prebuiltDomainModelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltDomainModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -6403,18 +6264,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("prebuiltDomainModelCreateObject", prebuiltDomainModelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("prebuiltDomainModelCreateObject", prebuiltDomainModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltIntentModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltIntent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltintents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -6494,7 +6354,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -6503,7 +6363,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6523,17 +6383,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Gets custom prebuilt intents information of this application
+        /// Gets custom prebuilt intents information of this application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6556,12 +6412,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelInfo>>> GetCustomPrebuiltDomainIntentsInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<IntentClassifier>>> ListCustomPrebuiltIntentsWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -6573,17 +6425,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCustomPrebuiltDomainIntentsInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltIntents", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltintents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -6657,7 +6508,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ModelInfo>>();
+            var _result = new HttpOperationResponse<IList<IntentClassifier>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -6666,7 +6517,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ModelInfo>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<IntentClassifier>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6686,17 +6537,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Adds a custom prebuilt entity model to the application
+        /// Adds a custom prebuilt entity model to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='prebuiltDomainModelCreateObject'>
         /// A model object containing the name of the custom prebuilt entity and the
@@ -6723,15 +6570,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> AddCustomPrebuiltEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject = default(PrebuiltDomainModelCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltEntityWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (prebuiltDomainModelCreateObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltDomainModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -6740,18 +6587,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("prebuiltDomainModelCreateObject", prebuiltDomainModelCreateObject);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("prebuiltDomainModelCreateObject", prebuiltDomainModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltEntityModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltEntity", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -6831,7 +6677,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -6840,7 +6686,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6860,17 +6706,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Gets all custom prebuilt entities information of this application
+        /// Gets all custom prebuilt entities information of this application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6893,12 +6735,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelInfo>>> GetCustomPrebuiltDomainEntitiesInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<EntityExtractor>>> ListCustomPrebuiltEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -6910,17 +6748,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCustomPrebuiltDomainEntitiesInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltEntities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -6994,7 +6831,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ModelInfo>>();
+            var _result = new HttpOperationResponse<IList<EntityExtractor>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -7003,7 +6840,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ModelInfo>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<EntityExtractor>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -7023,17 +6860,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         }
 
         /// <summary>
-        /// Gets all custom prebuilt models information of this application
+        /// Gets all custom prebuilt models information of this application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -7056,12 +6889,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelInfo>>> GetCustomPrebuiltDomainModelsInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<CustomPrebuiltModel>>> ListCustomPrebuiltModelsWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -7073,17 +6902,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCustomPrebuiltDomainModelsInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltModels", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltmodels";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -7157,7 +6985,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ModelInfo>>();
+            var _result = new HttpOperationResponse<IList<CustomPrebuiltModel>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -7166,7 +6994,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<ModelInfo>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<CustomPrebuiltModel>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -7188,18 +7016,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a prebuilt domain's models from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='domainName'>
-        /// Domain name
+        /// Domain name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -7207,7 +7031,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -7219,12 +7043,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteCustomPrebuiltDomainModelsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -7240,18 +7060,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("domainName", domainName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomPrebuiltDomainModels", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomPrebuiltDomain", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltdomains/{domainName}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
             // Create HTTP transport objects
@@ -7298,12 +7117,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -7332,21 +7158,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Gets information about the hierarchical entity child model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='hChildId'>
-        /// Format - guid. The hierarchical entity extractor child ID.
+        /// The hierarchical entity extractor child ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -7369,23 +7191,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<HierarchicalChildEntity>> GetHierarchicalEntityChildInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<HierarchicalChildEntity>> GetHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (hEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
-            }
-            if (hChildId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hChildId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -7394,22 +7204,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
                 tracingParameters.Add("hChildId", hChildId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityChildInfo", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
-            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(hChildId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hChildId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -7513,23 +7322,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Renames a single child in an existing hierarchical entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='hChildId'>
-        /// Format - guid. The hierarchical entity extractor child ID.
+        /// The hierarchical entity extractor child ID.
         /// </param>
-        /// <param name='body'>
+        /// <param name='hierarchicalChildModelUpdateObject'>
         /// Model object containing new name of the hierarchical entity child.
         /// </param>
         /// <param name='customHeaders'>
@@ -7538,7 +7343,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -7550,23 +7355,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateHierarchicalEntityChildModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, object body = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (hEntityId == null)
+            if (hierarchicalChildModelUpdateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
-            }
-            if (hChildId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hChildId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalChildModelUpdateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -7575,23 +7372,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("body", body);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
                 tracingParameters.Add("hChildId", hChildId);
+                tracingParameters.Add("hierarchicalChildModelUpdateObject", hierarchicalChildModelUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntityChildModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
-            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(hChildId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hChildId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -7614,9 +7410,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(hierarchicalChildModelUpdateObject != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(hierarchicalChildModelUpdateObject, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7642,12 +7438,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -7676,21 +7479,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a hierarchical entity extractor child from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
         /// <param name='hChildId'>
-        /// Format - guid. The hierarchical entity extractor child ID.
+        /// The hierarchical entity extractor child ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -7698,7 +7497,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -7710,23 +7509,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteHierarchicalEntityChildModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (hEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
-            }
-            if (hChildId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hChildId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -7735,22 +7522,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
                 tracingParameters.Add("hChildId", hChildId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntityChildModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
-            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(hChildId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{hChildId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hChildId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -7795,12 +7581,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -7829,20 +7622,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Creates a single child in an existing hierarchical entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='hEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The hierarchical entity extractor ID.
         /// </param>
-        /// <param name='body'>
+        /// <param name='hierarchicalChildModelCreateObject'>
         /// A model object containing the name of the new hierarchical child model.
         /// </param>
         /// <param name='customHeaders'>
@@ -7866,19 +7655,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateHierarchicalEntityChildModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string hEntityId, object body = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (hEntityId == null)
+            if (hierarchicalChildModelCreateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "hierarchicalChildModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -7887,21 +7672,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("hEntityId", hEntityId);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("hierarchicalChildModelCreateObject", hierarchicalChildModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateHierarchicalEntityChildModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(hEntityId));
+            _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -7924,9 +7708,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(hierarchicalChildModelCreateObject != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(hierarchicalChildModelCreateObject, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7980,7 +7764,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -7989,7 +7773,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -8011,20 +7795,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Creates a single child in an existing composite entity model.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='cEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The composite entity extractor ID.
         /// </param>
-        /// <param name='body'>
+        /// <param name='compositeChildModelCreateObject'>
         /// A model object containing the name of the new composite child model.
         /// </param>
         /// <param name='customHeaders'>
@@ -8048,19 +7828,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CreateCompositeEntityChildModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string cEntityId, object body = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> AddCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, CompositeChildModelCreateObject compositeChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (cEntityId == null)
+            if (compositeChildModelCreateObject == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cEntityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "compositeChildModelCreateObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -8069,21 +7845,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cEntityId", cEntityId);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("compositeChildModelCreateObject", compositeChildModelCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateCompositeEntityChildModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddCompositeEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(cEntityId));
+            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -8106,9 +7881,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(compositeChildModelCreateObject != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(compositeChildModelCreateObject, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -8162,7 +7937,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<string>();
+            var _result = new HttpOperationResponse<System.Guid>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -8171,7 +7946,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<System.Guid>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -8193,21 +7968,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Deletes a composite entity extractor child from the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='cEntityId'>
-        /// Format - guid. The hierarchical entity extractor ID.
+        /// The composite entity extractor ID.
         /// </param>
         /// <param name='cChildId'>
-        /// Format - guid. The hierarchical entity extractor child ID.
+        /// The hierarchical entity extractor child ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -8215,7 +7986,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -8227,23 +7998,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteCompositeEntityChildModelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string cEntityId, string cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
-            }
-            if (cEntityId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cEntityId");
-            }
-            if (cChildId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "cChildId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -8252,22 +8011,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cEntityId", cEntityId);
                 tracingParameters.Add("cChildId", cChildId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntityChildModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntityChild", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children/{cChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
-            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(cEntityId));
-            _url = _url.Replace("{cChildId}", System.Uri.EscapeDataString(cChildId));
+            _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{cChildId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cChildId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -8312,12 +8070,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);

@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A model object containing the name of the custom prebuilt intent or
+    /// entity and the name of the domain to which this model belongs.
+    /// </summary>
     public partial class PrebuiltDomainModelCreateObject
     {
         /// <summary>
@@ -28,6 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the PrebuiltDomainModelCreateObject
         /// class.
         /// </summary>
+        /// <param name="domainName">The domain name.</param>
+        /// <param name="modelName">The intent name or entity name.</param>
         public PrebuiltDomainModelCreateObject(string domainName = default(string), string modelName = default(string))
         {
             DomainName = domainName;
@@ -41,13 +47,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "DomainName")]
+        [JsonProperty(PropertyName = "domainName")]
         public string DomainName { get; set; }
 
         /// <summary>
+        /// Gets or sets the intent name or entity name.
         /// </summary>
-        [JsonProperty(PropertyName = "ModelName")]
+        [JsonProperty(PropertyName = "modelName")]
         public string ModelName { get; set; }
 
     }

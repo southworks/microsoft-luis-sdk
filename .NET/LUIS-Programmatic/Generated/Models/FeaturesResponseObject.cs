@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Model Features, including Patterns and Phraselists.
+    /// </summary>
     public partial class FeaturesResponseObject
     {
         /// <summary>

@@ -27,8 +27,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the ProductionOrStagingEndpointInfo
         /// class.
         /// </summary>
+        /// <param name="versionId">The version ID to publish.</param>
+        /// <param name="isStaging">Indicates if the staging slot should be
+        /// used, instead of the Production one.</param>
+        /// <param name="endpointUrl">The Runtime endpoint URL for this model
+        /// version.</param>
+        /// <param name="region">The target region that the application is
+        /// published to.</param>
+        /// <param name="assignedEndpointKey">The endpoint key.</param>
         /// <param name="endpointRegion">The endpoint's region.</param>
-        public ProductionOrStagingEndpointInfo(object versionId = default(object), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string publishedDateTime = default(string))
+        /// <param name="publishedDateTime">Timestamp when was last
+        /// published.</param>
+        public ProductionOrStagingEndpointInfo(string versionId = default(string), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string publishedDateTime = default(string))
             : base(versionId, isStaging, endpointUrl, region, assignedEndpointKey, endpointRegion, publishedDateTime)
         {
             CustomInit();

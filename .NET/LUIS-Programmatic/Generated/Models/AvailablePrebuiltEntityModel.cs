@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Available Prebuilt entity model for using in an application.
+    /// </summary>
     public partial class AvailablePrebuiltEntityModel
     {
         /// <summary>
@@ -28,6 +31,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the AvailablePrebuiltEntityModel
         /// class.
         /// </summary>
+        /// <param name="name">The entity name.</param>
+        /// <param name="description">The entity description and usage
+        /// information.</param>
+        /// <param name="examples">Usage examples.</param>
         public AvailablePrebuiltEntityModel(string name = default(string), string description = default(string), string examples = default(string))
         {
             Name = name;
@@ -42,16 +49,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the entity name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the entity description and usage information.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets usage examples.
         /// </summary>
         [JsonProperty(PropertyName = "examples")]
         public string Examples { get; set; }

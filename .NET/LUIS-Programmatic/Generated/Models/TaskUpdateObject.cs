@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for cloning an application's version.
+    /// </summary>
     public partial class TaskUpdateObject
     {
         /// <summary>
@@ -26,6 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the TaskUpdateObject class.
         /// </summary>
+        /// <param name="version">The new version for the cloned model.</param>
         public TaskUpdateObject(string version = default(string))
         {
             Version = version;
@@ -38,8 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the new version for the cloned model.
         /// </summary>
-        [JsonProperty(PropertyName = "Version")]
+        [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
     }

@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// List of user permissions.
+    /// </summary>
     public partial class UserAccessList
     {
         /// <summary>

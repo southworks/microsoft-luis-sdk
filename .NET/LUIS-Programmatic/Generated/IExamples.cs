@@ -25,18 +25,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Adds a labeled example to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='exampleLabelObject'>
-        /// A JSON object containing the example label.
+        /// An example label with the expected intent and entities.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,22 +49,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LabelExampleResponse>> AddLabelWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, ExampleLabelObject exampleLabelObject = default(ExampleLabelObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a batch of labeled examples to the specified application.
+        /// Adds a batch of labeled examples to the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='exampleLabelObjectArray'>
-        /// A JSON array containing example labels.
+        /// Array of examples.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,19 +77,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchAddLabelsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray = default(IList<ExampleLabelObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns examples to be reviewed.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -121,19 +109,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<LabeledUtterance>>> ReviewLabeledExamplesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the label with the specified ID.
+        /// Deletes the labeled example with the specified ID.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='exampleId'>
         /// The example ID.
@@ -144,12 +128,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteExampleLabelsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int exampleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(System.Guid appId, string versionId, int exampleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for creating a Pattern feature.
+    /// </summary>
     public partial class PatternCreateObject
     {
         /// <summary>
@@ -26,6 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the PatternCreateObject class.
         /// </summary>
+        /// <param name="pattern">The Regular Expression to match.</param>
+        /// <param name="name">Name of the feature.</param>
         public PatternCreateObject(string pattern = default(string), string name = default(string))
         {
             Pattern = pattern;
@@ -39,13 +44,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the Regular Expression to match.
         /// </summary>
-        [JsonProperty(PropertyName = "Pattern")]
+        [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }
 
         /// <summary>
+        /// Gets or sets name of the feature.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

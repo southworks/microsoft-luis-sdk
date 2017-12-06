@@ -37,6 +37,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible values
+        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth'
+        /// </summary>
+        public AzureRegions AzureRegion { get; set; }
+
+        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
@@ -70,11 +78,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// Gets the ITrain.
         /// </summary>
         public virtual ITrain Train { get; private set; }
-
-        /// <summary>
-        /// Gets the IUser.
-        /// </summary>
-        public virtual IUser User { get; private set; }
 
         /// <summary>
         /// Gets the IPermissions.
@@ -174,7 +177,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             Apps = new Apps(this);
             Versions = new Versions(this);
             Train = new Train(this);
-            User = new User(this);
             Permissions = new Permissions(this);
             BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/luis/api/v2.0";
             SerializationSettings = new JsonSerializerSettings
@@ -202,8 +204,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ModelInfo>("readableType"));
-            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<ModelInfo>("readableType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ModelInfoResponse>("readableType"));
             DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<ModelInfoResponse>("readableType"));
             CustomInitialize();

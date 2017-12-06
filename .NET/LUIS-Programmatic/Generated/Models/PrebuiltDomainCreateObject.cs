@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A prebuilt domain create object containing the name and culture of the
+    /// domain.
+    /// </summary>
     public partial class PrebuiltDomainCreateObject
     {
         /// <summary>
@@ -26,6 +30,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the PrebuiltDomainCreateObject class.
         /// </summary>
+        /// <param name="domainName">The domain name.</param>
+        /// <param name="culture">The culture of the new domain.</param>
         public PrebuiltDomainCreateObject(string domainName = default(string), string culture = default(string))
         {
             DomainName = domainName;
@@ -39,13 +45,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "DomainName")]
+        [JsonProperty(PropertyName = "domainName")]
         public string DomainName { get; set; }
 
         /// <summary>
+        /// Gets or sets the culture of the new domain.
         /// </summary>
-        [JsonProperty(PropertyName = "Culture")]
+        [JsonProperty(PropertyName = "culture")]
         public string Culture { get; set; }
 
     }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Model Training Details.
+    /// </summary>
     public partial class ModelTrainingDetails
     {
         /// <summary>
@@ -26,9 +29,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ModelTrainingDetails class.
         /// </summary>
+        /// <param name="statusId">The train request status ID.</param>
         /// <param name="status">Possible values include: 'Queued',
         /// 'InProgress', 'UpToDate', 'Fail', 'Success'</param>
-        public ModelTrainingDetails(double? statusId = default(double?), string status = default(string), double? exampleCount = default(double?), string trainingDateTime = default(string), string failureReason = default(string))
+        /// <param name="exampleCount">The count of examples used to train the
+        /// model.</param>
+        /// <param name="trainingDateTime">When the model was trained.</param>
+        /// <param name="failureReason">Reason for the training
+        /// failure.</param>
+        public ModelTrainingDetails(int? statusId = default(int?), string status = default(string), int? exampleCount = default(int?), System.DateTime? trainingDateTime = default(System.DateTime?), string failureReason = default(string))
         {
             StatusId = statusId;
             Status = status;
@@ -44,9 +53,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the train request status ID.
         /// </summary>
         [JsonProperty(PropertyName = "statusId")]
-        public double? StatusId { get; set; }
+        public int? StatusId { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Queued', 'InProgress',
@@ -56,16 +66,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets the count of examples used to train the model.
         /// </summary>
         [JsonProperty(PropertyName = "exampleCount")]
-        public double? ExampleCount { get; set; }
+        public int? ExampleCount { get; set; }
 
         /// <summary>
+        /// Gets or sets when the model was trained.
         /// </summary>
         [JsonProperty(PropertyName = "trainingDateTime")]
-        public string TrainingDateTime { get; set; }
+        public System.DateTime? TrainingDateTime { get; set; }
 
         /// <summary>
+        /// Gets or sets reason for the training failure.
         /// </summary>
         [JsonProperty(PropertyName = "failureReason")]
         public string FailureReason { get; set; }

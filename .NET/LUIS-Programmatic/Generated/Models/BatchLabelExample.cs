@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Response when adding a batch of labeled examples.
+    /// </summary>
     public partial class BatchLabelExample
     {
         /// <summary>

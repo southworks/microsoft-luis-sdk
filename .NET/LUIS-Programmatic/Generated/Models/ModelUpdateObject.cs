@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for updating an intent classifier.
+    /// </summary>
     public partial class ModelUpdateObject
     {
         /// <summary>
@@ -26,6 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ModelUpdateObject class.
         /// </summary>
+        /// <param name="name">The entity's new name.</param>
         public ModelUpdateObject(string name = default(string))
         {
             Name = name;
@@ -38,8 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the entity's new name.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

@@ -26,97 +26,81 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserAccessList> GetApplicationUserAccessListAsync(this IPermissions operations, AzureRegions azureRegion, string appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserAccessList> ListAsync(this IPermissions operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationUserAccessListWithHttpMessagesAsync(azureRegion, appId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a user to the allowed list of users to access this LUIS
-            /// application.Users are added using their email address.
+            /// Adds a user to the allowed list of users to access this LUIS application.
+            /// Users are added using their email address.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
-            /// <param name='body'>
-            /// A JSON object containing the user's email address.
+            /// <param name='userToAdd'>
+            /// A model containing the user's email address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddUserToAccessListAsync(this IPermissions operations, AzureRegions azureRegion, string appId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddAsync(this IPermissions operations, System.Guid appId, UserCollaborator userToAdd, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddUserToAccessListWithHttpMessagesAsync(azureRegion, appId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.AddWithHttpMessagesAsync(appId, userToAdd, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Removed a user to the allowed list of users to access this LUIS
-            /// application.Users are removed using their email address.
+            /// Removes a user from the allowed list of users to access this LUIS
+            /// application. Users are removed using their email address.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
-            /// <param name='body'>
-            /// A JSON object containing the user's email address.
+            /// <param name='userToDelete'>
+            /// A model containing the user's email address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveUserFromAccessListAsync(this IPermissions operations, AzureRegions azureRegion, string appId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPermissions operations, System.Guid appId, UserCollaborator userToDelete, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RemoveUserFromAccessListWithHttpMessagesAsync(azureRegion, appId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(appId, userToDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Replaces the current users access list with the one sent in the body.If an
+            /// Replaces the current users access list with the one sent in the body. If an
             /// empty list is sent, all access to other users will be removed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
-            /// <param name='body'>
-            /// A JSON object containing a list of user's email addresses.
+            /// <param name='collaborators'>
+            /// A model containing a list of user's email addresses.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAccessListAsync(this IPermissions operations, AzureRegions azureRegion, string appId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IPermissions operations, System.Guid appId, CollaboratorsArray collaborators, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateAccessListWithHttpMessagesAsync(azureRegion, appId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(appId, collaborators, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

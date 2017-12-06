@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Exported Model - Extracted Entity from utterance.
+    /// </summary>
     public partial class JSONEntity
     {
         /// <summary>
@@ -26,6 +29,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the JSONEntity class.
         /// </summary>
+        /// <param name="startPos">The index within the utterance where the
+        /// extracted entity starts.</param>
+        /// <param name="endPos">The index within the utterance where the
+        /// extracted entity ends.</param>
+        /// <param name="entity">The entity name.</param>
         public JSONEntity(int? startPos = default(int?), int? endPos = default(int?), string entity = default(string))
         {
             StartPos = startPos;
@@ -40,16 +48,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity starts.
         /// </summary>
         [JsonProperty(PropertyName = "startPos")]
         public int? StartPos { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity ends.
         /// </summary>
         [JsonProperty(PropertyName = "endPos")]
         public int? EndPos { get; set; }
 
         /// <summary>
+        /// Gets or sets the entity name.
         /// </summary>
         [JsonProperty(PropertyName = "entity")]
         public string Entity { get; set; }

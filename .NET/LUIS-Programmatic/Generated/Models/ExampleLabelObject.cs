@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// A labeled example.
+    /// </summary>
     public partial class ExampleLabelObject
     {
         /// <summary>
@@ -28,6 +31,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ExampleLabelObject class.
         /// </summary>
+        /// <param name="text">The sample's utterance.</param>
+        /// <param name="entityLabels">The idenfied entities within the
+        /// utterance.</param>
+        /// <param name="intentName">The idenfitied intent representing the
+        /// utterance.</param>
         public ExampleLabelObject(string text = default(string), IList<EntityLabelObject> entityLabels = default(IList<EntityLabelObject>), string intentName = default(string))
         {
             Text = text;
@@ -42,18 +50,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the sample's utterance.
         /// </summary>
-        [JsonProperty(PropertyName = "Text")]
+        [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets the idenfied entities within the utterance.
         /// </summary>
-        [JsonProperty(PropertyName = "EntityLabels")]
+        [JsonProperty(PropertyName = "entityLabels")]
         public IList<EntityLabelObject> EntityLabels { get; set; }
 
         /// <summary>
+        /// Gets or sets the idenfitied intent representing the utterance.
         /// </summary>
-        [JsonProperty(PropertyName = "IntentName")]
+        [JsonProperty(PropertyName = "intentName")]
         public string IntentName { get; set; }
 
     }

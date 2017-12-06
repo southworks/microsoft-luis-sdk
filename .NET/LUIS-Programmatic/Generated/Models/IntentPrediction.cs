@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A suggested intent.
+    /// </summary>
     public partial class IntentPrediction
     {
         /// <summary>
@@ -26,6 +29,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the IntentPrediction class.
         /// </summary>
+        /// <param name="name">The intent's name</param>
+        /// <param name="score">The intent's score, based on the prediction
+        /// model.</param>
         public IntentPrediction(string name = default(string), double? score = default(double?))
         {
             Name = name;
@@ -39,11 +45,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the intent's name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the intent's score, based on the prediction model.
         /// </summary>
         [JsonProperty(PropertyName = "score")]
         public double? Score { get; set; }

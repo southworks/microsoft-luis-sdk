@@ -23,21 +23,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
     public partial interface IVersions
     {
         /// <summary>
-        /// Creates a new version equivalent to the current snapshot of the
-        /// selected application version.
+        /// Creates a new version using the current snapshot of the selected
+        /// application version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
-        /// <param name='taskUpdateObject'>
-        /// An object containing the new version ID.
+        /// <param name='versionCloneObject'>
+        /// A model containing the new version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,19 +44,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> CloneVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, TaskUpdateObject taskUpdateObject = default(TaskUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> CloneWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionCloneObject = default(TaskUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the application versions info.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -78,22 +73,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse> GetApplicationVersionsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<VersionInfo>>> ListWithHttpMessagesAsync(System.Guid appId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the task info.
+        /// Gets the version info.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,25 +95,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> GetApplicationVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<VersionInfo>> GetWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the name or description of the application version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
-        /// <param name='taskUpdateObject'>
-        /// A JSON object containing Name and Description of the application.
+        /// <param name='versionUpdateObject'>
+        /// A model containing Name and Description of the application.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -130,25 +120,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> RenameApplicationVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, TaskUpdateObject taskUpdateObject = default(TaskUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an application version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -156,25 +142,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteApplicationVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Exports a LUIS application to JSON format.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -185,22 +167,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> ExportApplicationVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisApp>> ExportWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the given application version's subscription key.
+        /// Imports a new version into a LUIS application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
+        /// </param>
+        /// <param name='luisApp'>
+        /// A LUIS application structure.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The new versionId to import. If not specified, the versionId will
+        /// be read from the imported object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -211,170 +196,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> GetApplicationVersionSubscriptionKeyWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Assigns a subscription key to the given application version.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='keyValue'>
-        /// The value of the endpoint key to assign to the application.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AssignSubscriptionKeyToVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string keyValue = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Assigns an external API key to the given application according to
-        /// the specified key type.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='externalKeyUpdateObject'>
-        /// The external api key to be assigned.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> UpdateApplicationVersionExternalKeyWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, ExternalKeyUpdateObject externalKeyUpdateObject = default(ExternalKeyUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the given application versions's external keys.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> GetApplicationVersionExternalApiKeysWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes an external API key currently associated to the given
-        /// application according for the specified key type.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='keyType'>
-        /// The external key type.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> DeleteApplicationVersionExternalKeyWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, string keyType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Imports a new version into a LUIS application, the version's JSON
-        /// should be included in in the request body.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The imported versionId.
-        /// </param>
-        /// <param name='jSONApp'>
-        /// A JSON representing the LUIS application structure.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> ImportVersionToApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId = default(string), JSONApp jSONApp = default(JSONApp), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> ImportWithHttpMessagesAsync(System.Guid appId, LuisApp luisApp, string versionId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deleted an unlabelled utterance.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
-        /// <param name='body'>
-        /// The utterance text to delete
+        /// <param name='utterance'>
+        /// The utterance text to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -382,12 +221,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteUnlabelledUtteranceWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, object body = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteUnlabelledUtteranceWithHttpMessagesAsync(System.Guid appId, string versionId, string utterance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

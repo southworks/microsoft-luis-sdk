@@ -14,6 +14,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Defines the entity type and position of the extracted entity within the
+    /// example.
+    /// </summary>
     public partial class EntityLabel
     {
         /// <summary>
@@ -27,7 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the EntityLabel class.
         /// </summary>
-        public EntityLabel(string entityName, double startTokenIndex, double endTokenIndex)
+        /// <param name="entityName">The entity type.</param>
+        /// <param name="startTokenIndex">The index within the utterance where
+        /// the extracted entity starts.</param>
+        /// <param name="endTokenIndex">The index within the utterance where
+        /// the extracted entity ends.</param>
+        public EntityLabel(string entityName, int startTokenIndex, int endTokenIndex)
         {
             EntityName = entityName;
             StartTokenIndex = startTokenIndex;
@@ -41,19 +50,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the entity type.
         /// </summary>
         [JsonProperty(PropertyName = "entityName")]
         public string EntityName { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity starts.
         /// </summary>
         [JsonProperty(PropertyName = "startTokenIndex")]
-        public double StartTokenIndex { get; set; }
+        public int StartTokenIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity ends.
         /// </summary>
         [JsonProperty(PropertyName = "endTokenIndex")]
-        public double EndTokenIndex { get; set; }
+        public int EndTokenIndex { get; set; }
 
         /// <summary>
         /// Validate the object.

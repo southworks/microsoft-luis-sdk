@@ -33,22 +33,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EnqueueTrainingResponse> TrainApplicationVersionAsync(this ITrain operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnqueueTrainingResponse> TrainVersionAsync(this ITrain operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrainApplicationVersionWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrainVersionWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -64,22 +60,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelTrainingInfo>> GetApplicationVersionTrainingStatusAsync(this ITrain operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelTrainingInfo>> GetStatusAsync(this ITrain operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionTrainingStatusWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStatusWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

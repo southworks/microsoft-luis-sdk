@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Prebuilt Domain.
+    /// </summary>
     public partial class PrebuiltDomain
     {
         /// <summary>

@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// A model object containing the properties to update.
+    /// </summary>
     public partial class HierarchicalModelUpdateObject
     {
         /// <summary>
@@ -30,6 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the HierarchicalModelUpdateObject
         /// class.
         /// </summary>
+        /// <param name="children">Child entities.</param>
+        /// <param name="name">The new entity name.</param>
         public HierarchicalModelUpdateObject(IList<string> children = default(IList<string>), string name = default(string))
         {
             Children = children;
@@ -43,13 +48,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets child entities.
         /// </summary>
-        [JsonProperty(PropertyName = "Children")]
+        [JsonProperty(PropertyName = "children")]
         public IList<string> Children { get; set; }
 
         /// <summary>
+        /// Gets or sets the new entity name.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

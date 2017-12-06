@@ -23,90 +23,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
     public partial interface IFeatures
     {
         /// <summary>
-        /// Creates a new pattern feature.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='patternCreateObject'>
-        /// A JSON object containing Name and Pattern of the feature.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<double?>> CreatePatternFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, PatternCreateObject patternCreateObject = default(PatternCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all application version pattern features.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of entries to skip. Default value is 0.
-        /// </param>
-        /// <param name='take'>
-        /// The number of entries to return. Maximum page size is 500. Default
-        /// is 100.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<IList<PatternFeatureInfo>>> GetApplicationVersionPatternFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates a new phraselist feature.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='phraselistCreateObject'>
-        /// A JSON object containing Name, comma-separated Phrases and the
-        /// isExchangeable boolean.            Default value for isExchangeable
-        /// is true.
+        /// A Phraselist object containing Name, comma-separated Phrases and
+        /// the isExchangeable boolean. Default value for isExchangeable is
+        /// true.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,19 +51,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<double?>> CreatePhraselistFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, PhraselistCreateObject phraselistCreateObject = default(PhraselistCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<int?>> AddPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all application phraselist features.
+        /// Gets all the phraselist features.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -159,19 +83,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> GetApplicationVersionPhraselistFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> ListPhraseListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all application version features.
+        /// Gets all the extraction features for the specified application
+        /// version.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -195,118 +116,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<FeaturesResponseObject>> GetApplicationVersionFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets pattern feature info.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='patternId'>
-        /// The pattern feature ID.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<PatternFeatureInfo>> GetPatternFeatureInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int patternId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates the pattern, the name and the state of the pattern feature.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='patternId'>
-        /// The pattern feature ID.
-        /// </param>
-        /// <param name='patternUpdateObject'>
-        /// A JSON object containing either:&lt;/br&gt;1- Just a boolean called
-        /// IsActive, in which case the status of the feature will be
-        /// changed.&lt;/br&gt;2- Name, Pattern and a boolean called IsActive
-        /// to update the feature.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> UpdatePatternFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int patternId, PatternUpdateObject patternUpdateObject = default(PatternUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a pattern feature from an application version.
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='versionId'>
-        /// The version ID of the task.
-        /// </param>
-        /// <param name='patternId'>
-        /// The pattern feature ID.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> DeletePatternFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int patternId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<FeaturesResponseObject>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets phraselist feature info.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='phraselistId'>
-        /// The ID of the feature to be deleted.
+        /// The ID of the feature to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -323,29 +144,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraselistFeatureInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the phrases, the state and the name of the phraselist
         /// feature.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='phraselistId'>
-        /// The ID of the feature to be deleted.
+        /// The ID of the feature to be updated.
         /// </param>
         /// <param name='phraselistUpdateObject'>
-        /// A JSON object containing either:&lt;/br&gt;1- Just a boolean called
-        /// IsActive, in which case the status of the feature will be
-        /// changed.&lt;/br&gt;2- Name, Pattern, Mode, and a boolean called
-        /// IsActive to update the feature.
+        /// The new values for: - Just a boolean called IsActive, in which case
+        /// the status of the feature will be changed. - Name, Pattern, Mode,
+        /// and a boolean called IsActive to update the feature.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -353,25 +169,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdatePhraselistFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdatePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a phraselist feature from an application.
+        /// Deletes a phraselist feature.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='phraselistId'>
         /// The ID of the feature to be deleted.
@@ -382,12 +194,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeletePhraselistFeatureWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeletePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

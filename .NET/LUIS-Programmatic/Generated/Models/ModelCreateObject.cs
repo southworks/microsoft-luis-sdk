@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for creating a new entity extractor.
+    /// </summary>
     public partial class ModelCreateObject
     {
         /// <summary>
@@ -26,6 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ModelCreateObject class.
         /// </summary>
+        /// <param name="name">Name of the new entity extractor.</param>
         public ModelCreateObject(string name = default(string))
         {
             Name = name;
@@ -38,8 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets name of the new entity extractor.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

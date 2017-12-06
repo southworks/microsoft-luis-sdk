@@ -27,25 +27,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
-            /// <param name='modelCreateObject'>
+            /// <param name='intentCreateObject'>
             /// A model object containing the name of the new intent classifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateIntentClassifierAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, ModelCreateObject modelCreateObject = default(ModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddIntentAsync(this IModel operations, System.Guid appId, string versionId, ModelCreateObject intentCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateIntentClassifierWithHttpMessagesAsync(azureRegion, appId, versionId, modelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddIntentWithHttpMessagesAsync(appId, versionId, intentCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -57,15 +53,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -76,9 +68,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IntentClassifier>> GetApplicationVersionIntentInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentClassifier>> ListIntentsAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionIntentInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIntentsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -90,15 +82,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='modelCreateObject'>
             /// A model object containing the name for the new entity extractor.
@@ -106,9 +94,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateEntityExtractorAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, ModelCreateObject modelCreateObject = default(ModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddEntityAsync(this IModel operations, System.Guid appId, string versionId, ModelCreateObject modelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateEntityExtractorWithHttpMessagesAsync(azureRegion, appId, versionId, modelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddEntityWithHttpMessagesAsync(appId, versionId, modelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -120,15 +108,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -139,9 +123,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityExtractor>> GetApplicationVersionEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityExtractor>> ListEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListEntitiesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -153,26 +137,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hierarchicalModelCreateObject'>
-            /// A model object containing the name and children of the new entity
-            /// extractor.
+            /// A model containing the name and children of the new entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateHierarchicalEntityExtractorAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject = default(HierarchicalModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateHierarchicalEntityExtractorWithHttpMessagesAsync(azureRegion, appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -184,15 +163,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -203,9 +178,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<HierarchicalEntityExtractor>> GetApplicationVersionHierarchicalEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<HierarchicalEntityExtractor>> ListHierarchicalEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionHierarchicalEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListHierarchicalEntitiesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -217,26 +192,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hierarchicalModelCreateObject'>
-            /// A model object containing the name and children of the new entity
-            /// extractor.
+            /// A model containing the name and children of the new entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateCompositeEntityExtractorAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject = default(HierarchicalModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateCompositeEntityExtractorWithHttpMessagesAsync(azureRegion, appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCompositeEntityWithHttpMessagesAsync(appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -248,15 +218,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -267,40 +233,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<CompositeEntityExtractor>> GetApplicationVersionCompositeEntityInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<CompositeEntityExtractor>> ListCompositeEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionCompositeEntityInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Adds a closed list model to the application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='closedListModelCreateObject'>
-            /// A model object containing the name and words for the new closed list entity
-            /// extractor.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<string> CreateClosedListEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject = default(ClosedListModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateClosedListEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, closedListModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCompositeEntitiesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -312,15 +247,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -331,9 +262,36 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ClosedListEntityExtractor>> GetApplicationVersionClosedListInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ClosedListEntityExtractor>> ListClosedListsAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionClosedListInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListClosedListsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Adds a closed list model to the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='closedListModelCreateObject'>
+            /// A model containing the name and words for the new closed list entity
+            /// extractor.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Guid> AddClosedListAsync(this IModel operations, System.Guid appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddClosedListWithHttpMessagesAsync(appId, versionId, closedListModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -345,15 +303,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='prebuiltExtractorNames'>
             /// An array of prebuilt entity extractor names.
@@ -361,9 +315,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PrebuiltEntityExtractor>> AddPrebuiltEntityExtractorsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, IList<string> prebuiltExtractorNames = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PrebuiltEntityExtractor>> AddPrebuiltAsync(this IModel operations, System.Guid appId, string versionId, IList<string> prebuiltExtractorNames, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddPrebuiltEntityExtractorsWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltExtractorNames, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddPrebuiltWithHttpMessagesAsync(appId, versionId, prebuiltExtractorNames, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -375,15 +329,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -394,9 +344,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PrebuiltEntityExtractor>> GetApplicationVersionPrebuiltInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PrebuiltEntityExtractor>> ListPrebuiltsAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionPrebuiltInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPrebuiltsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -408,22 +358,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AvailablePrebuiltEntityModel>> GetAvailablePrebuiltEntityExtractorsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AvailablePrebuiltEntityModel>> ListPrebuiltEntitiesAsync(this IModel operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAvailablePrebuiltEntityExtractorsWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPrebuiltEntitiesWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -435,15 +381,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -454,9 +396,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetApplicationVersionModelInfosAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelInfoResponse>> ListModelsAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionModelInfosWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListModelsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -468,25 +410,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='intentId'>
-            /// Format - guid. The intent classifier ID.
+            /// The intent classifier ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntentClassifier> GetIntentInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntentClassifier> GetIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetIntentInfoWithHttpMessagesAsync(azureRegion, appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetIntentWithHttpMessagesAsync(appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -498,18 +436,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='intentId'>
-            /// Format - guid. The intent classifier ID.
+            /// The intent classifier ID.
             /// </param>
             /// <param name='modelUpdateObject'>
             /// A model object containing the new intent classifier name.
@@ -517,9 +451,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RenameIntentModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, ModelUpdateObject modelUpdateObject = default(ModelUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RenameIntentModelWithHttpMessagesAsync(azureRegion, appId, versionId, intentId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateIntentWithHttpMessagesAsync(appId, versionId, intentId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -528,25 +462,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='intentId'>
-            /// Format - guid. The intent classifier ID.
+            /// The intent classifier ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteIntentModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteIntentModelWithHttpMessagesAsync(azureRegion, appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteIntentWithHttpMessagesAsync(appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -555,25 +485,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='entityId'>
-            /// Format - guid. The entity extractor ID.
+            /// The entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntityExtractor> GetEntityInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EntityExtractor> GetEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityInfoWithHttpMessagesAsync(azureRegion, appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -585,18 +511,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='entityId'>
-            /// Format - guid. The entity extractor ID.
+            /// The entity extractor ID.
             /// </param>
             /// <param name='modelUpdateObject'>
             /// A model object containing the new entity extractor name.
@@ -604,9 +526,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RenameEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, ModelUpdateObject modelUpdateObject = default(ModelUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RenameEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, entityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateEntityWithHttpMessagesAsync(appId, versionId, entityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -615,25 +537,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='entityId'>
-            /// Format - guid. The entity extractor ID.
+            /// The entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -642,25 +560,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HierarchicalEntityExtractor> GetHierarchicalEntityInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HierarchicalEntityExtractor> GetHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetHierarchicalEntityInfoWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -672,18 +586,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='hierarchicalModelUpdateObject'>
             /// Model containing names of the children of the hierarchical entity.
@@ -691,9 +601,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHierarchicalEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject = default(HierarchicalModelUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHierarchicalEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -702,25 +612,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteHierarchicalEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteHierarchicalEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -729,25 +635,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The composite entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CompositeEntityExtractor> GetCompositeEntityInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string cEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CompositeEntityExtractor> GetCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCompositeEntityInfoWithHttpMessagesAsync(azureRegion, appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -759,18 +661,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The composite entity extractor ID.
             /// </param>
             /// <param name='hierarchicalModelUpdateObject'>
             /// A model object containing the new entity extractor name and children.
@@ -778,9 +676,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateCompositeEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject = default(HierarchicalModelUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateCompositeEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, cEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -789,25 +687,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The composite entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCompositeEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string cEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCompositeEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -816,25 +710,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list model ID.
+            /// The closed list model ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ClosedListEntityExtractor> GetClosedListEntityInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ClosedListEntityExtractor> GetClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetClosedListEntityInfoWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -846,28 +736,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list model ID.
+            /// The closed list model ID.
             /// </param>
             /// <param name='closedListModelUpdateObject'>
-            /// A json object containing the new entity name and words list.
+            /// The new entity name and words list.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateClosedListEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject = default(ClosedListModelUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateClosedListEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, closedListModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -876,28 +762,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list model ID.
+            /// The closed list model ID.
             /// </param>
             /// <param name='closedListModelPatchObject'>
-            /// A json object containing words list batch.
+            /// A words list batch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PatchClosedListEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, ClosedListModelPatchObject closedListModelPatchObject = default(ClosedListModelPatchObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PatchClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PatchClosedListEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, closedListModelPatchObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PatchClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelPatchObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -906,25 +788,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list model ID.
+            /// The closed list model ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteClosedListEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteClosedListEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -933,25 +811,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='prebuiltId'>
-            /// Format - guid. The prebuilt entity extractor ID.
+            /// The prebuilt entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrebuiltEntityExtractor> GetPrebuiltInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrebuiltEntityExtractor> GetPrebuiltAsync(this IModel operations, System.Guid appId, string versionId, System.Guid prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPrebuiltInfoWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPrebuiltWithHttpMessagesAsync(appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -963,25 +837,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='prebuiltId'>
-            /// Format - guid. The prebuilt entity extractor ID.
+            /// The prebuilt entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeletePrebuiltModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeletePrebuiltAsync(this IModel operations, System.Guid appId, string versionId, System.Guid prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeletePrebuiltModelWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeletePrebuiltWithHttpMessagesAsync(appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -990,18 +860,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list entity extractor ID.
+            /// The closed list entity extractor ID.
             /// </param>
             /// <param name='subListId'>
             /// The sublist ID.
@@ -1009,29 +875,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSubListAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, int subListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSubListWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, subListId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Updates one of the closed list's sublists
+            /// Updates one of the closed list's sublists.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list entity extractor ID.
+            /// The closed list entity extractor ID.
             /// </param>
             /// <param name='subListId'>
             /// The sublist ID.
@@ -1043,9 +905,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubListAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject = default(WordListBaseUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubListWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, subListId, wordListBaseUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, wordListBaseUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1054,18 +916,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='intentId'>
-            /// Format - guid. The intent classifier ID.
+            /// The intent classifier ID.
             /// </param>
             /// <param name='take'>
             /// The number of entries to return. Maximum page size is 500. Default is 100.
@@ -1073,29 +931,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SuggestEndpointQueriesForIntentsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentsSuggestionExample>> GetIntentSuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SuggestEndpointQueriesForIntentsWithHttpMessagesAsync(azureRegion, appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetIntentSuggestionsWithHttpMessagesAsync(appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Suggests examples that would improve the accuracy of the entity model.
+            /// Get suggestion examples that would improve the accuracy of the entity
+            /// model.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='entityId'>
-            /// Format - guid. The target entity extractor model to enhance.
+            /// The target entity extractor model to enhance.
             /// </param>
             /// <param name='take'>
             /// The number of entries to return. Maximum page size is 500. Default is 100.
@@ -1103,39 +961,38 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SuggestEndpointQueriesForEntitiesAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntitiesSuggestionExample>> GetEntitySuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SuggestEndpointQueriesForEntitiesWithHttpMessagesAsync(azureRegion, appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetEntitySuggestionsWithHttpMessagesAsync(appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Adds a list to an existing closed list
+            /// Adds a list to an existing closed list.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// Format - guid. The closed list entity extractor ID.
+            /// The closed list entity extractor ID.
             /// </param>
             /// <param name='wordListCreateObject'>
-            /// A json object containing words list.
+            /// Words list.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ApplicationInfoResponse>> AddSubListAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string clEntityId, WordListCreateObject wordListCreateObject = default(WordListCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<int?> AddSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddSubListWithHttpMessagesAsync(azureRegion, appId, versionId, clEntityId, wordListCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddSubListWithHttpMessagesAsync(appId, versionId, clEntityId, wordListCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1148,45 +1005,37 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
-            /// <param name='prebuiltDomainCreateBaseObject'>
-            /// A prebuilt domain create object containing the name of the domain
+            /// <param name='prebuiltDomainObject'>
+            /// A prebuilt domain create object containing the name of the domain.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<string>> AddCustomPrebuiltDomainToApplicationAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainCreateBaseObject = default(PrebuiltDomainCreateBaseObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<System.Guid?>> AddCustomPrebuiltDomainAsync(this IModel operations, System.Guid appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddCustomPrebuiltDomainToApplicationWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltDomainCreateBaseObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCustomPrebuiltDomainWithHttpMessagesAsync(appId, versionId, prebuiltDomainObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a custom prebuilt intent model to the application
+            /// Adds a custom prebuilt intent model to the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='prebuiltDomainModelCreateObject'>
             /// A model object containing the name of the custom prebuilt intent and the
@@ -1195,56 +1044,48 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> AddCustomPrebuiltIntentModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject = default(PrebuiltDomainModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddCustomPrebuiltIntentAsync(this IModel operations, System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddCustomPrebuiltIntentModelWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltDomainModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCustomPrebuiltIntentWithHttpMessagesAsync(appId, versionId, prebuiltDomainModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets custom prebuilt intents information of this application
+            /// Gets custom prebuilt intents information of this application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetCustomPrebuiltDomainIntentsInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentClassifier>> ListCustomPrebuiltIntentsAsync(this IModel operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCustomPrebuiltDomainIntentsInfoWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCustomPrebuiltIntentsWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a custom prebuilt entity model to the application
+            /// Adds a custom prebuilt entity model to the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='prebuiltDomainModelCreateObject'>
             /// A model object containing the name of the custom prebuilt entity and the
@@ -1253,63 +1094,55 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> AddCustomPrebuiltEntityModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject = default(PrebuiltDomainModelCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddCustomPrebuiltEntityAsync(this IModel operations, System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddCustomPrebuiltEntityModelWithHttpMessagesAsync(azureRegion, appId, versionId, prebuiltDomainModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCustomPrebuiltEntityWithHttpMessagesAsync(appId, versionId, prebuiltDomainModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all custom prebuilt entities information of this application
+            /// Gets all custom prebuilt entities information of this application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetCustomPrebuiltDomainEntitiesInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityExtractor>> ListCustomPrebuiltEntitiesAsync(this IModel operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCustomPrebuiltDomainEntitiesInfoWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCustomPrebuiltEntitiesWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all custom prebuilt models information of this application
+            /// Gets all custom prebuilt models information of this application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetCustomPrebuiltDomainModelsInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<CustomPrebuiltModel>> ListCustomPrebuiltModelsAsync(this IModel operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCustomPrebuiltDomainModelsInfoWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCustomPrebuiltModelsWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1321,25 +1154,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='domainName'>
-            /// Domain name
+            /// Domain name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCustomPrebuiltDomainModelsAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteCustomPrebuiltDomainAsync(this IModel operations, System.Guid appId, string versionId, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCustomPrebuiltDomainModelsWithHttpMessagesAsync(azureRegion, appId, versionId, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteCustomPrebuiltDomainWithHttpMessagesAsync(appId, versionId, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1348,28 +1177,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='hChildId'>
-            /// Format - guid. The hierarchical entity extractor child ID.
+            /// The hierarchical entity extractor child ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HierarchicalChildEntity> GetHierarchicalEntityChildInfoAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HierarchicalChildEntity> GetHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetHierarchicalEntityChildInfoWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1381,31 +1206,27 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='hChildId'>
-            /// Format - guid. The hierarchical entity extractor child ID.
+            /// The hierarchical entity extractor child ID.
             /// </param>
-            /// <param name='body'>
+            /// <param name='hierarchicalChildModelUpdateObject'>
             /// Model object containing new name of the hierarchical entity child.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHierarchicalEntityChildModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHierarchicalEntityChildModelWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, hChildId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, hierarchicalChildModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1414,28 +1235,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
             /// <param name='hChildId'>
-            /// Format - guid. The hierarchical entity extractor child ID.
+            /// The hierarchical entity extractor child ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteHierarchicalEntityChildModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, string hChildId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteHierarchicalEntityChildModelWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1444,28 +1261,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='hEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The hierarchical entity extractor ID.
             /// </param>
-            /// <param name='body'>
+            /// <param name='hierarchicalChildModelCreateObject'>
             /// A model object containing the name of the new hierarchical child model.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateHierarchicalEntityChildModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string hEntityId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateHierarchicalEntityChildModelWithHttpMessagesAsync(azureRegion, appId, versionId, hEntityId, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalChildModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1477,28 +1290,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The composite entity extractor ID.
             /// </param>
-            /// <param name='body'>
+            /// <param name='compositeChildModelCreateObject'>
             /// A model object containing the name of the new composite child model.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CreateCompositeEntityChildModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string cEntityId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddCompositeEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CompositeChildModelCreateObject compositeChildModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateCompositeEntityChildModelWithHttpMessagesAsync(azureRegion, appId, versionId, cEntityId, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCompositeEntityChildWithHttpMessagesAsync(appId, versionId, cEntityId, compositeChildModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1510,28 +1319,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cEntityId'>
-            /// Format - guid. The hierarchical entity extractor ID.
+            /// The composite entity extractor ID.
             /// </param>
             /// <param name='cChildId'>
-            /// Format - guid. The hierarchical entity extractor child ID.
+            /// The hierarchical entity extractor child ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCompositeEntityChildModelAsync(this IModel operations, AzureRegions azureRegion, string appId, string versionId, string cEntityId, string cChildId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteCompositeEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCompositeEntityChildModelWithHttpMessagesAsync(azureRegion, appId, versionId, cEntityId, cChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteCompositeEntityChildWithHttpMessagesAsync(appId, versionId, cEntityId, cChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

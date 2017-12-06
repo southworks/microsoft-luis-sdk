@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Defines the entity type and position of the extracted entity within the
+    /// example.
+    /// </summary>
     public partial class EntityLabelObject
     {
         /// <summary>
@@ -26,6 +30,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the EntityLabelObject class.
         /// </summary>
+        /// <param name="entityName">The entity type.</param>
+        /// <param name="startCharIndex">The index within the utterance where
+        /// the extracted entity starts.</param>
+        /// <param name="endCharIndex">The index within the utterance where the
+        /// extracted entity ends.</param>
         public EntityLabelObject(string entityName = default(string), int? startCharIndex = default(int?), int? endCharIndex = default(int?))
         {
             EntityName = entityName;
@@ -40,18 +49,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the entity type.
         /// </summary>
-        [JsonProperty(PropertyName = "EntityName")]
+        [JsonProperty(PropertyName = "entityName")]
         public string EntityName { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity starts.
         /// </summary>
-        [JsonProperty(PropertyName = "StartCharIndex")]
+        [JsonProperty(PropertyName = "startCharIndex")]
         public int? StartCharIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity ends.
         /// </summary>
-        [JsonProperty(PropertyName = "EndCharIndex")]
+        [JsonProperty(PropertyName = "endCharIndex")]
         public int? EndCharIndex { get; set; }
 
     }

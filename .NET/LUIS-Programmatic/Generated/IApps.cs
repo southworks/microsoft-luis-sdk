@@ -26,16 +26,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <summary>
         /// Creates a new LUIS app.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='applicationCreateObject'>
-        /// A JSON object containing Name, Description (optional), Culture,
-        /// Usage Scenario (optional), Domain (optional) and initial version ID
-        /// (optional) of the application.
-        /// Default value for the version ID is 0.1.
-        /// Note that the culture cannot be changed after the app is created.
+        /// A model containing Name, Description (optional), Culture, Usage
+        /// Scenario (optional), Domain (optional) and initial version ID
+        /// (optional) of the application. Default value for the version ID is
+        /// 0.1. Note: the culture cannot be changed after the app is created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,14 +47,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<string>> AddApplicationWithHttpMessagesAsync(AzureRegions azureRegion, ApplicationCreateObject applicationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddWithHttpMessagesAsync(ApplicationCreateObject applicationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the user applications.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
         /// </param>
@@ -79,20 +70,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> GetApplicationsListWithHttpMessagesAsync(AzureRegions azureRegion, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> ListWithHttpMessagesAsync(int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Imports an application to LUIS, the application's JSON should be
-        /// included in in the request body.
+        /// Imports an application to LUIS, the application's structure should
+        /// be included in in the request body.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
+        /// <param name='luisApp'>
+        /// A LUIS application structure.
         /// </param>
         /// <param name='appName'>
-        /// The imported application name.
-        /// </param>
-        /// <param name='jSONApp'>
-        /// A JSON representing the LUIS application structure.
+        /// The application name to create. If not specified, the application
+        /// name will be read from the imported object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,14 +94,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<string>> ImportApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appName = default(string), JSONApp jSONApp = default(JSONApp), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<System.Guid>> ImportWithHttpMessagesAsync(LuisApp luisApp, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the endpoint URLs for the prebuilt Cortana applications.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -126,14 +113,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<PersonalAssistantsResponse>> GetPersonalAssistantApplicationsWithHttpMessagesAsync(AzureRegions azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersonalAssistantsResponse>> ListCortanaEndpointsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the available application domains.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -146,14 +129,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<string>>> GetApplicationDomainsWithHttpMessagesAsync(AzureRegions azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<string>>> ListDomainsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the application available usage scenarios.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -166,14 +145,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<string>>> GetApplicationUsageScenariosWithHttpMessagesAsync(AzureRegions azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<string>>> ListUsageScenariosWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the supported application cultures.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -186,16 +161,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<AvailableCulture>>> GetApplicationCulturesWithHttpMessagesAsync(AzureRegions azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<AvailableCulture>>> ListSupportedCulturesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the query logs of the past month for the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -209,19 +180,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<Stream>> DownloadApplicationQueryLogsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Stream>> DownloadQueryLogsWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the application info.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -235,22 +199,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<ApplicationInfoResponse>> GetApplicationInfoWithHttpMessagesAsync(AzureRegions azureRegion, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ApplicationInfoResponse>> GetWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the name or description of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='applicationUpdateObject'>
-        /// A JSON object containing Name and Description of the application.
+        /// A model containing Name and Description of the application.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -258,22 +215,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> RenameApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationUpdateObject applicationUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid appId, ApplicationUpdateObject applicationUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -281,29 +234,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> DeleteApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Publishes a specific version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='applicationPublishObject'>
-        /// The application publish object.The region is the target region that
-        /// the application is published to. Possible values are "westus",
-        /// "eastus2", "westcentralus" or "southeastasia" for applications
-        /// created in west US, and "westeurope" for applications created in
-        /// West Europe.
+        /// The application publish object. The region is the target region
+        /// that the application is published to.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -320,16 +263,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ApplicationPublishResponse>> PublishApplicationWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationPublishObject applicationPublishObject = default(ApplicationPublishObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ProductionOrStagingEndpointInfo>> PublishWithHttpMessagesAsync(System.Guid appId, ApplicationPublishObject applicationPublishObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the application settings
+        /// Get the application settings.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -343,22 +282,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<ApplicationSettings>> GetApplicationSettingsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ApplicationSettings>> GetSettingsWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the application settings
+        /// Updates the application settings.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='applicationSettingUpdateObject'>
-        /// An app setting object contains the new app settings
+        /// An object containing the new application settings.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -366,22 +298,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateApplicationSettingsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, ApplicationSettingUpdateObject applicationSettingUpdateObject = default(ApplicationSettingUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdateSettingsWithHttpMessagesAsync(System.Guid appId, ApplicationSettingUpdateObject applicationSettingUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the available endpoint deployment regions and urls
+        /// Returns the available endpoint deployment regions and URLs.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -395,17 +323,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<AvailableEndpoints>> GetEndpointsWithHttpMessagesAsync(AzureRegions azureRegion, string appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AvailableEndpoints>> ListEndpointsWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the available custom prebuilt domains for all cultures
+        /// Gets all the available custom prebuilt domains for all cultures.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -418,41 +339,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<PrebuiltDomain>>> GetAvailableCustomPrebuiltDomainsWithHttpMessagesAsync(AzureRegions azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PrebuiltDomain>>> ListAvailableCustomPrebuiltDomainsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a prebuilt domain along with its models as a new application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='prebuiltDomainCreateObject'>
         /// A prebuilt domain create object containing the name and culture of
-        /// the domain
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        Task<HttpOperationResponse<string>> AddCustomPrebuiltApplicationWithHttpMessagesAsync(AzureRegions azureRegion, PrebuiltDomainCreateObject prebuiltDomainCreateObject = default(PrebuiltDomainCreateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all the available custom prebuilt domains for a specific
-        /// culture
-        /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
-        /// <param name='culture'>
-        /// Format - string. Culture
+        /// the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -469,6 +362,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PrebuiltDomain>>> GetAvailableCustomPrebuiltDomainsForCultureWithHttpMessagesAsync(AzureRegions azureRegion, string culture, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltDomainWithHttpMessagesAsync(PrebuiltDomainCreateObject prebuiltDomainCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all the available custom prebuilt domains for a specific
+        /// culture.
+        /// </summary>
+        /// <param name='culture'>
+        /// Culture.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<PrebuiltDomain>>> ListAvailableCustomPrebuiltDomainsForCultureWithHttpMessagesAsync(string culture, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

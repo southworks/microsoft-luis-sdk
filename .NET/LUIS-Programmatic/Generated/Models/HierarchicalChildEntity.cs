@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A Hierarchical Child Entity.
+    /// </summary>
     public partial class HierarchicalChildEntity : ChildEntity
     {
         /// <summary>
@@ -26,14 +29,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the HierarchicalChildEntity class.
         /// </summary>
-        /// <param name="id">The GUID belonging to a child entity.</param>
+        /// <param name="id">The ID (GUID) belonging to a child entity.</param>
         /// <param name="name">The name of a child entity.</param>
+        /// <param name="typeId">The type ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
         /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
         /// Entity Extractor', 'Composite Entity Extractor', 'Closed List
         /// Entity Extractor', 'Prebuilt Entity Extractor', 'Intent
         /// Classifier'</param>
-        public HierarchicalChildEntity(string id = default(string), string name = default(string), double? typeId = default(double?), string readableType = default(string))
+        public HierarchicalChildEntity(System.Guid id, string name = default(string), int? typeId = default(int?), string readableType = default(string))
             : base(id, name)
         {
             TypeId = typeId;
@@ -47,9 +51,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the type ID of the Entity Model.
         /// </summary>
         [JsonProperty(PropertyName = "typeId")]
-        public double? TypeId { get; set; }
+        public int? TypeId { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Entity Extractor',
@@ -60,5 +65,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

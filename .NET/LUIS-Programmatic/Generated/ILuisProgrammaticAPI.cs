@@ -33,6 +33,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth'
+        /// </summary>
+        AzureRegions AzureRegion { get; set; }
+
+        /// <summary>
         /// Subscription credentials which uniquely identify client
         /// subscription.
         /// </summary>
@@ -68,11 +76,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// Gets the ITrain.
         /// </summary>
         ITrain Train { get; }
-
-        /// <summary>
-        /// Gets the IUser.
-        /// </summary>
-        IUser User { get; }
 
         /// <summary>
         /// Gets the IPermissions.

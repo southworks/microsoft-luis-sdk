@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for updating an existing Pattern feature.
+    /// </summary>
     public partial class PatternUpdateObject
     {
         /// <summary>
@@ -26,6 +29,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the PatternUpdateObject class.
         /// </summary>
+        /// <param name="pattern">The Regular Expression to match.</param>
+        /// <param name="name">Name of the feature.</param>
+        /// <param name="isActive">Indicates if the Pattern feature is
+        /// enabled.</param>
         public PatternUpdateObject(string pattern = default(string), string name = default(string), bool? isActive = default(bool?))
         {
             Pattern = pattern;
@@ -40,18 +47,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the Regular Expression to match.
         /// </summary>
-        [JsonProperty(PropertyName = "Pattern")]
+        [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }
 
         /// <summary>
+        /// Gets or sets name of the feature.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates if the Pattern feature is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "IsActive")]
+        [JsonProperty(PropertyName = "isActive")]
         public bool? IsActive { get; set; }
 
     }

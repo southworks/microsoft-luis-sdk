@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A suggested entity.
+    /// </summary>
     public partial class EntityPrediction
     {
         /// <summary>
@@ -26,13 +29,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the EntityPrediction class.
         /// </summary>
+        /// <param name="entityName">The entity's name</param>
+        /// <param name="startTokenIndex">The index within the utterance where
+        /// the extracted entity starts.</param>
+        /// <param name="endTokenIndex">The index within the utterance where
+        /// the extracted entity ends.</param>
         /// <param name="phrase">The actual token(s) that comprise the
         /// entity.</param>
-        public EntityPrediction(string entityName = default(string), double? startIndex = default(double?), double? endIndex = default(double?), string phrase = default(string))
+        public EntityPrediction(string entityName = default(string), int? startTokenIndex = default(int?), int? endTokenIndex = default(int?), string phrase = default(string))
         {
             EntityName = entityName;
-            StartIndex = startIndex;
-            EndIndex = endIndex;
+            StartTokenIndex = startTokenIndex;
+            EndTokenIndex = endTokenIndex;
             Phrase = phrase;
             CustomInit();
         }
@@ -43,19 +51,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the entity's name
         /// </summary>
         [JsonProperty(PropertyName = "entityName")]
         public string EntityName { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity starts.
         /// </summary>
-        [JsonProperty(PropertyName = "startIndex")]
-        public double? StartIndex { get; set; }
+        [JsonProperty(PropertyName = "startTokenIndex")]
+        public int? StartTokenIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets the index within the utterance where the extracted
+        /// entity ends.
         /// </summary>
-        [JsonProperty(PropertyName = "endIndex")]
-        public double? EndIndex { get; set; }
+        [JsonProperty(PropertyName = "endTokenIndex")]
+        public int? EndTokenIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the actual token(s) that comprise the entity.

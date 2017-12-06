@@ -27,55 +27,47 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='exampleLabelObject'>
-            /// A JSON object containing the example label.
+            /// An example label with the expected intent and entities.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LabelExampleResponse> AddLabelAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, ExampleLabelObject exampleLabelObject = default(ExampleLabelObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabelExampleResponse> AddAsync(this IExamples operations, System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddLabelWithHttpMessagesAsync(azureRegion, appId, versionId, exampleLabelObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddWithHttpMessagesAsync(appId, versionId, exampleLabelObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a batch of labeled examples to the specified application.
+            /// Adds a batch of labeled examples to the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='exampleLabelObjectArray'>
-            /// A JSON array containing example labels.
+            /// Array of examples.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<BatchLabelExample>> BatchAddLabelsAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray = default(IList<ExampleLabelObject>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<BatchLabelExample>> BatchAsync(this IExamples operations, System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchAddLabelsWithHttpMessagesAsync(azureRegion, appId, versionId, exampleLabelObjectArray, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BatchWithHttpMessagesAsync(appId, versionId, exampleLabelObjectArray, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -87,15 +79,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -106,29 +94,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LabeledUtterance>> ReviewLabeledExamplesAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LabeledUtterance>> ListAsync(this IExamples operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReviewLabeledExamplesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the label with the specified ID.
+            /// Deletes the labeled example with the specified ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='exampleId'>
             /// The example ID.
@@ -136,9 +120,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteExampleLabelsAsync(this IExamples operations, AzureRegions azureRegion, string appId, string versionId, int exampleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IExamples operations, System.Guid appId, string versionId, int exampleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteExampleLabelsWithHttpMessagesAsync(azureRegion, appId, versionId, exampleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(appId, versionId, exampleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

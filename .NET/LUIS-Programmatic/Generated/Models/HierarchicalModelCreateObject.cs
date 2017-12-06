@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for creating a hierarchical entity extractor.
+    /// </summary>
     public partial class HierarchicalModelCreateObject
     {
         /// <summary>
@@ -30,6 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the HierarchicalModelCreateObject
         /// class.
         /// </summary>
+        /// <param name="children">List of child entities.</param>
+        /// <param name="name">Name of the new hierarchical entity.</param>
         public HierarchicalModelCreateObject(IList<string> children = default(IList<string>), string name = default(string))
         {
             Children = children;
@@ -43,13 +48,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list of child entities.
         /// </summary>
-        [JsonProperty(PropertyName = "Children")]
+        [JsonProperty(PropertyName = "children")]
         public IList<string> Children { get; set; }
 
         /// <summary>
+        /// Gets or sets name of the new hierarchical entity.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
     }

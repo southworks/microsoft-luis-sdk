@@ -31,15 +31,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// successfully or are up to date. To verify training success, get the
         /// training status at least once after training is complete.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,7 +52,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainApplicationVersionWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the training status of all models (intents and entities) for
         /// the specified LUIS app. You must call the train API to train the
@@ -64,15 +60,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// specifies the LUIS app ID. "versionId" specifies the version number
         /// of the LUIS app. For example, "0.1".
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope'
-        /// </param>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The application ID.
         /// </param>
         /// <param name='versionId'>
-        /// The version ID of the task.
+        /// The version ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -89,6 +81,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ModelTrainingInfo>>> GetApplicationVersionTrainingStatusWithHttpMessagesAsync(AzureRegions azureRegion, string appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ModelTrainingInfo>>> GetStatusWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

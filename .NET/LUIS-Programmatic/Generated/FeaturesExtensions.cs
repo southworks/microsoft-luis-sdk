@@ -22,115 +22,43 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
     public static partial class FeaturesExtensions
     {
             /// <summary>
-            /// Creates a new pattern feature.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='patternCreateObject'>
-            /// A JSON object containing Name and Pattern of the feature.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<double?> CreatePatternFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, PatternCreateObject patternCreateObject = default(PatternCreateObject), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreatePatternFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, patternCreateObject, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets all application version pattern features.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of entries to skip. Default value is 0.
-            /// </param>
-            /// <param name='take'>
-            /// The number of entries to return. Maximum page size is 500. Default is 100.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<PatternFeatureInfo>> GetApplicationVersionPatternFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetApplicationVersionPatternFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates a new phraselist feature.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='phraselistCreateObject'>
-            /// A JSON object containing Name, comma-separated Phrases and the
-            /// isExchangeable boolean.            Default value for isExchangeable is
-            /// true.
+            /// A Phraselist object containing Name, comma-separated Phrases and the
+            /// isExchangeable boolean. Default value for isExchangeable is true.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<double?> CreatePhraselistFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, PhraselistCreateObject phraselistCreateObject = default(PhraselistCreateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<int?> AddPhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreatePhraselistFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, phraselistCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddPhraseListWithHttpMessagesAsync(appId, versionId, phraselistCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all application phraselist features.
+            /// Gets all the phraselist features.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -141,29 +69,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PhraseListFeatureInfo>> GetApplicationVersionPhraselistFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PhraseListFeatureInfo>> ListPhraseListsAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionPhraselistFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPhraseListsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all application version features.
+            /// Gets all the extraction features for the specified application version.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -174,102 +98,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeaturesResponseObject> GetApplicationVersionFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeaturesResponseObject> ListAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetApplicationVersionFeaturesWithHttpMessagesAsync(azureRegion, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets pattern feature info.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='patternId'>
-            /// The pattern feature ID.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PatternFeatureInfo> GetPatternFeatureInfoAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int patternId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetPatternFeatureInfoWithHttpMessagesAsync(azureRegion, appId, versionId, patternId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates the pattern, the name and the state of the pattern feature.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='patternId'>
-            /// The pattern feature ID.
-            /// </param>
-            /// <param name='patternUpdateObject'>
-            /// A JSON object containing either:&lt;/br&gt;1- Just a boolean called
-            /// IsActive, in which case the status of the feature will be
-            /// changed.&lt;/br&gt;2- Name, Pattern and a boolean called IsActive to update
-            /// the feature.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdatePatternFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int patternId, PatternUpdateObject patternUpdateObject = default(PatternUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpdatePatternFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, patternId, patternUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Deletes a pattern feature from an application version.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='patternId'>
-            /// The pattern feature ID.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeletePatternFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int patternId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeletePatternFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, patternId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -278,25 +112,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='phraselistId'>
-            /// The ID of the feature to be deleted.
+            /// The ID of the feature to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PhraseListFeatureInfo> GetPhraselistFeatureInfoAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PhraseListFeatureInfo> GetPhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPhraselistFeatureInfoWithHttpMessagesAsync(azureRegion, appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -308,48 +138,39 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='phraselistId'>
-            /// The ID of the feature to be deleted.
+            /// The ID of the feature to be updated.
             /// </param>
             /// <param name='phraselistUpdateObject'>
-            /// A JSON object containing either:&lt;/br&gt;1- Just a boolean called
-            /// IsActive, in which case the status of the feature will be
-            /// changed.&lt;/br&gt;2- Name, Pattern, Mode, and a boolean called IsActive to
-            /// update the feature.
+            /// The new values for: - Just a boolean called IsActive, in which case the
+            /// status of the feature will be changed. - Name, Pattern, Mode, and a boolean
+            /// called IsActive to update the feature.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdatePhraselistFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdatePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePhraselistFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdatePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Deletes a phraselist feature from an application.
+            /// Deletes a phraselist feature.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='phraselistId'>
             /// The ID of the feature to be deleted.
@@ -357,9 +178,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeletePhraselistFeatureAsync(this IFeatures operations, AzureRegions azureRegion, string appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeletePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeletePhraselistFeatureWithHttpMessagesAsync(azureRegion, appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeletePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

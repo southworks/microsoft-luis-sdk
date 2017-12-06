@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Model Training Info.
+    /// </summary>
     public partial class ModelTrainingInfo
     {
         /// <summary>
@@ -26,8 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ModelTrainingInfo class.
         /// </summary>
-        /// <param name="modelId">The GUID of the model.</param>
-        public ModelTrainingInfo(string modelId = default(string), ModelTrainingDetails details = default(ModelTrainingDetails))
+        /// <param name="modelId">The ID (GUID) of the model.</param>
+        public ModelTrainingInfo(System.Guid? modelId = default(System.Guid?), ModelTrainingDetails details = default(ModelTrainingDetails))
         {
             ModelId = modelId;
             Details = details;
@@ -40,10 +43,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the GUID of the model.
+        /// Gets or sets the ID (GUID) of the model.
         /// </summary>
         [JsonProperty(PropertyName = "modelId")]
-        public string ModelId { get; set; }
+        public System.Guid? ModelId { get; set; }
 
         /// <summary>
         /// </summary>

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
 {
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -20,31 +22,30 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
     public static partial class VersionsExtensions
     {
             /// <summary>
-            /// Creates a new version equivalent to the current snapshot of the selected
+            /// Creates a new version using the current snapshot of the selected
             /// application version.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
-            /// <param name='taskUpdateObject'>
-            /// An object containing the new version ID.
+            /// <param name='versionCloneObject'>
+            /// A model containing the new version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CloneVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, TaskUpdateObject taskUpdateObject = default(TaskUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> CloneAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionCloneObject = default(TaskUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CloneVersionWithHttpMessagesAsync(azureRegion, appId, versionId, taskUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CloneWithHttpMessagesAsync(appId, versionId, versionCloneObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -53,12 +54,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='skip'>
             /// The number of entries to skip. Default value is 0.
@@ -69,33 +66,35 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetApplicationVersionsAsync(this IVersions operations, AzureRegions azureRegion, string appId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VersionInfo>> ListAsync(this IVersions operations, System.Guid appId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetApplicationVersionsWithHttpMessagesAsync(azureRegion, appId, skip, take, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Gets the task info.
+            /// Gets the version info.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetApplicationVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VersionInfo> GetAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetApplicationVersionWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -104,25 +103,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
-            /// <param name='taskUpdateObject'>
-            /// A JSON object containing Name and Description of the application.
+            /// <param name='versionUpdateObject'>
+            /// A model containing Name and Description of the application.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RenameApplicationVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, TaskUpdateObject taskUpdateObject = default(TaskUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RenameApplicationVersionWithHttpMessagesAsync(azureRegion, appId, versionId, taskUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(appId, versionId, versionUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -131,22 +126,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteApplicationVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteApplicationVersionWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -155,181 +146,48 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ExportApplicationVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisApp> ExportAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ExportApplicationVersionWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.ExportWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Gets the given application version's subscription key.
+            /// Imports a new version into a LUIS application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
+            /// </param>
+            /// <param name='luisApp'>
+            /// A LUIS application structure.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The new versionId to import. If not specified, the versionId will be read
+            /// from the imported object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetApplicationVersionSubscriptionKeyAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> ImportAsync(this IVersions operations, System.Guid appId, LuisApp luisApp, string versionId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetApplicationVersionSubscriptionKeyWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Assigns a subscription key to the given application version.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='keyValue'>
-            /// The value of the endpoint key to assign to the application.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task AssignSubscriptionKeyToVersionAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, string keyValue = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.AssignSubscriptionKeyToVersionWithHttpMessagesAsync(azureRegion, appId, versionId, keyValue, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Assigns an external API key to the given application according to the
-            /// specified key type.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='externalKeyUpdateObject'>
-            /// The external api key to be assigned.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateApplicationVersionExternalKeyAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, ExternalKeyUpdateObject externalKeyUpdateObject = default(ExternalKeyUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpdateApplicationVersionExternalKeyWithHttpMessagesAsync(azureRegion, appId, versionId, externalKeyUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the given application versions's external keys.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task GetApplicationVersionExternalApiKeysAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.GetApplicationVersionExternalApiKeysWithHttpMessagesAsync(azureRegion, appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Deletes an external API key currently associated to the given application
-            /// according for the specified key type.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID of the task.
-            /// </param>
-            /// <param name='keyType'>
-            /// The external key type.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteApplicationVersionExternalKeyAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, string keyType, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteApplicationVersionExternalKeyWithHttpMessagesAsync(azureRegion, appId, versionId, keyType, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Imports a new version into a LUIS application, the version's JSON should be
-            /// included in in the request body.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The imported versionId.
-            /// </param>
-            /// <param name='jSONApp'>
-            /// A JSON representing the LUIS application structure.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task ImportVersionToApplicationAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId = default(string), JSONApp jSONApp = default(JSONApp), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.ImportVersionToApplicationWithHttpMessagesAsync(azureRegion, appId, versionId, jSONApp, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.ImportWithHttpMessagesAsync(appId, luisApp, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -338,25 +196,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope'
-            /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The application ID.
             /// </param>
             /// <param name='versionId'>
-            /// The version ID of the task.
+            /// The version ID.
             /// </param>
-            /// <param name='body'>
-            /// The utterance text to delete
+            /// <param name='utterance'>
+            /// The utterance text to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteUnlabelledUtteranceAsync(this IVersions operations, AzureRegions azureRegion, string appId, string versionId, object body = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteUnlabelledUtteranceAsync(this IVersions operations, System.Guid appId, string versionId, string utterance, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteUnlabelledUtteranceWithHttpMessagesAsync(azureRegion, appId, versionId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteUnlabelledUtteranceWithHttpMessagesAsync(appId, versionId, utterance, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

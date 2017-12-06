@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for publishing a specific application version.
+    /// </summary>
     public partial class ApplicationPublishObject
     {
         /// <summary>
@@ -26,10 +29,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationPublishObject class.
         /// </summary>
-        public ApplicationPublishObject(string versionId = default(string), bool? isStaging = default(bool?))
+        /// <param name="versionId">The version ID to publish.</param>
+        /// <param name="isStaging">Indicates if the staging slot should be
+        /// used, instead of the Production one.</param>
+        /// <param name="region">The target region that the application is
+        /// published to.</param>
+        public ApplicationPublishObject(string versionId = default(string), bool? isStaging = default(bool?), string region = default(string))
         {
             VersionId = versionId;
             IsStaging = isStaging;
+            Region = region;
             CustomInit();
         }
 
@@ -39,14 +48,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the version ID to publish.
         /// </summary>
         [JsonProperty(PropertyName = "versionId")]
         public string VersionId { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates if the staging slot should be used, instead
+        /// of the Production one.
         /// </summary>
         [JsonProperty(PropertyName = "isStaging")]
         public bool? IsStaging { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target region that the application is published
+        /// to.
+        /// </summary>
+        [JsonProperty(PropertyName = "region")]
+        public string Region { get; set; }
 
     }
 }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Pattern feature.
+    /// </summary>
     public partial class PatternFeatureInfo : FeatureInfoObject
     {
         /// <summary>
@@ -28,7 +31,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// </summary>
         /// <param name="id">A six-digit ID used for Features.</param>
         /// <param name="name">The name of the Feature.</param>
-        public PatternFeatureInfo(double? id = default(double?), string name = default(string), bool? isActive = default(bool?), string pattern = default(string))
+        /// <param name="isActive">Indicates if the feature is enabled.</param>
+        /// <param name="pattern">The Regular Expression to match.</param>
+        public PatternFeatureInfo(int? id = default(int?), string name = default(string), bool? isActive = default(bool?), string pattern = default(string))
             : base(id, name, isActive)
         {
             Pattern = pattern;
@@ -41,6 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the Regular Expression to match.
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }

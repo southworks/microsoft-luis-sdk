@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The application settings.
+    /// </summary>
     public partial class ApplicationSettings
     {
         /// <summary>
@@ -26,10 +29,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationSettings class.
         /// </summary>
-        public ApplicationSettings(string id = default(string), bool? publicProperty = default(bool?))
+        /// <param name="id">The application ID.</param>
+        /// <param name="isPublic">Setting your application as public allows
+        /// other people to use your application's endpoint using their own
+        /// keys.</param>
+        public ApplicationSettings(System.Guid id, bool isPublic)
         {
             Id = id;
-            PublicProperty = publicProperty;
+            IsPublic = isPublic;
             CustomInit();
         }
 
@@ -39,14 +46,27 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the application ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets setting your application as public allows other people
+        /// to use your application's endpoint using their own keys.
         /// </summary>
         [JsonProperty(PropertyName = "public")]
-        public bool? PublicProperty { get; set; }
+        public bool IsPublic { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

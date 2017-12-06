@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Object model for updating an application's settings.
+    /// </summary>
     public partial class ApplicationSettingUpdateObject
     {
         /// <summary>
@@ -28,7 +31,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the ApplicationSettingUpdateObject
         /// class.
         /// </summary>
-        public ApplicationSettingUpdateObject(bool? publicProperty = default(bool?))
+        /// <param name="publicProperty">Setting your application as public
+        /// allows other people to use your application's endpoint using their
+        /// own keys.</param>
+        public ApplicationSettingUpdateObject(bool publicProperty = default(bool))
         {
             PublicProperty = publicProperty;
             CustomInit();
@@ -40,9 +46,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets setting your application as public allows other people
+        /// to use your application's endpoint using their own keys.
         /// </summary>
-        [JsonProperty(PropertyName = "Public")]
-        public bool? PublicProperty { get; set; }
+        [JsonProperty(PropertyName = "public")]
+        public bool PublicProperty { get; set; }
 
     }
 }
