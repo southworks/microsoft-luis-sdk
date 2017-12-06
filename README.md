@@ -1,3 +1,9 @@
+---
+services: cognitive-services, luis, language-understanding
+platforms: dotnet
+author: microsoft
+---
+
 # Cognitive Services: LUIS Console Application Sample
 
 A simple console demostrating how to consume the LUIS Runtime SDK to predict user utterances.
