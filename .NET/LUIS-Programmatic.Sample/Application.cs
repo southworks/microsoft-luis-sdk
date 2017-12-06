@@ -1,12 +1,12 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Sample
 {
+    using DotSpinners;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
+    using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.IO;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
-    using Microsoft.Extensions.Configuration;
-    using DotSpinners;
     using System.Threading.Tasks;
-    using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample;
 
     class Application
     {
@@ -25,7 +25,7 @@
                 AzureRegion = AzureRegions.Westus
             };
 
-            var program = new Program(client);
+            var program = new MainProgram(client);
 
             program.Run();
         }

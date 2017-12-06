@@ -1,15 +1,14 @@
-﻿using EasyConsole;
-using System;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages
 {
-    class MainPage : MenuPage
+    using EasyConsole;
+    using System;
+
+    class MainPage : BaseMenuPage
     {
-        public MainPage(Program program)
+        public MainPage(MainProgram program)
             : base("Main Page", program, 
                   new Option("Show all apps", () => program.NavigateTo<ListAppsPage>()),
                   new Option("Exit", () => Environment.Exit(0)))
-        {
-        }
+        { }
     }
 }

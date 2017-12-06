@@ -1,16 +1,16 @@
-﻿using DotSpinners;
-using EasyConsole;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-using System;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
 {
-    class BasePage : Page
+    using DotSpinners;
+    using EasyConsole;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using System;
+    using System.Threading.Tasks;
+
+    class BaseMenuPage : MenuPage
     {
         public ILuisProgrammaticAPI Client { get; private set; }
 
-        public BasePage(string title, MainProgram program) : base(title, program)
+        public BaseMenuPage(string title, MainProgram program, params Option[] options) : base(title, program, options)
         {
             Client = program.Client;
         }
@@ -23,7 +23,8 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             {
                 Console.Clear();
                 base.Display();
-            } else
+            }
+            else
             {
                 Console.WriteLine();
             }
@@ -43,24 +44,6 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             {
                 Console.WriteLine();
             }
-        }
-
-        protected void WaitForGoBack()
-        {
-            Input.ReadString("Press any key to go back");
-            Program.NavigateBack();
-        }
-
-        protected void WaitForNavigateTo<T>() where T : Page
-        {
-            Input.ReadString("Press any key to continue");
-            Program.NavigateTo<T>();
-        }
-
-        protected void WaitForNavigateHome()
-        {
-            Input.ReadString("Press any key to go home");
-            Program.NavigateHome();
         }
     }
 }
