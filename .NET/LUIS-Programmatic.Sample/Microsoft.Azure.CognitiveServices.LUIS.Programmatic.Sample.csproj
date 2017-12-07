@@ -1,10 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\LUIS-Programmatic\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="DotSpinners" Version="1.2.0" />
     <PackageReference Include="EasyConsole" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
   </ItemGroup>
   <PropertyGroup>
