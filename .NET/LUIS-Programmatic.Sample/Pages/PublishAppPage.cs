@@ -36,9 +36,10 @@
 
                     Console.WriteLine($"Your app is published. You can now go to test it on {result.EndpointUrl}");
                 }
-                catch (ErrorResponseException ex)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Your app is not ready to be published");
+                    var message = (ex as ErrorResponseException)?.Body.Message ?? "Unknow error";
+                    Console.WriteLine($"Your app is not ready to be published. Err: {message}");
                 }
             }
 
