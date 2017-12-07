@@ -16,17 +16,24 @@
         {
             Client = client;
             AddPage(new WelcomePage(this));
+
             AddPage(new Management.ListAppsPage(this));
             AddPage(new Management.AppInfoPage(this));
             AddPage(new Management.AppDetailsPage(this));
             AddPage(new Management.AppDeletePage(this));
-            AddPage(new TemplateSelectorPage(this));
-            AddPage(new BookingApp.StartPage(this));
+
             AddPage(new GreetingApp.StartPage(this));
             AddPage(new GreetingApp.AddUtterancePage(this));
+
+            AddPage(new BookingApp.StartPage(this));
+
             AddPage(new RetailApp.StartPage(this));
+
+            AddPage(new TemplateSelectorPage(this));
             AddPage(new TrainAppPage(this));
-            AddPage(new FinishWizardPage(this));
+            AddPage(new PublishAppPage(this));
+            AddPage(new ShareAppPage(this));
+
             SetPage<WelcomePage>();
         }
     }

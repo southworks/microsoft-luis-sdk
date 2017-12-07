@@ -5,7 +5,6 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     class StartPage : BasePage
     {

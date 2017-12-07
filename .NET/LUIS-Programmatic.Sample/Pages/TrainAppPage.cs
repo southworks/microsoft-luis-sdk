@@ -9,7 +9,7 @@
         public Guid AppId { get; set; }
         public string VersionId { get; set; }
 
-        public TrainAppPage(BaseProgram program) : base("Train App", program)
+        public TrainAppPage(BaseProgram program) : base("Train", program)
         { }
 
         public override void Display()
@@ -28,8 +28,11 @@
             }));
 
             Console.WriteLine("Your app is trained. You can now go to the LUIS portal and test it!");
-            
-            WaitForNavigateHome();
+
+            NavigateWithInitializer<PublishAppPage>(page => {
+                page.AppId = AppId;
+                page.VersionId = VersionId;
+            });
         }
     }
 }
