@@ -63,13 +63,10 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             Program.NavigateHome();
         }
 
-        protected T NavigateWithInitializer<T>(bool waitForNavigate, Action<T> initializer) where T : Page
+        protected T NavigateWithInitializer<T>(Action<T> initializer) where T : Page
         {
-            if (waitForNavigate)
-            {
-                Input.ReadString("Press any key to continue");
-            }
-
+            Input.ReadString("Press any key to continue");
+            
             var page = Program.SetPage<T>();
             initializer(page);
 

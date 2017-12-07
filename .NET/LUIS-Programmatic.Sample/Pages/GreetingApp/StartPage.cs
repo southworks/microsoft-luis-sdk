@@ -19,7 +19,12 @@
             var defaultAppName = $"Contoso-{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
             var versionId = "0.1";
 
-            var appName = Input.ReadString($"Enter your App's name: (default {defaultAppName})") ?? defaultAppName;
+            var appName = Input.ReadString($"Enter your App's name: (default {defaultAppName})");
+
+            if (string.IsNullOrWhiteSpace(appName))
+            {
+                appName = defaultAppName;
+            }
 
             Console.WriteLine();
             Console.WriteLine("We'll create a new app with a single \"intent\" including the following utterances:");
@@ -59,7 +64,7 @@
 
             Console.WriteLine("Utterances added to the intent");
 
-            NavigateWithInitializer<AddUtterancePage>(true, (page) => {
+            NavigateWithInitializer<AddUtterancePage>((page) => {
                 page.AppId = appId;
                 page.VersionId = versionId;
                 page.IntentName = greetingIntent.Name;

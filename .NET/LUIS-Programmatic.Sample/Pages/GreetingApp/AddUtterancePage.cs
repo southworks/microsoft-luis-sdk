@@ -36,7 +36,10 @@
                 addNew = Input.ReadString("Do you want to add additional utterances? (y/n) ");
             }
 
-            WaitForNavigateTo<TrainAppPage>();
+            NavigateWithInitializer<TrainAppPage>((page) => {
+                page.AppId = AppId;
+                page.VersionId = VersionId;
+            });
         }
     }
 }
