@@ -22,6 +22,7 @@
             AddPage(new TemplateSelectorPage(this));
             AddPage(new BookingApp.StartPage(this));
             AddPage(new GreetingApp.StartPage(this));
+            AddPage(new GreetingApp.AddUtterancePage(this));
             AddPage(new RetailApp.StartPage(this));
             AddPage(new TrainAppPage(this));
             AddPage(new FinishWizardPage(this));
