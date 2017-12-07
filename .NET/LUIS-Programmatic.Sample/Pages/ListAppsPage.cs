@@ -14,7 +14,7 @@
         {
             base.Display();
 
-            var apps = AwaitTask(Client.Apps.ListAsync());
+            var apps = AwaitTask(Client.Apps.ListAsync(), true);
             var json = JsonConvert.SerializeObject(apps, Formatting.Indented);
 
             Console.WriteLine(json);

@@ -22,10 +22,10 @@
                 var result = await Client.Train.TrainVersionAsync(AppId, VersionId);
                 while (!result.Status.Equals("UpToDate"))
                 {
-                    await Task.Delay(1500);
+                    await Task.Delay(1000);
                     result = await Client.Train.TrainVersionAsync(AppId, VersionId);
                 }
-            }), false);
+            }));
 
             Console.WriteLine("Your app is trained. You can now go to the LUIS portal and test it!");
             

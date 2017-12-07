@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             Client = program.Client;
         }
 
-        protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = true)
+        protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = false)
         {
             var awaiter = new DotSpinner(SpinnerTypes.Ping, task).Center();
             awaiter.Start();
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             return task.Result;
         }
 
-        protected void AwaitTask(Task task, bool clearAfterRun = true)
+        protected void AwaitTask(Task task, bool clearAfterRun = false)
         {
             var awaiter = new DotSpinner(SpinnerTypes.Ping, task).Center();
             awaiter.Start();

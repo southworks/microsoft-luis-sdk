@@ -11,11 +11,13 @@
 
         public override void Display()
         {
-            var apps = AwaitTask(Client.Apps.ListAsync(), false);
+            Menu = new Menu();
+            var apps = AwaitTask(Client.Apps.ListAsync());
             foreach (var app in apps)
             {
-                SafeAddToMenu(new Option(app.Name, () => NavigateWithInitializer<AppInfoPage>((page) => page.AppId = app.Id.Value)));
+                SafeAddToMenu(new Option($"App: {app.Name}", () => NavigateWithInitializer<AppInfoPage>((page) => page.AppId = app.Id.Value)));
             }
+            SafeAddToMenu(new Option("Delete app", () => Program.NavigateTo<AppDeletePage>() ));
             base.Display();
         }
     }

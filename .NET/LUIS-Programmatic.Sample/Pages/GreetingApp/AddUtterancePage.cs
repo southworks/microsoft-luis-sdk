@@ -29,7 +29,7 @@
             {
                 newUtterance.Text = Input.ReadString("Type new utterance: ");
 
-                var result = AwaitTask(Client.Examples.AddAsync(AppId, VersionId, newUtterance), false);
+                var result = AwaitTask(Client.Examples.AddAsync(AppId, VersionId, newUtterance));
 
                 Console.WriteLine($"Utterance \"{newUtterance.Text}\" added to the intent {IntentName}\n");
 

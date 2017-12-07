@@ -19,6 +19,7 @@
             AddPage(new Management.ListAppsPage(this));
             AddPage(new Management.AppInfoPage(this));
             AddPage(new Management.AppDetailsPage(this));
+            AddPage(new Management.AppDeletePage(this));
             AddPage(new TemplateSelectorPage(this));
             AddPage(new BookingApp.StartPage(this));
             AddPage(new GreetingApp.StartPage(this));

@@ -14,7 +14,7 @@
 
             Console.WriteLine("Booking app placeholder");
 
-            AwaitTask(Task.Delay(2000), false);
+            AwaitTask(Task.Delay(2000));
 
             WaitForNavigateTo<TrainAppPage>();
         }

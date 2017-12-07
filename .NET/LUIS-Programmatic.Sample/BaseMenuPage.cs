@@ -15,7 +15,7 @@
             Client = program.Client;
         }
 
-        protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = true)
+        protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = false)
         {
             var awaiter = new DotSpinner(SpinnerTypes.Ping, task).Center();
             awaiter.Start();
@@ -31,7 +31,7 @@
             return task.Result;
         }
 
-        protected void AwaitTask(Task task, bool clearAfterRun = true)
+        protected void AwaitTask(Task task, bool clearAfterRun = false)
         {
             var awaiter = new DotSpinner(SpinnerTypes.Ping, task).Center();
             awaiter.Start();
@@ -44,6 +44,23 @@
             {
                 Console.WriteLine();
             }
+        }
+        protected void WaitForGoBack()
+        {
+            Input.ReadString("Press any key to go back");
+            Program.NavigateBack();
+        }
+
+        protected void WaitForNavigateTo<T>() where T : Page
+        {
+            Input.ReadString("Press any key to continue");
+            Program.NavigateTo<T>();
+        }
+
+        protected void WaitForNavigateHome()
+        {
+            Input.ReadString("Press any key to go home");
+            Program.NavigateHome();
         }
 
         protected T NavigateWithInitializer<T>(Action<T> initializer) where T : Page

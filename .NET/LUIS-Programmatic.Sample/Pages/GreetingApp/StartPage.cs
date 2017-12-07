@@ -41,7 +41,7 @@
                 UsageScenario = ""
             };
 
-            var appId = AwaitTask(Client.Apps.AddAsync(newApp), false);
+            var appId = AwaitTask(Client.Apps.AddAsync(newApp));
 
             Console.WriteLine($"{appName} app created with the id {appId}");
 
@@ -50,7 +50,7 @@
                 Name = "Greeting"
             };
 
-            var intentId = AwaitTask(Client.Model.AddIntentAsync(appId, versionId, greetingIntent), false);
+            var intentId = AwaitTask(Client.Model.AddIntentAsync(appId, versionId, greetingIntent));
 
             Console.WriteLine($"{greetingIntent.Name} intent created with the id {intentId}");
 
@@ -60,7 +60,7 @@
                 new ExampleLabelObject("Hello", null, greetingIntent.Name)
             };
 
-            var utterancesResult = AwaitTask(Client.Examples.BatchAsync(appId, versionId, utterances), false);
+            var utterancesResult = AwaitTask(Client.Examples.BatchAsync(appId, versionId, utterances));
 
             Console.WriteLine("Utterances added to the intent");
 

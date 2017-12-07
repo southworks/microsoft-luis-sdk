@@ -15,7 +15,7 @@
         {
             base.Display();
 
-            var info = AwaitTask(Client.Apps.GetAsync(AppId));
+            var info = AwaitTask(Client.Apps.GetAsync(AppId), true);
 
             var json = JsonConvert.SerializeObject(info, Formatting.Indented);
 
