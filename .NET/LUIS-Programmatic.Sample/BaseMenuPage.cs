@@ -45,5 +45,24 @@
                 Console.WriteLine();
             }
         }
+
+        protected T NavigateWithInitializer<T>(Action<T> initializer) where T : Page
+        {
+            var page = Program.SetPage<T>();
+            initializer(page);
+
+            Console.Clear();
+            page.Display();
+
+            return page;
+        }
+
+        protected void SafeAddToMenu(Option option)
+        {
+            if (!Menu.Contains(option.Name))
+            {
+                Menu.Add(option);
+            }
+        }
     }
 }

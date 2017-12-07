@@ -1,12 +1,10 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Sample
 {
-    using DotSpinners;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample;
     using Microsoft.Extensions.Configuration;
     using System;
     using System.IO;
-    using System.Threading.Tasks;
 
     class Application
     {
@@ -14,7 +12,6 @@
 
         private static AzureRegions AzureRegion;
         private static string SubscriptionKey;
-        private static string ApplicationId;
 
         static void Main(string[] args)
         {
@@ -28,13 +25,6 @@
             var program = new MainProgram(client);
 
             program.Run();
-        }
-
-        private static T WaitFor<T>(Task<T> task)
-        {
-            new DotSpinner(SpinnerTypes.Ping, task).Center().Start();
-            Console.Clear();
-            return task.Result;
         }
 
         static void ReadConfiguration()
@@ -53,16 +43,10 @@
 
             AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region, true);
             SubscriptionKey = Configuration["LUIS.SubscriptionKey"];
-            ApplicationId = Configuration["LUIS.ApplicationId"];
 
             if (string.IsNullOrWhiteSpace(SubscriptionKey))
             {
                 throw new ArgumentException("Missing \"LUIS.SubscriptionKey\" in appsettings.json");
-            }
-
-            if (string.IsNullOrWhiteSpace(ApplicationId))
-            {
-                throw new ArgumentException("Missing \"LUIS.ApplicationId\" in appsettings.json");
             }
         }
     }

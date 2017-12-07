@@ -6,6 +6,7 @@
     using BookingApp = Pages.BookingApp;
     using GreetingApp = Pages.GreetingApp;
     using RetailApp = Pages.RetailApp;
+    using Management = Pages.Management;
 
     public class MainProgram : Program
     {
@@ -15,6 +16,9 @@
         {
             Client = client;
             AddPage(new WelcomePage(this));
+            AddPage(new Management.ListAppsPage(this));
+            AddPage(new Management.AppInfoPage(this));
+            AddPage(new Management.AppDetailsPage(this));
             AddPage(new TemplateSelectorPage(this));
             AddPage(new BookingApp.StartPage(this));
             AddPage(new GreetingApp.StartPage(this));

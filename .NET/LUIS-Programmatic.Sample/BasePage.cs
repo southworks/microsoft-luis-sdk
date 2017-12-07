@@ -62,5 +62,16 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
             Input.ReadString("Press any key to go home");
             Program.NavigateHome();
         }
+
+        protected T NavigateWithInitializer<T>(Action<T> initializer) where T : Page
+        {
+            var page = Program.SetPage<T>();
+            initializer(page);
+
+            Console.Clear();
+            page.Display();
+
+            return page;
+        }
     }
 }
