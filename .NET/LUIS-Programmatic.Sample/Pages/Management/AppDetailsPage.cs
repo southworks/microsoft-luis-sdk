@@ -8,7 +8,7 @@
     {
         public Guid AppId { get; set; }
 
-        public AppDetailsPage(MainProgram program) : base("Details", program)
+        public AppDetailsPage(BaseProgram program) : base("Details", program)
         { }
 
         public override void Display()

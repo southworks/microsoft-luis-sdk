@@ -6,7 +6,7 @@
 
     class ListAppsPage : BaseMenuPage
     {
-        public ListAppsPage(MainProgram program) : base("Select App", program)
+        public ListAppsPage(BaseProgram program) : base("Select App", program)
         { }
 
         public override void Display()

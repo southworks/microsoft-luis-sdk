@@ -5,7 +5,7 @@
 
     class WelcomePage : BaseMenuPage
     {
-        public WelcomePage(MainProgram program) : base("Welcome Page", program,
+        public WelcomePage(BaseProgram program) : base("Welcome Page", program,
             new Option("Start new LUIS app wizard", () => program.NavigateTo<TemplateSelectorPage>()),
             new Option("Manage Apps", () => program.NavigateTo<Management.ListAppsPage>()),
             new Option("Exit", () => Environment.Exit(0)))

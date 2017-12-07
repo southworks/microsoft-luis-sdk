@@ -5,7 +5,7 @@
 
     class TrainAppPage : BasePage
     {
-        public TrainAppPage(MainProgram program) : base("Train App", program)
+        public TrainAppPage(BaseProgram program) : base("Train App", program)
         { }
 
         public override void Display()

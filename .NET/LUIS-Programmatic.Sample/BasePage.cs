@@ -10,7 +10,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
     {
         public ILuisProgrammaticAPI Client { get; private set; }
 
-        public BasePage(string title, MainProgram program) : base(title, program)
+        public BasePage(string title, BaseProgram program) : base(title, program)
         {
             Client = program.Client;
         }

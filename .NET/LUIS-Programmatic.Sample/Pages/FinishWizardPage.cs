@@ -5,7 +5,7 @@
 
     class FinishWizardPage : BaseMenuPage
     {
-        public FinishWizardPage(MainProgram program) : base("End of wizard", program,
+        public FinishWizardPage(BaseProgram program) : base("End of wizard", program,
             new Option("Go to the start page", () => program.NavigateHome()),
             new Option("Close wizard", () => Environment.Exit(0)))
         { }

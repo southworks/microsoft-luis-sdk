@@ -9,7 +9,7 @@
 
     class StartPage : BasePage
     {
-        public StartPage(MainProgram program) : base("Greeting App", program)
+        public StartPage(BaseProgram program) : base("Greeting App", program)
         { }
 
         public override void Display()
@@ -59,7 +59,7 @@
 
             Console.WriteLine("Utterances added to the intent");
 
-            NavigateWithInitializer<AddUtterancePage>((page) => {
+            NavigateWithInitializer<AddUtterancePage>(true, (page) => {
                 page.AppId = appId;
                 page.VersionId = versionId;
                 page.IntentName = greetingIntent.Name;

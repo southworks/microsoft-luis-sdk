@@ -1,32 +1,53 @@
-﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
+﻿namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Sample
 {
-    using EasyConsole;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-    using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages;
-    using BookingApp = Pages.BookingApp;
-    using GreetingApp = Pages.GreetingApp;
-    using RetailApp = Pages.RetailApp;
-    using Management = Pages.Management;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
+    using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample;
+    using Microsoft.Extensions.Configuration;
+    using System;
+    using System.IO;
 
-    public class MainProgram : Program
+    class Program
     {
-        public ILuisProgrammaticAPI Client { get; private set; }
+        public static IConfigurationRoot Configuration { get; set; }
 
-        public MainProgram(ILuisProgrammaticAPI client) : base("LUIS Programmatic API Demo", true)
+        private static AzureRegions AzureRegion;
+        private static string SubscriptionKey;
+
+        static void Main(string[] args)
         {
-            Client = client;
-            AddPage(new WelcomePage(this));
-            AddPage(new Management.ListAppsPage(this));
-            AddPage(new Management.AppInfoPage(this));
-            AddPage(new Management.AppDetailsPage(this));
-            AddPage(new TemplateSelectorPage(this));
-            AddPage(new BookingApp.StartPage(this));
-            AddPage(new GreetingApp.StartPage(this));
-            AddPage(new GreetingApp.AddUtterancePage(this));
-            AddPage(new RetailApp.StartPage(this));
-            AddPage(new TrainAppPage(this));
-            AddPage(new FinishWizardPage(this));
-            SetPage<WelcomePage>();
+            ReadConfiguration();
+
+            var client = new LuisProgrammaticAPI(new ApiKeyServiceClientCredentials(SubscriptionKey))
+            {
+                AzureRegion = AzureRegions.Westus
+            };
+
+            var program = new BaseProgram(client);
+
+            program.Run();
+        }
+
+        static void ReadConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+
+            var region = Configuration["LUIS.Region"];
+            if (string.IsNullOrWhiteSpace(region))
+            {
+                throw new ArgumentException("Missing \"LUIS.Region\" in appsettings.json");
+            }
+
+            AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region, true);
+            SubscriptionKey = Configuration["LUIS.SubscriptionKey"];
+
+            if (string.IsNullOrWhiteSpace(SubscriptionKey))
+            {
+                throw new ArgumentException("Missing \"LUIS.SubscriptionKey\" in appsettings.json");
+            }
         }
     }
 }

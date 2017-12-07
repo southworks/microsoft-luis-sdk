@@ -5,7 +5,7 @@
 
     class MainPage : BaseMenuPage
     {
-        public MainPage(MainProgram program)
+        public MainPage(BaseProgram program)
             : base("Main Page", program, 
                   new Option("Show all apps", () => program.NavigateTo<ListAppsPage>()),
                   new Option("Exit", () => Environment.Exit(0)))

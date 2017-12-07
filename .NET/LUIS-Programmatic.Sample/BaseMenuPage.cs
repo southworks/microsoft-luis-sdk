@@ -10,7 +10,7 @@
     {
         public ILuisProgrammaticAPI Client { get; private set; }
 
-        public BaseMenuPage(string title, MainProgram program, params Option[] options) : base(title, program, options)
+        public BaseMenuPage(string title, BaseProgram program, params Option[] options) : base(title, program, options)
         {
             Client = program.Client;
         }

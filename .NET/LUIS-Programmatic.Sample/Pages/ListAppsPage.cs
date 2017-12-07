@@ -6,7 +6,7 @@
 
     class ListAppsPage : BasePage
     {
-        public ListAppsPage(MainProgram program)
+        public ListAppsPage(BaseProgram program)
             : base("Apps list", program)
         { }
 

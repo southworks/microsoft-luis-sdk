@@ -11,7 +11,7 @@
         public string VersionId { get; set; }
         public string IntentName { get; set; }
 
-        public AddUtterancePage(MainProgram program) : base("Add utterances", program)
+        public AddUtterancePage(BaseProgram program) : base("Add utterances", program)
         { }
 
         public override void Display()

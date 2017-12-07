@@ -5,7 +5,7 @@
 
     class StartPage : BasePage
     {
-        public StartPage(MainProgram program) : base("Booking App", program)
+        public StartPage(BaseProgram program) : base("Booking App", program)
         { }
 
         public override void Display()

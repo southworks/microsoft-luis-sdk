@@ -6,7 +6,7 @@
     class AppInfoPage : BaseMenuPage
     {
         public Guid AppId { get; set; }
-        public AppInfoPage(MainProgram program) : base("Details", program)
+        public AppInfoPage(BaseProgram program) : base("Details", program)
         { }
 
         public override void Display()
