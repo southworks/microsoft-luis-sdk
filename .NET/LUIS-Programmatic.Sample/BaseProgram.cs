@@ -34,6 +34,8 @@
 
             AddPage(new CreateAppPage<RetailApp.StartPage>(this));
             AddPage(new RetailApp.StartPage(this));
+            AddPage(new RetailApp.FlowerpotPage(this));
+            AddPage(new RetailApp.AddFlowersPage(this));
 
             AddPage(new TemplateSelectorPage(this));
             AddPage(new TrainAppPage(this));

@@ -1,7 +1,9 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.RetailApp
 {
     using System;
-    using System.Threading.Tasks;
+    using System.Linq;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
     class StartPage : BaseStartPage
     {
@@ -12,12 +14,24 @@
         {
             base.Display();
 
+            Console.WriteLine("We’ll create a new 'Bouquet' hierarchical entity.");
+            Console.WriteLine("The Bouquet entity will contain 'Roses' and 'Carnations' as child entities.");
 
-            Console.WriteLine("We’ll create a new Retail app to send flower arrangements.");
+            var bouquetEntity = new HierarchicalModelCreateObject
+            {
+                Name = "Bouquet",
+                Children = new[] { "Roses", "Carnations" }.ToList()
+            };
 
-            AwaitTask(Task.Delay(2000));
+            var entityId = AwaitTask(Client.Model.AddHierarchicalEntityAsync(this.AppId, this.VersionId, bouquetEntity));
 
-            WaitForNavigateTo<TrainAppPage>();
+            Console.WriteLine($"{bouquetEntity.Name} hierarchical Entity created with the id {entityId}");
+
+            NavigateWithInitializer<FlowerpotPage>((page) =>
+            {
+                page.AppId = this.AppId;
+                page.VersionId = this.VersionId;
+            });
         }
     }
 }

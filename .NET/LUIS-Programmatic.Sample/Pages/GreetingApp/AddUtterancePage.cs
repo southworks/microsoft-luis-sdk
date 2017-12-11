@@ -1,9 +1,9 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.GreetingApp
 {
+    using System;
     using EasyConsole;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
-    using System;
 
     class AddUtterancePage : BasePage
     {
@@ -23,7 +23,7 @@
                 IntentName = IntentName
             };
 
-            var addNew = Input.ReadString("Do you want to add additional utterances? (y/n) ");
+            var addNew = Input.ReadString("Do you want to add more utterances? (y/n) ");
 
             while (addNew.Trim().ToLowerInvariant().StartsWith("y"))
             {
