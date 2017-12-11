@@ -5,9 +5,9 @@
     class TemplateSelectorPage : BaseMenuPage
     {
         public TemplateSelectorPage(BaseProgram program) : base("Template Selector", program,
-            new Option("Greeting App", () => program.NavigateTo<GreetingApp.StartPage>()),
-            new Option("Retail App", () => program.NavigateTo<RetailApp.StartPage>()),
-            new Option("Booking App", () => program.NavigateTo<BookingApp.StartPage>()))
+            new Option("Greeting App", () => program.NavigateTo<CreateAppPage<GreetingApp.StartPage>>()),
+            new Option("Retail App", () => program.NavigateTo<CreateAppPage<RetailApp.StartPage>>()),
+            new Option("Booking App", () => program.NavigateTo<CreateAppPage<BookingApp.StartPage>>()))
         { }
     }
 }

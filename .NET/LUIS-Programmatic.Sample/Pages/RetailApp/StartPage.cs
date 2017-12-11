@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    class StartPage : BasePage
+    class StartPage : BaseStartPage
     {
         public StartPage(BaseProgram program) : base("Retail App", program)
         { }
@@ -12,7 +12,8 @@
         {
             base.Display();
 
-            Console.WriteLine("Retail app placeholder");
+
+            Console.WriteLine("We’ll create a new Retail app to send flower arrangements.");
 
             AwaitTask(Task.Delay(2000));
 
