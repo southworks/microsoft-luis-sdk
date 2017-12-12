@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// the extracted entity starts.</param>
         /// <param name="endCharIndex">The index within the utterance where the
         /// extracted entity ends.</param>
-        public EntityLabelObject(string entityName = default(string), int? startCharIndex = default(int?), int? endCharIndex = default(int?))
+        public EntityLabelObject(string entityName, int startCharIndex, int endCharIndex)
         {
             EntityName = entityName;
             StartCharIndex = startCharIndex;
@@ -59,14 +60,27 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// entity starts.
         /// </summary>
         [JsonProperty(PropertyName = "startCharIndex")]
-        public int? StartCharIndex { get; set; }
+        public int StartCharIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the index within the utterance where the extracted
         /// entity ends.
         /// </summary>
         [JsonProperty(PropertyName = "endCharIndex")]
-        public int? EndCharIndex { get; set; }
+        public int EndCharIndex { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (EntityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EntityName");
+            }
+        }
     }
 }

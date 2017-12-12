@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// the extracted entity ends.</param>
         /// <param name="phrase">The actual token(s) that comprise the
         /// entity.</param>
-        public EntityPrediction(string entityName = default(string), int? startTokenIndex = default(int?), int? endTokenIndex = default(int?), string phrase = default(string))
+        public EntityPrediction(string entityName, int startTokenIndex, int endTokenIndex, string phrase)
         {
             EntityName = entityName;
             StartTokenIndex = startTokenIndex;
@@ -61,14 +62,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// entity starts.
         /// </summary>
         [JsonProperty(PropertyName = "startTokenIndex")]
-        public int? StartTokenIndex { get; set; }
+        public int StartTokenIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the index within the utterance where the extracted
         /// entity ends.
         /// </summary>
         [JsonProperty(PropertyName = "endTokenIndex")]
-        public int? EndTokenIndex { get; set; }
+        public int EndTokenIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the actual token(s) that comprise the entity.
@@ -76,5 +77,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         [JsonProperty(PropertyName = "phrase")]
         public string Phrase { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (EntityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EntityName");
+            }
+            if (Phrase == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Phrase");
+            }
+        }
     }
 }

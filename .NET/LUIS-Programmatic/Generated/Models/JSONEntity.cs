@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// <param name="endPos">The index within the utterance where the
         /// extracted entity ends.</param>
         /// <param name="entity">The entity name.</param>
-        public JSONEntity(int? startPos = default(int?), int? endPos = default(int?), string entity = default(string))
+        public JSONEntity(int startPos, int endPos, string entity)
         {
             StartPos = startPos;
             EndPos = endPos;
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// entity starts.
         /// </summary>
         [JsonProperty(PropertyName = "startPos")]
-        public int? StartPos { get; set; }
+        public int StartPos { get; set; }
 
         /// <summary>
         /// Gets or sets the index within the utterance where the extracted
         /// entity ends.
         /// </summary>
         [JsonProperty(PropertyName = "endPos")]
-        public int? EndPos { get; set; }
+        public int EndPos { get; set; }
 
         /// <summary>
         /// Gets or sets the entity name.
@@ -67,5 +68,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         [JsonProperty(PropertyName = "entity")]
         public string Entity { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Entity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Entity");
+            }
+        }
     }
 }

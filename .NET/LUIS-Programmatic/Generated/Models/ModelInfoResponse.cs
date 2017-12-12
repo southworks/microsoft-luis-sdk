@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,6 +33,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// Initializes a new instance of the ModelInfoResponse class.
         /// </summary>
         /// <param name="id">The ID of the Entity Model.</param>
+        /// <param name="readableType">Possible values include: 'Entity
+        /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
+        /// Entity Extractor', 'Composite Entity Extractor', 'Closed List
+        /// Entity Extractor', 'Prebuilt Entity Extractor', 'Intent
+        /// Classifier'</param>
         /// <param name="children">List of child entities.</param>
         /// <param name="subLists">List of sub-lists.</param>
         /// <param name="customPrebuiltDomainName">The domain name.</param>
@@ -39,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         /// name.</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
-        public ModelInfoResponse(System.Guid id, IList<ChildEntity> children = default(IList<ChildEntity>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), string name = default(string), int? typeId = default(int?))
+        public ModelInfoResponse(System.Guid id, string readableType, IList<ChildEntity> children = default(IList<ChildEntity>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), string name = default(string), int? typeId = default(int?))
         {
             Children = children;
             SubLists = subLists;
@@ -48,6 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
             Id = id;
             Name = name;
             TypeId = typeId;
+            ReadableType = readableType;
             CustomInit();
         }
 
@@ -99,13 +106,26 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         public int? TypeId { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include: 'Entity Extractor',
+        /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
+        /// Extractor', 'Composite Entity Extractor', 'Closed List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier'
+        /// </summary>
+        [JsonProperty(PropertyName = "readableType")]
+        public string ReadableType { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (ReadableType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReadableType");
+            }
             if (Children != null)
             {
                 foreach (var element in Children)
