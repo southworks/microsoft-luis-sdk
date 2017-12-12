@@ -4,7 +4,7 @@
     using Newtonsoft.Json;
     using System;
 
-    class AppDetailsPage : BasePage
+    class AppDetailsPage : BasePage, IAppPage
     {
         public Guid AppId { get; set; }
 
