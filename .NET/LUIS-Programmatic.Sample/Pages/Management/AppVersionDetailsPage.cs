@@ -4,19 +4,19 @@
     using Newtonsoft.Json;
     using System;
 
-    class AppEntitiesPage : BasePage
+    class AppVersionDetailsPage : BasePage, IAppVersionPage
     {
         public Guid AppId { get; set; }
         public string VersionId { get; set; }
 
-        public AppEntitiesPage(BaseProgram program) : base("Entities", program)
+        public AppVersionDetailsPage(BaseProgram program) : base("Details", program)
         { }
 
         public override void Display()
         {
             base.Display();
 
-            var info = AwaitTask(Client.Model.ListEntitiesAsync(AppId, VersionId), true);
+            var info = AwaitTask(Client.Versions.GetAsync(AppId, VersionId), true);
 
             var json = JsonConvert.SerializeObject(info, Formatting.Indented);
 

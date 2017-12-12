@@ -20,10 +20,13 @@
             AddPage(new Management.ListAppsPage(this));
             AddPage(new Management.AppInfoPage(this));
             AddPage(new Management.AppDetailsPage(this));
-            AddPage(new Management.AppIntentsPage(this));
-            AddPage(new Management.AppEntitiesPage(this));
+            AddPage(new Management.AppVersionIntentsPage(this));
+            AddPage(new Management.AppVersionEntitiesPage(this));
             AddPage(new Management.AppTrainPage(this));
             AddPage(new Management.AppDeletePage(this));
+            AddPage(new Management.AppPublishPage(this));
+            AddPage(new Management.AppVersionSelector(this));
+            AddPage(new Management.AppVersionInfoPage(this));
 
             AddPage(new CreateAppPage<GreetingApp.StartPage>(this));
             AddPage(new GreetingApp.StartPage(this));

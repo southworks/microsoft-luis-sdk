@@ -3,10 +3,9 @@
     using EasyConsole;
     using System;
 
-    class AppInfoPage : BaseMenuPage
+    class AppInfoPage : BaseMenuPage, IAppPage
     {
         public Guid AppId { get; set; }
-        public string VersionId { get; set; }
 
         public AppInfoPage(BaseProgram program) : base("Details", program)
         { }
@@ -14,22 +13,18 @@
         public override void Display()
         {
             Menu = new Menu();
-            SafeAddToMenu(new Option("View Details", () => NavigateWithInitializer<AppDetailsPage>(page => page.AppId = AppId)));
-            SafeAddToMenu(new Option("View Intents", () => NavigateWithInitializer<AppIntentsPage>(page =>
-            {
-                page.AppId = AppId;
-                page.VersionId = VersionId;
-            })));
-            SafeAddToMenu(new Option("View Entites", () => NavigateWithInitializer<AppEntitiesPage>(page =>
-            {
-                page.AppId = AppId;
-                page.VersionId = VersionId;
-            })));
-            SafeAddToMenu(new Option("Train", () => NavigateWithInitializer<AppTrainPage>(page =>
-            {
-                page.AppId = AppId;
-                page.VersionId = VersionId;
-            })));
+
+            SafeAddToMenu("View Details",
+                () => NavigateWithInitializer<AppDetailsPage>(page => page.AppId = AppId));
+
+            SafeAddToMenu("Version SubMenu",
+                () => NavigateWithInitializer<AppVersionSelector>(p => p.AppId = AppId));
+
+            SafeAddToMenu("Train", 
+                () => NavigateWithInitializer<AppTrainPage>(p => p.AppId = AppId));
+
+            SafeAddToMenu("Publish",
+                () => NavigateWithInitializer<AppPublishPage>(p => p.AppId = AppId));
 
             base.Display();
         }

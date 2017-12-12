@@ -81,5 +81,10 @@
                 Menu.Add(option);
             }
         }
+
+        protected void SafeAddToMenu(string name, Action callback)
+        {
+            SafeAddToMenu(new Option(name, callback));
+        }
     }
 }

@@ -4,12 +4,12 @@
     using Newtonsoft.Json;
     using System;
 
-    class AppIntentsPage : BasePage
+    class AppVersionIntentsPage : BasePage, IAppVersionPage
     {
         public Guid AppId { get; set; }
         public string VersionId { get; set; }
 
-        public AppIntentsPage(BaseProgram program) : base("Intents", program)
+        public AppVersionIntentsPage(BaseProgram program) : base("Intents", program)
         { }
 
         public override void Display()
