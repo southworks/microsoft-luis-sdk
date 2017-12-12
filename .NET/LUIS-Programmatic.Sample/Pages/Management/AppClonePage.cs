@@ -5,22 +5,22 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using System;
 
-    class AppPublishPage : BasePage, IAppPage
+    class AppClonePage : BasePage, IAppPage
     {
         public Guid AppId { get; set; }
 
-        public AppPublishPage(BaseProgram program) : base("Publish", program)
+        public AppClonePage(BaseProgram program) : base("Clone", program)
         { }
 
         public override void Display()
         {
             base.Display();
 
-            Console.WriteLine("Preparing app to publish...");
+            Console.WriteLine("Preparing app to clone...");
 
             var versions = AwaitTask(Client.Versions.ListAsync(AppId));
 
-            Console.WriteLine("Select version to publish");
+            Console.WriteLine("Select version to clone");
             var versionId = "";
             var menuVersion = new Menu();
             foreach (var version in versions)
@@ -29,27 +29,25 @@
             }
             menuVersion.Display();
 
-            var isStaging = Input.ReadString("Publish on staging? Y/N").Trim().ToLowerInvariant().StartsWith("y");
+            var verName = Input.ReadString("Enter the new version tag: ").Trim();
 
-            var versionToPublish = new ApplicationPublishObject
+            var versionToClone = new TaskUpdateObject
             {
-                Region = "westus",
-                VersionId = versionId,
-                IsStaging = isStaging
+                Version = verName
             };
 
-            Console.WriteLine("Publishing app...");
+            Console.WriteLine("Cloning app...");
 
             try
             {
-                var result = AwaitTask(Client.Apps.PublishAsync(AppId, versionToPublish));
-                Console.WriteLine("Your app has been published.");
+                var result = AwaitTask(Client.Versions.CloneAsync(AppId, versionId, versionToClone));
+                Console.WriteLine("Your app has been cloned.");
                 Print(result);
             }
             catch (Exception ex)
             {
                 var message = (ex as ErrorResponseException)?.Body.Message ?? "Unknow error";
-                Console.WriteLine($"Your app is not ready to be published. Err: {message}");
+                Console.WriteLine($"Your app is not ready to be cloned. Err: {message}");
             }
 
             WaitForGoBack();

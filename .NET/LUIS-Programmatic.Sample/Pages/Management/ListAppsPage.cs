@@ -16,6 +16,7 @@
             {
                 SafeAddToMenu(new Option($"App: {app.Name}", () => NavigateWithInitializer<AppInfoPage>(p => p.AppId = app.Id.Value)));
             }
+            SafeAddToMenu(new Option("Import app", () => Program.NavigateTo<AppImportPage>()));
             SafeAddToMenu(new Option("Delete app", () => Program.NavigateTo<AppDeletePage>() ));
             base.Display();
         }

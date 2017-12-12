@@ -3,6 +3,7 @@
     using DotSpinners;
     using EasyConsole;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Newtonsoft.Json;
     using System;
     using System.Threading.Tasks;
 
@@ -13,6 +14,12 @@
         public BaseMenuPage(string title, BaseProgram program, params Option[] options) : base(title, program, options)
         {
             Client = program.Client;
+        }
+
+        protected void Print(object obj)
+        {
+            var json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            Console.WriteLine(json);
         }
 
         protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = false)

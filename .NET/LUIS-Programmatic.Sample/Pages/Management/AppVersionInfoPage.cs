@@ -16,13 +16,16 @@
             Menu = new Menu();
 
             SafeAddToMenu("View Details",
-                () => NavigateWithInitializer<AppVersionDetailsPage>(page => page.AppId = AppId));
+                () => NavigateToVersion<AppVersionDetailsPage>());
 
             SafeAddToMenu("View Intent", 
                 () => NavigateToVersion<AppVersionIntentsPage>());
 
             SafeAddToMenu("View Entities",
                 () => NavigateToVersion<AppVersionEntitiesPage>());
+
+            SafeAddToMenu("View Prebuilt Entities",
+                () => NavigateToVersion<AppVersionPrebuiltEntitiesPage>());
 
             base.Display();
         }

@@ -3,19 +3,19 @@
     using Language.LUIS.Programmatic;
     using System;
 
-    class AppVersionEntitiesPage : BasePage, IAppVersionPage
+    class AppVersionPrebuiltEntitiesPage : BasePage, IAppVersionPage
     {
         public Guid AppId { get; set; }
         public string VersionId { get; set; }
 
-        public AppVersionEntitiesPage(BaseProgram program) : base("Entities", program)
+        public AppVersionPrebuiltEntitiesPage(BaseProgram program) : base("Prebuilt", program)
         { }
 
         public override void Display()
         {
             base.Display();
 
-            var info = AwaitTask(Client.Model.ListEntitiesAsync(AppId, VersionId), true);
+            var info = AwaitTask(Client.Model.ListPrebuiltsAsync(AppId, VersionId), true);
 
             Print(info);
 

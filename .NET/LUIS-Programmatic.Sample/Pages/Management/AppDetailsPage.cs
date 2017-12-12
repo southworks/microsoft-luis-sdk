@@ -1,7 +1,6 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.Management
 {
     using Language.LUIS.Programmatic;
-    using Newtonsoft.Json;
     using System;
 
     class AppDetailsPage : BasePage, IAppPage
@@ -17,9 +16,7 @@
 
             var info = AwaitTask(Client.Apps.GetAsync(AppId), true);
 
-            var json = JsonConvert.SerializeObject(info, Formatting.Indented);
-
-            Console.WriteLine(json);
+            Print(info);
 
             WaitForGoBack();
         }

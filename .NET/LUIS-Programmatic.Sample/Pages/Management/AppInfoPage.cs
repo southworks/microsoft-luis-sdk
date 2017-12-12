@@ -20,11 +20,17 @@
             SafeAddToMenu("Version SubMenu",
                 () => NavigateWithInitializer<AppVersionSelector>(p => p.AppId = AppId));
 
-            SafeAddToMenu("Train", 
+            SafeAddToMenu("Train",
                 () => NavigateWithInitializer<AppTrainPage>(p => p.AppId = AppId));
 
             SafeAddToMenu("Publish",
                 () => NavigateWithInitializer<AppPublishPage>(p => p.AppId = AppId));
+
+            SafeAddToMenu("Clone",
+                () => NavigateWithInitializer<AppClonePage>(p => p.AppId = AppId));
+
+            SafeAddToMenu("Export",
+                () => NavigateWithInitializer<AppExportPage>(p => p.AppId = AppId));
 
             base.Display();
         }

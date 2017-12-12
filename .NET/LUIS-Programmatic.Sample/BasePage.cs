@@ -1,6 +1,7 @@
 ﻿using DotSpinners;
 using EasyConsole;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -13,6 +14,12 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
         public BasePage(string title, BaseProgram program) : base(title, program)
         {
             Client = program.Client;
+        }
+
+        protected void Print(object obj)
+        {
+            var json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings{ NullValueHandling = NullValueHandling.Ignore });
+            Console.WriteLine(json);
         }
 
         protected T AwaitTask<T>(Task<T> task, bool clearAfterRun = false)

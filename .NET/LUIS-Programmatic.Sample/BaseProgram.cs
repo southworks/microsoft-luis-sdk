@@ -22,11 +22,16 @@
             AddPage(new Management.AppDetailsPage(this));
             AddPage(new Management.AppVersionIntentsPage(this));
             AddPage(new Management.AppVersionEntitiesPage(this));
+            AddPage(new Management.AppVersionPrebuiltEntitiesPage(this));
             AddPage(new Management.AppTrainPage(this));
             AddPage(new Management.AppDeletePage(this));
+            AddPage(new Management.AppClonePage(this));
+            AddPage(new Management.AppImportPage(this));
+            AddPage(new Management.AppExportPage(this));
             AddPage(new Management.AppPublishPage(this));
             AddPage(new Management.AppVersionSelector(this));
             AddPage(new Management.AppVersionInfoPage(this));
+            AddPage(new Management.AppVersionDetailsPage(this));
 
             AddPage(new CreateAppPage<GreetingApp.StartPage>(this));
             AddPage(new GreetingApp.StartPage(this));
