@@ -14,8 +14,8 @@
         {
             base.Display();
 
-            Console.WriteLine("We’ll create a new 'Bouquet' hierarchical entity.");
-            Console.WriteLine("The Bouquet entity will contain 'Roses' and 'Carnations' as child entities.");
+            Console.WriteLine("We’ll create a new \"Bouquet\" hierarchical entity.");
+            Console.WriteLine("The Bouquet entity will contain \"Roses\" and \"Carnations\" as child entities.");
 
             var bouquetEntity = new HierarchicalModelCreateObject
             {

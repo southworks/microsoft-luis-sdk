@@ -18,23 +18,23 @@
         {
             base.Display();
 
-            var addNew = Input.ReadString("Do you want to add more flowers to the 'Flowerpot' entity? (y/n)");
+            var addNew = Input.ReadString("Do you want to add more flowers to the \"Flowerpot\" entity? (y/n)");
 
             while (addNew.Trim().ToLowerInvariant().StartsWith("y"))
             {
                 var childEntity = new HierarchicalChildModelCreateObject
                 {
-                    Name = Input.ReadString("Type the flower name (e.g. Ficus): ")
+                    Name = Input.ReadString("Type the flower name (e.g. \"Ficus\"): ")
                 };
 
                 var result = AwaitTask(Client.Model.AddHierarchicalEntityChildAsync(this.AppId, this.VersionId, this.EntityId, childEntity));
 
                 Console.WriteLine($"Child Entity \"{childEntity.Name}\" added to the Parent Entity {this.EntityId}\n");
 
-                addNew = Input.ReadString("Do you want to add more flowers to the 'Flowerpot' entity? (y/n)");
+                addNew = Input.ReadString("Do you want to add more flowers to the \"Flowerpot\" entity? (y/n)");
             }
 
-            NavigateWithInitializer<TrainAppPage>((page) => {
+            NavigateWithInitializer<SendFlowersIntentPage>((page) => {
                 page.AppId = AppId;
                 page.VersionId = VersionId;
             });
