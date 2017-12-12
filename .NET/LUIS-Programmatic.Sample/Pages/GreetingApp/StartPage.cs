@@ -5,8 +5,11 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
-    class StartPage : BaseStartPage
+    class StartPage : BasePage, IAppVersionPage
     {
+        public Guid AppId { get; set; }
+        public string VersionId { get; set; }
+
         public StartPage(BaseProgram program) : base("Greeting App", program)
         { }
 
@@ -24,7 +27,7 @@
                 Name = "Greeting"
             };
 
-            var intentId = AwaitTask(Client.Model.AddIntentAsync(this.AppId, this.VersionId, greetingIntent));
+            var intentId = AwaitTask(Client.Model.AddIntentAsync(AppId, VersionId, greetingIntent));
 
             Console.WriteLine($"{greetingIntent.Name} intent created with the id {intentId}");
 
@@ -34,13 +37,13 @@
                 new ExampleLabelObject("Hello", null, greetingIntent.Name)
             };
 
-            var utterancesResult = AwaitTask(Client.Examples.BatchAsync(this.AppId, this.VersionId, utterances));
+            var utterancesResult = AwaitTask(Client.Examples.BatchAsync(AppId, VersionId, utterances));
 
             Console.WriteLine("Utterances added to the intent");
 
             NavigateWithInitializer<AddUtterancePage>((page) => {
-                page.AppId = this.AppId;
-                page.VersionId = this.VersionId;
+                page.AppId = AppId;
+                page.VersionId = VersionId;
                 page.IntentName = greetingIntent.Name;
             });
         }

@@ -15,7 +15,7 @@
         public BaseProgram(ILuisProgrammaticAPI client) : base("LUIS Programmatic API Demo", true)
         {
             Client = client;
-            AddPage(new WelcomePage(this));
+            AddPage(new MainPage(this));
 
             AddPage(new Management.ListAppsPage(this));
             AddPage(new Management.AppInfoPage(this));
@@ -46,7 +46,7 @@
             AddPage(new PublishAppPage(this));
             AddPage(new ShareAppPage(this));
 
-            SetPage<WelcomePage>();
+            SetPage<MainPage>();
         }
     }
 }

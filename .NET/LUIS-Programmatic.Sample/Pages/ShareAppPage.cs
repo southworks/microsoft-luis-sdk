@@ -5,7 +5,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using System;
 
-    class ShareAppPage : BasePage
+    class ShareAppPage : BasePage, IAppVersionPage
     {
         public Guid AppId { get; set; }
         public string VersionId { get; set; }

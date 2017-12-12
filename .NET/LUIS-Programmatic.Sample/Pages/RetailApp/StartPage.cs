@@ -5,8 +5,11 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
-    class StartPage : BaseStartPage
+    class StartPage : BasePage, IAppVersionPage
     {
+        public Guid AppId { get; set; }
+        public string VersionId { get; set; }
+
         public StartPage(BaseProgram program) : base("Retail App", program)
         { }
 
@@ -23,14 +26,14 @@
                 Children = new[] { "Roses", "Carnations" }.ToList()
             };
 
-            var entityId = AwaitTask(Client.Model.AddHierarchicalEntityAsync(this.AppId, this.VersionId, bouquetEntity));
+            var entityId = AwaitTask(Client.Model.AddHierarchicalEntityAsync(AppId, VersionId, bouquetEntity));
 
             Console.WriteLine($"{bouquetEntity.Name} hierarchical Entity created with the id {entityId}");
 
             NavigateWithInitializer<FlowerpotPage>((page) =>
             {
-                page.AppId = this.AppId;
-                page.VersionId = this.VersionId;
+                page.AppId = AppId;
+                page.VersionId = VersionId;
             });
         }
     }

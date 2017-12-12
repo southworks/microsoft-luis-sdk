@@ -4,7 +4,7 @@
     using System;
     using System.Threading.Tasks;
 
-    class TrainAppPage : BasePage
+    class TrainAppPage : BasePage, IAppVersionPage
     {
         public Guid AppId { get; set; }
         public string VersionId { get; set; }

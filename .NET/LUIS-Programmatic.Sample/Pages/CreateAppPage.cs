@@ -5,7 +5,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
-    class CreateAppPage<StartPageType>: BasePage where StartPageType : BaseStartPage
+    class CreateAppPage<T>: BasePage where T : Page, IAppVersionPage
     {
         public CreateAppPage(BaseProgram program) : base("Create App", program)
         { }
@@ -38,7 +38,7 @@
 
             Console.WriteLine($"{appName} app created with the id {appId}");
 
-            NavigateWithInitializer<StartPageType>((page) => {
+            NavigateWithInitializer<T>((page) => {
                 page.AppId = appId;
                 page.VersionId = versionId;
             });

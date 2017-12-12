@@ -3,8 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
-    class StartPage : BaseStartPage
+    class StartPage : BasePage, IAppVersionPage
     {
+        public Guid AppId { get; set; }
+        public string VersionId { get; set; }
+
         public StartPage(BaseProgram program) : base("Booking App", program)
         { }
 

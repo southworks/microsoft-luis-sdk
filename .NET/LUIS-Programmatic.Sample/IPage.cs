@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.Management
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
 {
+    using System;
+
     interface IAppPage
     {
         Guid AppId { get; set; }

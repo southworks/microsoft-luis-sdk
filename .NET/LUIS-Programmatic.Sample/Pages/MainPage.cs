@@ -5,10 +5,10 @@
 
     class MainPage : BaseMenuPage
     {
-        public MainPage(BaseProgram program)
-            : base("Main Page", program, 
-                  new Option("Show all apps", () => program.NavigateTo<ListAppsPage>()),
-                  new Option("Exit", () => Environment.Exit(0)))
+        public MainPage(BaseProgram program) : base("Main", program,
+            new Option("Start new LUIS app wizard", () => program.NavigateTo<TemplateSelectorPage>()),
+            new Option("Manage Apps", () => program.NavigateTo<Management.ListAppsPage>()),
+            new Option("Exit", () => Environment.Exit(0)))
         { }
     }
 }
