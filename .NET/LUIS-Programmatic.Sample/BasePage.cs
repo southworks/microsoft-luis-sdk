@@ -1,12 +1,12 @@
-﻿using DotSpinners;
-using EasyConsole;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample
 {
+    using DotSpinners;
+    using EasyConsole;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Newtonsoft.Json;
+    using System;
+    using System.Threading.Tasks;
+
     class BasePage : Page
     {
         public ILuisProgrammaticAPI Client { get; private set; }

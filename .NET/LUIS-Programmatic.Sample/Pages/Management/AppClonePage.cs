@@ -46,7 +46,7 @@
             }
             catch (Exception ex)
             {
-                var message = (ex as ErrorResponseException)?.Body.Message ?? "Unknow error";
+                var message = (ex as ErrorResponseException)?.Body.Message ?? ex.Message;
                 Console.WriteLine($"Your app is not ready to be cloned. Err: {message}");
             }
 
