@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    class StartPage : BasePage
+    class StartPage : BaseStartPage
     {
         public StartPage(BaseProgram program) : base("Booking App", program)
         { }
