@@ -2,6 +2,7 @@
 {
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     class TrainAppPage : BasePage, IAppVersionPage
@@ -12,6 +13,8 @@
         public TrainAppPage(BaseProgram program) : base("Train", program)
         { }
 
+        private string[] trainedStatus = new string[] { "UpToDate", "Success" };
+
         public override void Display()
         {
             base.Display();
@@ -19,11 +22,14 @@
             Console.WriteLine("We'll start training your app...");
 
             AwaitTask(Task.Run(async() => {
+                var isTrained = false;
                 var result = await Client.Train.TrainVersionAsync(AppId, VersionId);
-                while (!result.Status.Equals("UpToDate"))
+                isTrained = result.Status.Equals("UpToDate");
+                while (!isTrained)
                 {
                     await Task.Delay(1000);
-                    result = await Client.Train.TrainVersionAsync(AppId, VersionId);
+                    var status = await Client.Train.GetStatusAsync(AppId, VersionId);
+                    isTrained = status.All(m => trainedStatus.Contains(m.Details.Status));
                 }
             }));
 

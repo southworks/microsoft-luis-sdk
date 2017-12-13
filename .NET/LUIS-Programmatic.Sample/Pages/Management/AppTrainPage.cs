@@ -3,6 +3,7 @@
     using EasyConsole;
     using Language.LUIS.Programmatic;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     class AppTrainPage : BasePage, IAppPage
@@ -11,6 +12,8 @@
 
         public AppTrainPage(BaseProgram program) : base("Train", program)
         { }
+
+        private string[] trainedStatus = new string[] { "UpToDate", "Success" };
 
         public override void Display()
         {
@@ -30,11 +33,14 @@
             menuVersion.Display();
 
             AwaitTask(Task.Run(async () => {
+                var isTrained = false;
                 var result = await Client.Train.TrainVersionAsync(AppId, versionId);
-                while (!result.Status.Equals("UpToDate"))
+                isTrained = result.Status.Equals("UpToDate");
+                while (!isTrained)
                 {
                     await Task.Delay(1000);
-                    result = await Client.Train.TrainVersionAsync(AppId, versionId);
+                    var status = await Client.Train.GetStatusAsync(AppId, versionId);
+                    isTrained = status.All(m => trainedStatus.Contains(m.Details.Status));
                 }
             }));
 
