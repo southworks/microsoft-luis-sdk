@@ -6,7 +6,7 @@ author: microsoft
 
 # Cognitive Services: LUIS Programmatic SDK Console Application Sample
 
-A simple console demonstrating how to use the LUIS Programmatic SDK to manages LUIS applications.
+A simple console that showcases how the SDK can be used to create and customize new LUIS apps.
 
 ### Prerequisites
 
@@ -25,7 +25,7 @@ Once you get the programmatic key, edit the [appsettings.json](LUIS-Programmatic
 ### Highlights
 
 Once the app is running, you will see two main options:
-* **Start new LUIS app wizard:** This option guides you through a wizard to create a LUIS application that shows some capabilities of the SDK. You can create apps based on three different domains:
+* **Start new LUIS app wizard:** This option guides you through a wizard to create a LUIS application that shows some capabilities of the SDK. You can create apps based on three different scenarios:
     * Greeting App
     * Retail App
     * Booking App
