@@ -28,7 +28,7 @@
 
             Console.WriteLine($"{compositeEntity.Name} composite entity created with id {compositeEntityId}");
 
-            NavigateWithInitializer<TrainAppPage>((page) => {
+            NavigateWithInitializer<FindFlightsIntentPage>((page) => {
                 page.AppId = AppId;
                 page.VersionId = VersionId;
             });

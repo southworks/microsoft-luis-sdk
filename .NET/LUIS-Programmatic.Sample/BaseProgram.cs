@@ -5,8 +5,8 @@
     using Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages;
     using BookingApp = Pages.BookingApp;
     using GreetingApp = Pages.GreetingApp;
-    using RetailApp = Pages.RetailApp;
     using Management = Pages.Management;
+    using RetailApp = Pages.RetailApp;
 
     public class BaseProgram : Program
     {
@@ -46,6 +46,7 @@
             AddPage(new CreateAppPage<BookingApp.StartPage>(this));
             AddPage(new BookingApp.StartPage(this));
             AddPage(new BookingApp.FlightsEntityPage(this));
+            AddPage(new BookingApp.FindFlightsIntentPage(this));
 
             AddPage(new TemplateSelectorPage(this));
             AddPage(new TrainAppPage(this));
