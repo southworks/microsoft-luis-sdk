@@ -11,13 +11,13 @@
         public static IConfigurationRoot Configuration { get; set; }
 
         private static AzureRegions AzureRegion;
-        private static string SubscriptionKey;
+        private static string ProgrammaticKey;
 
         static void Main(string[] args)
         {
             ReadConfiguration();
 
-            var client = new LuisProgrammaticAPI(new ApiKeyServiceClientCredentials(SubscriptionKey))
+            var client = new LuisProgrammaticAPI(new ApiKeyServiceClientCredentials(ProgrammaticKey))
             {
                 AzureRegion = AzureRegions.Westus
             };
@@ -42,11 +42,11 @@
             }
 
             AzureRegion = (AzureRegions)Enum.Parse(typeof(AzureRegions), region, true);
-            SubscriptionKey = Configuration["LUIS.SubscriptionKey"];
+            ProgrammaticKey = Configuration["LUIS.ProgrammaticKey"];
 
-            if (string.IsNullOrWhiteSpace(SubscriptionKey))
+            if (string.IsNullOrWhiteSpace(ProgrammaticKey))
             {
-                throw new ArgumentException("Missing \"LUIS.SubscriptionKey\" in appsettings.json");
+                throw new ArgumentException("Missing \"LUIS.ProgrammaticKey\" in appsettings.json");
             }
         }
     }

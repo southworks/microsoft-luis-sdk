@@ -7,7 +7,7 @@
 
     class CreateAppPage<T>: BasePage where T : Page, IAppVersionPage
     {
-        public CreateAppPage(BaseProgram program) : base("Create App", program)
+        public CreateAppPage(BaseProgram program) : base("Create", program)
         { }
 
         public override void Display()

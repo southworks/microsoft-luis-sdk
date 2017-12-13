@@ -6,7 +6,7 @@
 
     class AppDeletePage : BaseMenuPage
     {
-        public AppDeletePage(BaseProgram program) : base("Delete App", program)
+        public AppDeletePage(BaseProgram program) : base("Delete", program)
         { }
 
         public override void Display()
