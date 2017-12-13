@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using EasyConsole;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.Management
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.Management
 {
+    using System;
+    using EasyConsole;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+
     class AppVersionSelector : BaseMenuPage, IAppPage
     {
         public Guid AppId { get; set; }
