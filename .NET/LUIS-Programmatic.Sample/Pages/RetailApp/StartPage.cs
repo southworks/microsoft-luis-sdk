@@ -1,7 +1,6 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.RetailApp
 {
     using System;
-    using System.Linq;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
@@ -23,7 +22,7 @@
             var bouquetEntity = new HierarchicalModelCreateObject
             {
                 Name = "Bouquet",
-                Children = new[] { "Roses", "Carnations" }.ToList()
+                Children = new[] { "Roses", "Carnations" }
             };
 
             var entityId = AwaitTask(Client.Model.AddHierarchicalEntityAsync(AppId, VersionId, bouquetEntity));

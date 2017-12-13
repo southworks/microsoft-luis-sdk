@@ -18,7 +18,7 @@
             base.Display();
 
             Console.WriteLine();
-            Console.WriteLine("We'll create a new app with a single \"intent\" including the following utterances:");
+            Console.WriteLine("We'll create a new \"intent\" including the following utterances:");
             Console.WriteLine(" - Hi");
             Console.WriteLine(" - Hello");
 

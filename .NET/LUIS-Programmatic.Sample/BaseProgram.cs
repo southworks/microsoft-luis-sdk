@@ -37,14 +37,15 @@
             AddPage(new GreetingApp.StartPage(this));
             AddPage(new GreetingApp.AddUtterancePage(this));
 
-            AddPage(new CreateAppPage<BookingApp.StartPage>(this));
-            AddPage(new BookingApp.StartPage(this));
-
             AddPage(new CreateAppPage<RetailApp.StartPage>(this));
             AddPage(new RetailApp.StartPage(this));
             AddPage(new RetailApp.FlowerpotPage(this));
             AddPage(new RetailApp.AddFlowersPage(this));
             AddPage(new RetailApp.SendFlowersIntentPage(this));
+
+            AddPage(new CreateAppPage<BookingApp.StartPage>(this));
+            AddPage(new BookingApp.StartPage(this));
+            AddPage(new BookingApp.FlightsEntityPage(this));
 
             AddPage(new TemplateSelectorPage(this));
             AddPage(new TrainAppPage(this));

@@ -1,7 +1,8 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Sample.Pages.BookingApp
 {
     using System;
-    using System.Threading.Tasks;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
 
     class StartPage : BasePage, IAppVersionPage
     {
@@ -15,11 +16,34 @@
         {
             base.Display();
 
-            Console.WriteLine("Booking app placeholder");
+            Console.WriteLine("We’ll create two new entities.");
+            Console.WriteLine("The \"Destination\" simple entity will hold the flight destination.");
+            Console.WriteLine("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.");
 
-            AwaitTask(Task.Delay(2000));
+            var simpleEntity = new ModelCreateObject
+            {
+                Name = "Destination"
+            };
 
-            WaitForNavigateTo<TrainAppPage>();
+            var simpleEntityId = AwaitTask(Client.Model.AddEntityAsync(AppId, VersionId, simpleEntity));
+
+            Console.WriteLine($"{simpleEntity.Name} simple entity created with id {simpleEntityId}");
+
+            var hierarchicalEntity = new HierarchicalModelCreateObject
+            {
+                Name = "Class",
+                Children = new[] { "First", "Business", "Economy" }
+            };
+
+            var hierarchicalEntityId = AwaitTask(Client.Model.AddHierarchicalEntityAsync(AppId, VersionId, hierarchicalEntity));
+
+            Console.WriteLine($"{hierarchicalEntity.Name} hierarchical entity created with id {hierarchicalEntityId}");
+
+            NavigateWithInitializer<FlightsEntityPage>((page) =>
+            {
+                page.AppId = AppId;
+                page.VersionId = VersionId;
+            });
         }
     }
 }
