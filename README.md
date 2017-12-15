@@ -32,13 +32,13 @@ You'll need these two values to configure the LuisDialog through the LuisModel a
 
 1. Application ID
 
-    In the LUIS application's dashboard, you can copy the App ID from the address bar.
+    You can find the App ID in the LUIS application's settings.
 
     ![App Settings](images/prereqs-appid.png)
 
 2. Subscription Key and Azure Region
 
-    Click on the Publish App link from the LUIS application dashboard.  Once your app is published, copy the Region and Key String from *Starter_Key* from the Endpoints table on the Publish App page.
+    Click on the Publish App link from the top of the LUIS application dashboard. Once your app is published, copy the Region and Key String from *Starter_Key* from the Endpoints table on the Publish App page.
 
     ![Programmatic API Key](images/prereqs-apikey.png)
 
